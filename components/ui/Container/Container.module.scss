@@ -1,0 +1,13 @@
+@import "styles/mixins";
+
+.container {
+    @apply max-w-screen-mobile px-4;
+
+    @include media-rules(tablet) {
+        @apply max-w-screen-tablet px-8;
+    }
+
+    @include media-rules(desktop) {
+        @apply max-w-screen-desktop;
+    }
+}
