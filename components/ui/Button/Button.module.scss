@@ -1,0 +1,37 @@
+@import 'styles/mixins';
+
+.button {
+    @apply rounded-[30px] text-sm font-bold leading-normal tracking-tight text-primary transition-colors duration-300 ease-linear;
+
+    @include media-rules(tablet) {
+        @apply text-base;
+    }
+}
+
+.contained {
+    @apply h-[46px] w-[116px] bg-green;
+
+    &:is(:hover, :focus) {
+        @apply bg-green-dark;
+    }
+
+    @include media-rules(tablet) {
+        @apply w-[169px] h-[60px];
+    }
+}
+
+.outlined {
+    @apply h-[46px] w-[104px] border border-primary;
+
+    &:is(:hover, :focus) {
+        @apply border border-green-dark text-green-dark;
+    }
+
+    @include media-rules(tablet) {
+        @apply w-[135px] h-[60px];
+    }
+}
+
+.fullWidth {
+    @apply w-full;
+}
