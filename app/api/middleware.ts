@@ -20,7 +20,7 @@ export const middleware = async (req: NextRequest) => {
         }
 
         const response = NextResponse.next();
-        response.headers.set('X-User-Id', user._id.toString());
+        response.headers.set('X-User', JSON.stringify(user));
 
         return response;
     } catch {
@@ -29,5 +29,5 @@ export const middleware = async (req: NextRequest) => {
 };
 
 export const config = {
-    matcher: ['/api/users/current'],
+    matcher: ['/api/users/current', '/api/users/logout'],
 };
