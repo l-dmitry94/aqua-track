@@ -1,16 +1,29 @@
+import { FilterQuery, UpdateQuery } from 'mongoose';
+
 import User from '@/models/user';
 
-export const findUserByEmail = async (email: string) => {
-    const user = await User.findOne({ email });
+interface IUser {
+    _id: string;
+    name: string;
+    email: string;
+    password: string;
+    token?: string;
+}
+
+export const findUser = async (filter: FilterQuery<IUser>): Promise<IUser | null> => {
+    const user = await User.findOne(filter);
     return user;
 };
 
-export const registerUser = async (name: string, email: string, password: string) => {
-    const user = await User.create({ name, email, password });
+export const registerUser = async (data: Omit<IUser, '_id'>): Promise<IUser> => {
+    const user = await User.create(data);
     return user;
 };
 
-export const updateUserToken = async (userId: string, token: string) => {
-    const user = await User.findByIdAndUpdate(userId, { token });
+export const updateUser = async (
+    filter: FilterQuery<IUser>,
+    data: UpdateQuery<IUser>
+): Promise<IUser | null> => {
+    const user = await User.findByIdAndUpdate(filter, data);
     return user;
 };
