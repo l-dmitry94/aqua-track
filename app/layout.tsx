@@ -1,5 +1,5 @@
 import { FC, ReactNode } from 'react';
-import { Box } from '@mui/material';
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
 
@@ -22,9 +22,11 @@ interface IRootLayout {
 const RootLayout: FC<IRootLayout> = ({ children }) => {
     return (
         <html lang="en">
-            <Box component="body" className={poppins.className}>
-                {children}
-            </Box>
+            <body className={poppins.className}>
+                <AppRouterCacheProvider options={{ enableCssLayer: true }}>
+                    {children}
+                </AppRouterCacheProvider>
+            </body>
         </html>
     );
 };
