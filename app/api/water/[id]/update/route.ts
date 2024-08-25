@@ -10,6 +10,7 @@ export const PATCH = async (req: NextRequest, { params }: { params: { id: string
         return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     }
 
+    const user = JSON.parse(userHeader);
     const { id } = params;
     const { date, volume } = await req.json();
 
@@ -21,11 +22,11 @@ export const PATCH = async (req: NextRequest, { params }: { params: { id: string
         return NextResponse.json({ message: 'Date and volume are required' }, { status: 400 });
     }
 
-    const updatedEntry = await updateWaterEntry(id, new Date(date), volume);
+    const updatedEntry = await updateWaterEntry(id, user.id, new Date(date), volume);
 
     if (!updatedEntry) {
-        return NextResponse.json({ message: 'Entry not found' }, { status: 404 });
+        return NextResponse.json({ message: 'Entry not found or user unauthorized' }, { status: 404 });
     }
 
-    return NextResponse.json(updatedEntry);
+    return NextResponse.json(updatedEntry, { status: 200 });
 };

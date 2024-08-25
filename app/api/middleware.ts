@@ -22,7 +22,7 @@ export const middleware = async (req: NextRequest) => {
         const response = NextResponse.next();
         response.headers.set(
             'X-User',
-            JSON.stringify({ emai: user.email, name: user.name, id: user._id })
+            JSON.stringify({ email: user.email, name: user.name, id: user._id })
         );
 
         return response;
@@ -35,10 +35,6 @@ export const config = {
     matcher: [
         '/api/users/current',
         '/api/users/logout',
-        '/api/water/create',
-        '/api/water/[id]/update',
-        '/api/water/[id]/delete',
-        '/api/water/daily',
-        '/api/water/monthly'
+        '/api/water/:path*',
     ],
 };

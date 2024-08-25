@@ -1,46 +1,71 @@
 import WaterEntry from '@/models/water';
+import { ObjectId } from 'mongodb';
 
 export const createWaterEntry = async (userId: string, date: Date, volume: number) => {
-    const waterEntry = await WaterEntry.create({ user: userId, date, volume });
-    return waterEntry;
+    const waterEntry = new WaterEntry({
+        user: userId,
+        date: date,
+        volume: volume,
+    });
+    return await waterEntry.save();
 };
 
-export const updateWaterEntry = async (id: string, date: Date, volume: number) => {
-    const waterEntry = await WaterEntry.findByIdAndUpdate(
-        id,
+export const updateWaterEntry = async (id: string, userId: string, date: Date, volume: number) => {
+    const waterEntry = await WaterEntry.findOneAndUpdate(
+        { _id: id, user: userId },
         { date, volume },
         { new: true }
     );
     return waterEntry;
 };
 
-export const deleteWaterEntry = async (id: string) => {
-    const waterEntry = await WaterEntry.findByIdAndDelete(id);
+export const deleteWaterEntry = async (id: string, userId: string) => {
+    const waterEntry = await WaterEntry.findOneAndDelete({ _id: id, user: userId });
     return waterEntry;
 };
 
 export const getDailyWaterEntries = async (userId: string) => {
-    const date = new Date();
-    date.setHours(0, 0, 0, 0);
-    const entries = await WaterEntry.find({
-        user: userId,
-        date: { $gte: date, $lt: new Date(date.getTime() + 24 * 60 * 60 * 1000) }
-    });
-    return entries;
+    try {
+        if (!userId) {
+            return [];
+        }
+
+        const userObjectId = new ObjectId(userId);
+
+        const startOfDay = new Date();
+        startOfDay.setUTCHours(0, 0, 0, 0);
+
+        const endOfDay = new Date(startOfDay);
+        endOfDay.setUTCDate(startOfDay.getUTCDate() + 1);
+
+        const entries = await WaterEntry.find({
+            user: userObjectId,
+            date: { $gte: startOfDay, $lt: endOfDay }
+        }).exec();
+
+        return entries;
+    } catch (error) {
+        console.error('Error fetching daily water entries:', error);
+        return [];
+    }
 };
 
 export const getMonthlyWaterEntries = async (userId: string) => {
-    const date = new Date();
-    date.setDate(1);
-    date.setHours(0, 0, 0, 0);
-    const entries = await WaterEntry.find({
-        user: userId,
-        date: { $gte: date, $lt: new Date(date.getFullYear(), date.getMonth() + 1, 1) }
-    });
-    return entries;
-};
+    try {
+        const startDate = new Date();
+        startDate.setDate(1);
+        startDate.setHours(0, 0, 0, 0);
 
-export const getWaterEntryById = async (id: string) => {
-    const waterEntry = await WaterEntry.findById(id);
-    return waterEntry;
+        const endDate = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 1);
+
+        const entries = await WaterEntry.find({
+            user: userId,
+            date: { $gte: startDate, $lt: endDate }
+        }).exec();
+
+        return entries;
+    } catch (error) {
+        console.error('Error fetching monthly water entries:', error);
+        return [];
+    }
 };
