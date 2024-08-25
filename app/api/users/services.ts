@@ -8,6 +8,11 @@ interface IUser {
     email: string;
     password: string;
     token?: string;
+    gender?: 'woman' | 'man';
+    weight?: number;
+    activeTime?: number;
+    waterIntake?: number;
+    avatar?: string;
 }
 
 export const findUser = async (filter: FilterQuery<IUser>): Promise<IUser | null> => {
@@ -24,6 +29,6 @@ export const updateUser = async (
     filter: FilterQuery<IUser>,
     data: UpdateQuery<IUser>
 ): Promise<IUser | null> => {
-    const user = await User.findByIdAndUpdate(filter, data);
+    const user = await User.findByIdAndUpdate(filter, data, { new: true });
     return user;
 };

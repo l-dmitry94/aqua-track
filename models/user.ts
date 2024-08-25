@@ -6,6 +6,11 @@ const userSchema = new Schema(
         email: { type: String, unique: true, required: true },
         password: { type: String, required: true },
         token: { type: String, default: null },
+        gender: { type: String, enum: ['woman', 'man'], default: 'woman' },
+        weight: { type: Number, default: null },
+        activeTime: { type: Number, default: null },
+        waterIntake: { type: Number, default: null },
+        avatar: { type: String, default: null },
     },
     {
         timestamps: true,
