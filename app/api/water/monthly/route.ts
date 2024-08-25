@@ -4,15 +4,19 @@ import { getMonthlyWaterEntries } from '../services';
 
 export const GET = async (req: NextRequest) => {
     await connectMongoDB();
-    
-    const { searchParams } = new URL(req.url);
-    const userId = searchParams.get('userId');
 
-    if (!userId) {
-        return NextResponse.json({ message: 'User ID is required' }, { status: 400 });
+    const userHeader = req.headers.get('X-User');
+    if (!userHeader) {
+        return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     }
 
-    const entries = await getMonthlyWaterEntries(userId);
+    const user = JSON.parse(userHeader);
 
-    return NextResponse.json(entries);
+    try {
+        const entries = await getMonthlyWaterEntries(user._id);
+        return NextResponse.json(entries);
+    } catch (error) {
+        console.error('Error fetching monthly water entries:', error);
+        return NextResponse.json({ message: 'Error fetching data' }, { status: 500 });
+    }
 };

@@ -5,6 +5,11 @@ import { updateWaterEntry } from '../../services';
 export const PATCH = async (req: NextRequest, { params }: { params: { id: string } }) => {
     await connectMongoDB();
 
+    const userHeader = req.headers.get('X-User');
+    if (!userHeader) {
+        return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+    }
+
     const { id } = params;
     const { date, volume } = await req.json();
 

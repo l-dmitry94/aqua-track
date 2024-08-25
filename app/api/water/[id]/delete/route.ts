@@ -5,6 +5,11 @@ import { deleteWaterEntry } from '../../services';
 export const DELETE = async (req: NextRequest, { params }: { params: { id: string } }) => {
     await connectMongoDB();
 
+    const userHeader = req.headers.get('X-User');
+    if (!userHeader) {
+        return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+    }
+
     const { id } = params;
 
     if (!id) {
