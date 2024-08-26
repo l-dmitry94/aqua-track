@@ -1,0 +1,15 @@
+{
+    "apiFolder": "app/api",
+    "schemaFolders": ["models"],
+    "definition": {
+        "openapi": "3.0.1",
+        "info": {
+            "title": "Next Swagger API",
+            "version": "1.0"
+        },
+        "servers": [
+            { "url": "http://localhost:3000/api" },
+            { "url": "https://aqua-track-olive.vercel.app/api" }
+        ]
+    }
+}
