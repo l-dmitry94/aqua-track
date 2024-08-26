@@ -7,9 +7,9 @@ const userSchema = new Schema(
         password: { type: String, required: true },
         token: { type: String, default: null },
         gender: { type: String, enum: ['woman', 'man'], default: 'woman' },
-        weight: { type: Number, default: null },
-        activeTime: { type: Number, default: null },
-        waterIntake: { type: Number, default: null },
+        weight: { type: Number, default: 0 },
+        activeTime: { type: Number, default: 0 },
+        waterIntake: { type: Number, default: 1.8 },
         avatar: { type: String, default: null },
     },
     {

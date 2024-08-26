@@ -22,7 +22,7 @@ export const middleware = async (req: NextRequest) => {
         const response = NextResponse.next();
         response.headers.set(
             'X-User',
-            JSON.stringify({ email: user.email, name: user.name, _id: user._id })
+            JSON.stringify({ email: user.email, name: user.name, id: user._id })
         );
 
         return response;

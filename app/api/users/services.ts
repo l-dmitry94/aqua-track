@@ -32,3 +32,8 @@ export const updateUser = async (
     const user = await User.findByIdAndUpdate(filter, data, { new: true });
     return user;
 };
+
+export const allUsers = async (): Promise<IUser[]> => {
+    const users = await User.find();
+    return users;
+};

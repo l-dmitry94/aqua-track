@@ -23,7 +23,6 @@ export const PATCH = async (req: NextRequest) => {
     let avatarUrl = null;
 
     if (avatar) {
-        // Convert the file to a buffer
         const reader = avatar.stream().getReader();
         const chunks: Uint8Array[] = [];
         let done = false;
