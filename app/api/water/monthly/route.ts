@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
+
 import { connectMongoDB } from '@/lib/mongodb';
+
 import { getMonthlyWaterEntries } from '../services';
 
 export const GET = async (req: NextRequest) => {

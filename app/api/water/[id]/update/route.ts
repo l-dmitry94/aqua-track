@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
+
 import { connectMongoDB } from '@/lib/mongodb';
+
 import { updateWaterEntry } from '../../services';
 
 export const PATCH = async (req: NextRequest, { params }: { params: { id: string } }) => {
@@ -25,7 +27,10 @@ export const PATCH = async (req: NextRequest, { params }: { params: { id: string
     const updatedEntry = await updateWaterEntry(id, user.id, new Date(date), volume);
 
     if (!updatedEntry) {
-        return NextResponse.json({ message: 'Entry not found or user unauthorized' }, { status: 404 });
+        return NextResponse.json(
+            { message: 'Entry not found or user unauthorized' },
+            { status: 404 }
+        );
     }
 
     return NextResponse.json(updatedEntry, { status: 200 });

@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
+
 import { connectMongoDB } from '@/lib/mongodb';
+
 import { deleteWaterEntry } from '../../services';
 
 export const DELETE = async (req: NextRequest, { params }: { params: { id: string } }) => {

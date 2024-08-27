@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
+
 import { connectMongoDB } from '@/lib/mongodb';
+
 import { createWaterEntry } from '../services';
 
 export const POST = async (req: NextRequest) => {
@@ -15,7 +17,10 @@ export const POST = async (req: NextRequest) => {
     const { date, volume } = await req.json();
 
     if (!date || volume === undefined) {
-        return NextResponse.json({ message: 'Bad Request: Missing required fields' }, { status: 400 });
+        return NextResponse.json(
+            { message: 'Bad Request: Missing required fields' },
+            { status: 400 }
+        );
     }
 
     try {

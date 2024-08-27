@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import mongoose, { Document, Schema } from 'mongoose';
 
 interface IWaterEntry extends Document {
     user: mongoose.Types.ObjectId;
@@ -28,6 +28,7 @@ const waterSchema = new Schema<IWaterEntry>(
     }
 );
 
-const WaterEntry = mongoose.models.WaterEntry || mongoose.model<IWaterEntry>('WaterEntry', waterSchema);
+const WaterEntry =
+    mongoose.models.WaterEntry || mongoose.model<IWaterEntry>('WaterEntry', waterSchema);
 
 export default WaterEntry;

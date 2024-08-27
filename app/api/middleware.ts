@@ -32,9 +32,5 @@ export const middleware = async (req: NextRequest) => {
 };
 
 export const config = {
-    matcher: [
-        '/api/users/current',
-        '/api/users/logout',
-        '/api/water/:path*',
-    ],
+    matcher: ['/api/users/current', '/api/users/logout', '/api/water/:path*'],
 };

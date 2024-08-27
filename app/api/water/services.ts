@@ -1,5 +1,6 @@
-import WaterEntry from '@/models/water';
 import { ObjectId } from 'mongodb';
+
+import WaterEntry from '@/models/water';
 
 export const createWaterEntry = async (userId: string, date: Date, volume: number) => {
     const waterEntry = new WaterEntry({
@@ -40,7 +41,7 @@ export const getDailyWaterEntries = async (userId: string) => {
 
         const entries = await WaterEntry.find({
             user: userObjectId,
-            date: { $gte: startOfDay, $lt: endOfDay }
+            date: { $gte: startOfDay, $lt: endOfDay },
         }).exec();
 
         return entries;
@@ -60,7 +61,7 @@ export const getMonthlyWaterEntries = async (userId: string) => {
 
         const entries = await WaterEntry.find({
             user: userId,
-            date: { $gte: startDate, $lt: endDate }
+            date: { $gte: startDate, $lt: endDate },
         }).exec();
 
         return entries;
