@@ -1,20 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { connectMongoDB } from '@/lib/mongodb';
+import { authenticate } from '@/middlewares/authenticate';
 
 import cloudinary from '../../config/cloudinary';
 import { updateUser } from '../services';
 
 export const PATCH = async (req: NextRequest) => {
-    await connectMongoDB();
+    const user = await authenticate(req);
 
-    const userHeader = req.headers.get('X-User');
-
-    if (!userHeader) {
+    if (!user) {
         return NextResponse.json({ message: 'User not found' }, { status: 404 });
     }
 
-    const { id } = JSON.parse(userHeader);
+    const { _id } = user;
 
     const formData = await req.formData();
     const avatar = formData.get('avatar') as File;
@@ -45,22 +43,25 @@ export const PATCH = async (req: NextRequest) => {
 
         const uploadResponse = await new Promise<any>((resolve, reject) => {
             cloudinary.uploader
-                .upload_stream({ folder: 'aqua-track/avatars', public_id: id }, (error, result) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        resolve(result);
+                .upload_stream(
+                    { folder: 'aqua-track/avatars', public_id: _id },
+                    (error, result) => {
+                        if (error) {
+                            reject(error);
+                        } else {
+                            resolve(result);
+                        }
                     }
-                })
+                )
                 .end(buffer);
         });
 
         avatarUrl = uploadResponse.secure_url;
     }
 
-    const user = await updateUser({ _id: id }, { ...rest, avatar: avatarUrl });
+    const userData = await updateUser({ _id }, { ...rest, avatar: avatarUrl });
 
-    if (!user) {
+    if (!userData) {
         return NextResponse.json({ message: 'Failed to update user' }, { status: 500 });
     }
 
@@ -68,13 +69,13 @@ export const PATCH = async (req: NextRequest) => {
         {
             message: 'User updated successfully',
             user: {
-                name: user.name,
-                email: user.email,
-                gender: user.gender,
-                weight: user.weight,
-                activeTime: user.activeTime,
-                waterIntake: user.waterIntake,
-                avatar: user.avatar,
+                name: userData.name,
+                email: userData.email,
+                gender: userData.gender,
+                weight: userData.weight,
+                activeTime: userData.activeTime,
+                waterIntake: userData.waterIntake,
+                avatar: userData.avatar,
             },
         },
         { status: 200 }
