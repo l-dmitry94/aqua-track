@@ -1,23 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { connectMongoDB } from '@/lib/mongodb';
+import { authenticate } from '@/middlewares/authenticate';
 
 import { updateUser } from '../services';
 
 export const POST = async (req: NextRequest) => {
-    await connectMongoDB();
+    const user = await authenticate(req);
 
-    const userHeader = req.headers.get('X-User');
-
-    if (!userHeader) {
-        return NextResponse.json({ message: 'User not found' }, { status: 404 });
+    if (!user) {
+        return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     }
 
-    const { id } = JSON.parse(userHeader);
+    const { _id } = user;
 
     const token = null;
 
-    await updateUser({ _id: id }, { token });
+    await updateUser({ _id }, { token });
 
     return new NextResponse(null, { status: 204 });
 };
