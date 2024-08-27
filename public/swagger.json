@@ -13,7 +13,7 @@
         }
     ],
     "paths": {
-        "/api/users/login": {
+        "/users/login": {
             "post": {
                 "summary": "Login a user",
                 "tags": ["Users"],
@@ -80,7 +80,7 @@
                 }
             }
         },
-        "/api/users/register": {
+        "/users/register": {
             "post": {
                 "summary": "Register a new user",
                 "tags": ["Users"],
