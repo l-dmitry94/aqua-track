@@ -13,11 +13,11 @@ export const POST = async (req: NextRequest) => {
         return NextResponse.json({ message: 'User not found' }, { status: 404 });
     }
 
-    const { _id } = JSON.parse(userHeader);
+    const { id } = JSON.parse(userHeader);
 
     const token = null;
 
-    await updateUser({ _id }, { token });
+    await updateUser({ _id: id }, { token });
 
-    return NextResponse.json({ status: 204 });
+    return NextResponse.json(null, { status: 204 });
 };
