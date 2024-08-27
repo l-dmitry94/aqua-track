@@ -19,5 +19,5 @@ export const POST = async (req: NextRequest) => {
 
     await updateUser({ _id: id }, { token });
 
-    return NextResponse.json(null, { status: 204 });
+    return new NextResponse(null, { status: 204 });
 };
