@@ -18,6 +18,12 @@ export const PATCH = async (req: NextRequest) => {
 
     const formData = await req.formData();
     const avatar = formData.get('avatar') as File;
+    if (formData.getAll('avatar').length > 1) {
+        return NextResponse.json(
+            { message: 'Only one image can be uploaded for avatar' },
+            { status: 400 }
+        );
+    }
     const rest = Object.fromEntries(formData.entries());
 
     let avatarUrl = null;
