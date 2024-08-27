@@ -1,13 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-export const GET = async (req: NextRequest) => {
-    const userHeader = req.headers.get('X-User');
+import { authenticate } from '@/middlewares/authenticate';
 
-    if (!userHeader) {
-        return NextResponse.json({ message: 'User not found' }, { status: 404 });
+export const GET = async (req: NextRequest) => {
+    const user = await authenticate(req);
+
+    if (!user) {
+        return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     }
 
-    const { name, email } = JSON.parse(userHeader);
+    const { name, email } = user;
 
     return NextResponse.json(
         {
