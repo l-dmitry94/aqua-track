@@ -1,39 +1,17 @@
-import jwt from 'jsonwebtoken';
 import { NextRequest, NextResponse } from 'next/server';
 
+import { authenticate } from '../../../../../middlewares/authenticate';
 import { updateWaterEntry } from '../../services';
 
-interface JwtPayload {
-    id: string;
-}
-
-const SECRET_KEY: string = process.env.JWT_SECRET as string;
-
-const verifyToken = (token: string): Promise<JwtPayload> => {
-    return new Promise((resolve, reject) => {
-        jwt.verify(token, SECRET_KEY, (err, decoded) => {
-            if (err || !decoded) return reject(err);
-            resolve(decoded as JwtPayload);
-        });
-    });
-};
-
 export const PATCH = async (req: NextRequest, { params }: { params: { id: string } }) => {
-    const authHeader = req.headers.get('Authorization');
-    if (!authHeader) {
-        return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
-    }
+    const user = await authenticate(req);
 
-    const token = authHeader.replace('Bearer ', '');
-    let user: JwtPayload | null = null;
-
-    try {
-        user = await verifyToken(token);
-    } catch (error) {
+    if (!user) {
         return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     }
 
     const { id } = params;
+
     const { date, volume }: { date: string; volume: number } = await req.json();
 
     if (!id) {
@@ -45,7 +23,7 @@ export const PATCH = async (req: NextRequest, { params }: { params: { id: string
     }
 
     try {
-        const updatedEntry = await updateWaterEntry(id, user.id, new Date(date), volume);
+        const updatedEntry = await updateWaterEntry(id, user._id, new Date(date), volume);
         if (!updatedEntry) {
             return NextResponse.json(
                 { message: 'Entry not found or user unauthorized' },
