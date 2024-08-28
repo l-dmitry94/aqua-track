@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+import cloudinary from '@/lib/cloudinary';
 import { authenticate } from '@/middlewares/authenticate';
 
-import cloudinary from '../../config/cloudinary';
 import { updateUser } from '../services';
 
 export const PATCH = async (req: NextRequest) => {
