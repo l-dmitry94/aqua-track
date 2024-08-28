@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.1",
     "info": {
-        "title": "Next Swagger API",
+        "title": "Next Swagger API Aqua-Track",
         "version": "1.0"
     },
     "servers": [
@@ -12,21 +12,78 @@
             "url": "https://aqua-track-olive.vercel.app/api"
         }
     ],
-    "tags": [
-        {
-            "name": "User",
-            "description": "User endpoints"
-        },
-        {
-            "name": "Water",
-            "description": "Water metering operations"
-        }
-    ],
     "paths": {
+        "/users/login": {
+            "post": {
+                "summary": "Login a user",
+                "tags": ["Users"],
+                "requestBody": {
+                    "description": "User login credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "john.doe@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password123"
+                                    }
+                                },
+                                "required": ["email", "password"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User logged in successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "user": {
+                                            "type": "object",
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "email": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        },
+                                        "token": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Email or password is wrong"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
         "/users/register": {
             "post": {
                 "summary": "Register a new user",
-                "tags": ["User"],
+                "tags": ["Users"],
                 "requestBody": {
                     "description": "User registration information",
                     "required": true,
@@ -49,7 +106,8 @@
                                         "format": "password",
                                         "example": "password123"
                                     }
-                                }
+                                },
+                                "required": ["name", "email", "password"]
                             }
                         }
                     }
@@ -97,5 +155,6 @@
             }
         }
     },
-    "components": {}
+    "components": {},
+    "tags": []
 }
