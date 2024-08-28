@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { authenticate } from '../../../../middlewares/authenticate';
+import { authenticate } from '@/middlewares/authenticate';
 import { getMonthlyWaterEntries } from '../services';
 
 export const GET = async (req: NextRequest) => {

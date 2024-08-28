@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { authenticate } from '../../../../../middlewares/authenticate';
+import { authenticate } from '@/middlewares/authenticate';
 import { updateWaterEntry } from '../../services';
 
 export const PATCH = async (req: NextRequest, { params }: { params: { id: string } }) => {

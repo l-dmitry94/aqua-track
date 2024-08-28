@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { authenticate } from '../../../../../middlewares/authenticate';
+import { authenticate } from '@/middlewares/authenticate';
 import { deleteWaterEntry } from '../../services';
 
 export const DELETE = async (req: NextRequest, { params }: { params: { id: string } }) => {

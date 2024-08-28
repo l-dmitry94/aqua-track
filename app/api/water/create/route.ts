@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { authenticate } from '../../../../middlewares/authenticate';
+import { authenticate } from '@/middlewares/authenticate';
 import { createWaterEntry } from '../services';
 
 export const POST = async (req: NextRequest) => {
