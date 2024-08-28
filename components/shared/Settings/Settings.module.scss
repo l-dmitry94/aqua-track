@@ -1,0 +1,7 @@
+.imageWrapper {
+    @apply flex h-[100px] w-[100px] items-end justify-center overflow-hidden rounded-full bg-slate-500;
+}
+
+.image {
+    @apply h-auto w-auto object-cover;
+}
