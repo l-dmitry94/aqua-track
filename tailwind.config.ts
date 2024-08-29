@@ -17,6 +17,7 @@ const config: Config = {
                 },
                 white: '#ffffff',
                 gray: '#f0eff4',
+                error: '#ef5050',
             },
             letterSpacing: {
                 tight: '-0.01em',

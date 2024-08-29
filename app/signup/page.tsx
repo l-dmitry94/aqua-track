@@ -1,7 +1,7 @@
-export interface SignUpPage {}
+import SignUp from '@/components/shared/Auth/SignUp';
 
-const SignUpPage = ({}: SignUpPage) => {
-    return <div>SignUp</div>;
+const SignUpPage = () => {
+    return <SignUp />;
 };
 
 export default SignUpPage;
