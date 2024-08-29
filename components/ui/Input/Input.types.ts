@@ -1,10 +1,13 @@
-interface InputProps {
-    type: string;
-    placeholder: string;
-    name: string;
-    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    onBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
-    value: string;
-}
+import { HTMLInputTypeAttribute, InputHTMLAttributes } from 'react';
+import { FieldErrors, UseFormRegister } from 'react-hook-form';
 
-export type { InputProps };
+import { FormValues, NameValues } from '../Form/Form.types';
+
+export interface IInput extends InputHTMLAttributes<HTMLInputElement> {
+    name: NameValues;
+    type: HTMLInputTypeAttribute;
+    register: UseFormRegister<FormValues>;
+    errors: FieldErrors<FormValues>;
+    label: string;
+    placeholder: string;
+}

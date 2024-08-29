@@ -1,0 +1,31 @@
+.inputWrapper {
+    @apply relative;
+}
+
+.label {
+    @apply mb-2 inline-block text-base font-bold leading-normal tracking-tight text-secondary;
+}
+
+.input {
+    @apply flex h-[50px] w-full justify-center rounded-2xl border border-secondary/20 bg-transparent px-4 outline-none transition-colors duration-200 ease-linear;
+
+    &:focus {
+        @apply border-secondary/40;
+    }
+
+    &.errorInput {
+        @apply border-error;
+    }
+}
+
+.passwordButton {
+    @apply absolute right-2 top-1/2 -translate-y-1/2 outline-none;
+}
+
+.passwordIcon {
+    @apply h-5 w-5 fill-none stroke-secondary;
+}
+
+.error {
+    @apply text-error text-sm leading-[1.29] tracking-tight mt-[10px];
+}

@@ -1,10 +1,13 @@
+'use client';
+
 import { FC } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Box } from '@mui/material';
 
-import { FormValues, UserForm } from './Form.types';
+import { FormValues, IForm } from './Form.types';
 
-const Form: FC<UserForm> = ({ validationSchema, operation, children }) => {
+const Form: FC<IForm> = ({ validationSchema, operation, children }) => {
     const {
         register,
         handleSubmit,
@@ -14,10 +17,15 @@ const Form: FC<UserForm> = ({ validationSchema, operation, children }) => {
     });
 
     const onSubmit: SubmitHandler<FormValues> = (data) => {
+        console.log(data);
         operation(data);
     };
 
-    return <form onSubmit={handleSubmit(onSubmit)}>{children(register, errors)}</form>;
+    return (
+        <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+            {children(register, errors)}
+        </Box>
+    );
 };
 
 export default Form;

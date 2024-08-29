@@ -8,14 +8,14 @@ export interface UserLogin {
 }
 
 export interface UserRegister extends UserLogin {
-    name: string;
+    repeatPassword: string;
 }
 
 export type FormValues = UserLogin & UserRegister;
 export type NameValues = keyof UserLogin & keyof UserRegister;
 
-export interface UserForm {
+export interface IForm {
     validationSchema?: yup.AnyObjectSchema;
-    operation: (data: FormValues) => Promise<void>;
+    operation: (data: FormValues) => Promise<void> | any;
     children: (register: UseFormRegister<FormValues>, errors: FieldErrors<FormValues>) => ReactNode;
 }
