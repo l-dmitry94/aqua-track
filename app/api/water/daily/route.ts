@@ -1,27 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { connectMongoDB } from '@/lib/mongodb';
+import { authenticate } from '@/middlewares/authenticate';
 
 import { getDailyWaterEntries } from '../services';
 
 export const GET = async (req: NextRequest) => {
-    await connectMongoDB();
+    const user = await authenticate(req);
 
-    const userHeader = req.headers.get('X-User');
-
-    if (!userHeader) {
+    if (!user) {
         return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     }
 
     try {
-        const user = JSON.parse(userHeader);
-        const userId = user.id;
-
-        if (!userId) {
-            return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
-        }
-
-        const entries = await getDailyWaterEntries(userId);
+        const entries = await getDailyWaterEntries(user._id);
         return NextResponse.json(entries);
     } catch (error) {
         console.error('Error fetching daily water entries:', error);
