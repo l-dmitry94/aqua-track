@@ -23,7 +23,7 @@ const SignUp = () => {
             </Typography>
 
             <Form validationSchema={validationSchema} operation={() => {}}>
-                {(register, errors) => (
+                {(register, control, errors) => (
                     <>
                         <Box component="div" className={scss.wrapper}>
                             {fields.map(({ type, name, placeholder, label }) => (

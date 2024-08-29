@@ -7,7 +7,7 @@ export interface IInput extends InputHTMLAttributes<HTMLInputElement> {
     name: NameValues;
     type: HTMLInputTypeAttribute;
     register: UseFormRegister<FormValues>;
-    errors: FieldErrors<FormValues>;
+    errors?: FieldErrors<FormValues>;
     label: string;
     placeholder: string;
 }

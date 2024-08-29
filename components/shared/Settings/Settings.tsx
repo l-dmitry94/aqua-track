@@ -1,60 +1,46 @@
 'use client';
-import { useState } from 'react';
-import { Box } from '@mui/material';
-import Image from 'next/image';
 
-import Icon from '@/components/ui/Icon';
+import { Box } from '@mui/material';
+
+import Button from '@/components/ui/Button';
+import Form from '@/components/ui/Form';
 import Title from '@/components/ui/Title';
-import { defaultImage } from '@/public/images/settings';
+
+import AdditionalInfo from './AdditionalInfo';
+import DailyNorma from './DailyNorma';
+import GenderIdentity from './GenderIdentity';
+import ProfileData from './ProfileData';
+import UploadImage from './UploadImage';
 
 import scss from './Settings.module.scss';
 
 const Settings = () => {
-    const [preview, setPreview] = useState<string | null>(null);
-
-    const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0];
-        if (file) {
-            const previewURL = URL.createObjectURL(file);
-            setPreview(previewURL);
-        } else {
-            setPreview(null);
-        }
-    };
-
     return (
-        <Box component="div" className={scss.settings}>
-            <Title className={scss.title}>Settings</Title>
+        <Form operation={() => {}}>
+            {(register, control, errors) => (
+                <Box component="div" className={scss.settings}>
+                    <Title className={scss.title}>Settings</Title>
 
-            <Box component="div">
-                <Box component="div" className={scss.imageWrapper}>
-                    <Image
-                        src={preview || defaultImage}
-                        width={100}
-                        height={100}
-                        alt="User Image"
-                        priority
-                        className={scss.image}
-                    />
-                </Box>
-                <Box component="label" htmlFor="upload">
-                    <Icon variant="upload" className={scss.uploadIcon} />
-                    Upload a photo
-                    <input
-                        type="file"
-                        accept="image/*"
-                        hidden
-                        onChange={onFileChange}
-                        id="upload"
-                    />
-                </Box>
-            </Box>
+                    <UploadImage register={register} />
 
-            <Box component="div">
-                <Box component="div"></Box>
-                <Box component="div"></Box>
-            </Box>
-        </Box>
+                    <Box component="div">
+                        <Box component="div">
+                            <GenderIdentity control={control} />
+                            <ProfileData register={register} errors={errors} />
+                            <DailyNorma />
+                        </Box>
+
+                        <Box component="div">
+                            <AdditionalInfo />
+                        </Box>
+                    </Box>
+
+                    <Button type="submit" variant="contained">
+                        Save
+                    </Button>
+                </Box>
+            )}
+        </Form>
     );
 };
 
