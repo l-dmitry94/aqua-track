@@ -1,0 +1,25 @@
+@import 'styles/mixins';
+
+.auth {
+    @apply h-screen w-screen py-4;
+}
+
+.container {
+    @apply h-full max-w-screen-tablet;
+}
+
+.wrapper {
+    @apply relative h-full rounded-[30px] bg-gray px-4 py-6;
+}
+
+.link {
+    @apply text-lg font-bold uppercase leading-[1.11] tracking-tight;
+}
+
+.content {
+    @apply w-full absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 px-4 max-w-[311px];
+
+    @include media-rules(tablet) {
+        @apply max-w-[436px];
+    }
+}

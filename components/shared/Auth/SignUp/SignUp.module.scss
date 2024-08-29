@@ -1,0 +1,20 @@
+.title {
+    @apply mb-8 text-[2rem] font-bold leading-none tracking-tight;
+}
+
+.wrapper {
+    @apply mb-8 flex flex-col gap-4;
+}
+
+.button {
+    @apply mb-4;
+}
+
+.linkWrapper {
+    @apply text-center text-sm leading-[1.29] tracking-tight text-secondary/50;
+}
+
+.link {
+    @apply font-bold underline text-secondary;
+    text-decoration-skip-ink: none;
+}
