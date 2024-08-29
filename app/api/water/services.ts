@@ -25,7 +25,7 @@ export const deleteWaterEntry = async (id: string, userId: string) => {
     return waterEntry;
 };
 
-export const getDailyWaterEntries = async (userId: string) => {
+export const getDailyWaterEntries = async (userId: string, selectedDate?: string) => {
     try {
         if (!userId) {
             return [];
@@ -33,7 +33,7 @@ export const getDailyWaterEntries = async (userId: string) => {
 
         const userObjectId = new ObjectId(userId);
 
-        const startOfDay = new Date();
+        const startOfDay = selectedDate ? new Date(selectedDate) : new Date();
         startOfDay.setUTCHours(0, 0, 0, 0);
 
         const endOfDay = new Date(startOfDay);
@@ -50,6 +50,8 @@ export const getDailyWaterEntries = async (userId: string) => {
         return [];
     }
 };
+
+
 
 export const getMonthlyWaterEntries = async (userId: string) => {
     try {
