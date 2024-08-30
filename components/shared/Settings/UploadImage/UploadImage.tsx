@@ -23,7 +23,7 @@ const UploadImage: FC<IUploadImage> = ({ register }) => {
         }
     };
     return (
-        <Box component="div">
+        <Box component="div" className={scss.wrapper}>
             <Box component="div" className={scss.imageWrapper}>
                 <Image
                     src={preview || defaultImage}
@@ -34,7 +34,7 @@ const UploadImage: FC<IUploadImage> = ({ register }) => {
                     className={clsx(scss.defaultImage, preview && scss.image)}
                 />
             </Box>
-            <Box component="label" htmlFor="upload">
+            <Box component="label" htmlFor="upload" className={scss.label}>
                 <Icon variant="upload" className={scss.uploadIcon} />
                 Upload a photo
                 <input

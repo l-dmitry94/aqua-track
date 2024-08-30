@@ -1,11 +1,23 @@
+.wrapper {
+    @apply flex flex-col items-center justify-center mb-10;
+}
+
 .imageWrapper {
-    @apply flex h-[100px] w-[100px] items-end justify-center overflow-hidden rounded-full bg-slate-500;
+    @apply mb-[10px] flex h-[75px] w-[75px] items-end justify-center overflow-hidden rounded-full bg-[#f0eff4];
 }
 
 .defaultImage {
-    @apply w-auto h-auto object-cover
+    @apply h-auto w-auto object-cover;
 }
 
 .image {
     @apply h-full w-full;
+}
+
+.label {
+    @apply flex items-center gap-2 text-sm leading-[1.29] tracking-tight text-secondary;
+}
+
+.uploadIcon {
+    @apply h-[18px] w-[18px] fill-none stroke-secondary;
 }

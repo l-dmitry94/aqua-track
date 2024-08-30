@@ -7,11 +7,11 @@ import Input from '@/components/ui/Input';
 import fields from './fields';
 import { IProfileData } from './ProfileData.types';
 
-// import scss from './ProfileData.module.scss';
+import scss from './ProfileData.module.scss';
 
 const ProfileData: FC<IProfileData> = ({ register, errors }) => {
     return (
-        <Box component="div">
+        <Box component="div" className={scss.wrapper}>
             {fields.map(({ name, type, label, placeholder }) => (
                 <Input
                     key={name}

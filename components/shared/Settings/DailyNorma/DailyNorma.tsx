@@ -6,17 +6,19 @@ import scss from './DailyNorma.module.scss';
 
 const DailyNorma = () => {
     return (
-        <Box component="div">
-            <Typography variant="h3">My daily norma</Typography>
+        <Box component="div" className={scss.dailyNorma}>
+            <Typography variant="h3" className={scss.title}>
+                My daily norma
+            </Typography>
 
-            <List>
-                <ListItem>
-                    <ListItemText>For woman:</ListItemText>
-                    <ListItemText>V=(M*0,03) + (T*0,4)</ListItemText>
+            <List className={scss.list}>
+                <ListItem disablePadding className={scss.listItem}>
+                    <ListItemText className={scss.listItemTextLabel}>For woman:</ListItemText>
+                    <ListItemText className={scss.listItemText}>V=(M*0,03) + (T*0,4)</ListItemText>
                 </ListItem>
-                <ListItem>
-                    <ListItemText>For man:</ListItemText>
-                    <ListItemText>V=(M*0,04) + (T*0,6)</ListItemText>
+                <ListItem disablePadding className={scss.listItem}>
+                    <ListItemText className={scss.listItemTextLabel}>For man:</ListItemText>
+                    <ListItemText className={scss.listItemText}>V=(M*0,04) + (T*0,6)</ListItemText>
                 </ListItem>
             </List>
 
@@ -29,9 +31,11 @@ const DailyNorma = () => {
                 (in the absence of these, you must set 0)
             </Typography>
 
-            <Box component="div">
-                <Icon variant="exclamation" />
-                <Typography variant="body2">Active time in hours</Typography>
+            <Box component="div" className={scss.activeTime}>
+                <Icon variant="exclamation" className={scss.icon} />
+                <Typography variant="body2" className={scss.text}>
+                    Active time in hours
+                </Typography>
             </Box>
         </Box>
     );

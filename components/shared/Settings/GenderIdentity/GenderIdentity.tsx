@@ -4,18 +4,50 @@ import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@mu
 
 import { IGenderIdentity } from './GenderIdentity.types';
 
+import scss from './GenderIdentity.module.scss';
+
 const GenderIdentity: FC<IGenderIdentity> = ({ control }) => {
     return (
-        <FormControl component="fieldset">
-            <FormLabel>Your gender identity</FormLabel>
+        <FormControl component="fieldset" className={scss.formControl}>
+            <FormLabel className={scss.label}>Your gender identity</FormLabel>
             <Controller
                 name="gender"
                 control={control}
                 defaultValue="woman"
                 render={({ field }) => (
-                    <RadioGroup row {...field}>
-                        <FormControlLabel value="woman" control={<Radio />} label="Woman" />
-                        <FormControlLabel value="man" control={<Radio />} label="Man" />
+                    <RadioGroup row {...field} className={scss.radioGroup}>
+                        <FormControlLabel
+                            value="woman"
+                            control={
+                                <Radio
+                                    sx={{
+                                        color: '#9BE1A0',
+                                        '&.Mui-checked': {
+                                            color: '#9BE1A0',
+                                        },
+                                    }}
+                                    className={scss.radioButton}
+                                />
+                            }
+                            className={scss.radio}
+                            label="Woman"
+                        />
+                        <FormControlLabel
+                            value="man"
+                            control={
+                                <Radio
+                                    sx={{
+                                        color: '#9BE1A0',
+                                        '&.Mui-checked': {
+                                            color: '#9BE1A0',
+                                        },
+                                    }}
+                                    className={scss.radioButton}
+                                />
+                            }
+                            className={scss.radio}
+                            label="Man"
+                        />
                     </RadioGroup>
                 )}
             />

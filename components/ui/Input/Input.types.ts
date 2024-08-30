@@ -10,4 +10,5 @@ export interface IInput extends InputHTMLAttributes<HTMLInputElement> {
     errors?: FieldErrors<FormValues>;
     label: string;
     placeholder: string;
+    light?: boolean;
 }
