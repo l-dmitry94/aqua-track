@@ -378,6 +378,28 @@
                     }
                 }
             }
+        },
+        "/users/logout": {
+            "post": {
+                "summary": "Logout user",
+                "tags": ["Users"],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "description": "User information about logout"
+                },
+                "responses": {
+                    "204": {
+                        "description": "User logout successfully"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
         }
     }
 }
