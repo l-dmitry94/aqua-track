@@ -11,6 +11,7 @@ const Form: FC<IForm> = ({ validationSchema, operation, children }) => {
     const {
         register,
         handleSubmit,
+        control,
         formState: { errors },
     } = useForm<FormValues>({
         resolver: validationSchema && yupResolver(validationSchema),
@@ -23,7 +24,7 @@ const Form: FC<IForm> = ({ validationSchema, operation, children }) => {
 
     return (
         <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-            {children(register, errors)}
+            {children(register, control, errors)}
         </Box>
     );
 };

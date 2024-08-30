@@ -1,0 +1,47 @@
+.title {
+    @apply mb-[14px] font-sans text-base font-bold leading-[1.25] tracking-tight text-primary;
+}
+
+.list {
+    @apply mb-[14px] flex flex-col gap-3;
+}
+
+.listItem {
+    @apply block;
+}
+
+.listItemTextLabel {
+    @apply m-0 mb-1;
+
+    & span {
+        @apply font-sans text-sm leading-[1.29] tracking-tight text-secondary;
+    }
+}
+
+.listItemText {
+    @apply m-0 text-sm font-bold leading-[1.29] tracking-tight;
+
+    & span {
+        @apply font-sans text-sm font-bold leading-[1.29] tracking-tight text-green;
+    }
+}
+
+.description {
+    @apply p-4 border border-secondary/15 rounded-2xl text-sm  leading-[1.29] tracking-tight text-secondary/60 mb-[14px] font-sans;
+
+    & .asterisk {
+        @apply text-green
+    }
+}
+
+.activeTime {
+    @apply flex items-center gap-1;
+}
+
+.icon {
+    @apply w-[18px] h-[18px] fill-green;
+}
+
+.text {
+    @apply font-sans text-sm leading-[1.29] tracking-tight text-secondary;
+}

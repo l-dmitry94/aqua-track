@@ -9,7 +9,7 @@ import { IInput } from './Input.types';
 
 import scss from './Input.module.scss';
 
-const Input: FC<IInput> = ({ register, name, type, placeholder, label, errors }) => {
+const Input: FC<IInput> = ({ register, name, type, placeholder, label, light, errors }) => {
     const [showPassword, setShowPassword] = useState(false);
 
     const togglePassword = () => {
@@ -18,7 +18,11 @@ const Input: FC<IInput> = ({ register, name, type, placeholder, label, errors })
 
     return (
         <Box component="div" className={scss.wrapper}>
-            <Box component="label" htmlFor={name} id={name} className={scss.label}>
+            <Box
+                component="label"
+                htmlFor={name}
+                className={clsx(scss.label, light && scss.lightLabel)}
+            >
                 {label}
             </Box>
             <Box component="div" className={scss.inputWrapper}>
@@ -27,7 +31,8 @@ const Input: FC<IInput> = ({ register, name, type, placeholder, label, errors })
                     {...register(name)}
                     placeholder={placeholder}
                     id={name}
-                    className={clsx(scss.input, errors[name] && scss.errorInput)}
+                    autoComplete={type === 'password' ? 'current-password' : 'off'}
+                    className={clsx(scss.input, errors?.[name] && scss.errorInput)}
                 />
 
                 {type === 'password' && (
@@ -44,7 +49,7 @@ const Input: FC<IInput> = ({ register, name, type, placeholder, label, errors })
                 )}
             </Box>
 
-            {errors[name] && <p className={scss.error}>{errors[name]?.message}</p>}
+            {errors?.[name] && <p className={scss.error}>{errors?.[name]?.message}</p>}
         </Box>
     );
 };
