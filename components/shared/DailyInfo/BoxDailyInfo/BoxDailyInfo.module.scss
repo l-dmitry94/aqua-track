@@ -1,0 +1,9 @@
+@import 'styles/mixins';
+
+.wrapper {
+    @apply py-10 pl-5;
+}
+
+.topBox {
+    @apply flex flex-row justify-between;
+}
