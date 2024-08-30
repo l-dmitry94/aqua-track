@@ -19,10 +19,6 @@ export const PATCH = async (req: NextRequest, { params }: { params: { id: string
         return NextResponse.json({ message: 'Entry ID is required' }, { status: 400 });
     }
 
-    if (!date || volume === undefined) {
-        return NextResponse.json({ message: 'Date and volume are required' }, { status: 400 });
-    }
-
     try {
         const updatedEntry = await updateWaterEntry(id, user._id, new Date(date), volume);
         if (!updatedEntry) {

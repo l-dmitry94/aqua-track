@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
+
 import { authenticate } from '@/middlewares/authenticate';
+
 import { getDailyWaterEntries } from '../services';
 
 export const POST = async (req: NextRequest) => {

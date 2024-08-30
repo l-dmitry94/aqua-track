@@ -51,8 +51,6 @@ export const getDailyWaterEntries = async (userId: string, selectedDate?: string
     }
 };
 
-
-
 export const getMonthlyWaterEntries = async (userId: string) => {
     try {
         const startDate = new Date();
