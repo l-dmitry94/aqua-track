@@ -24,7 +24,6 @@ export const DELETE = async (req: NextRequest, { params }: { params: { id: strin
         }
         return NextResponse.json({ message: 'Entry deleted successfully' }, { status: 200 });
     } catch (error) {
-        console.error('Error deleting water entry:', error);
         return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
     }
 };

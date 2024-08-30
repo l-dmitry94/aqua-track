@@ -24,7 +24,6 @@ export const POST = async (req: NextRequest) => {
         const waterEntry = await createWaterEntry(user._id, new Date(date), volume);
         return NextResponse.json(waterEntry, { status: 201 });
     } catch (error) {
-        console.error('Error creating water entry:', error);
         return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
     }
 };

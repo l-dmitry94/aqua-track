@@ -29,7 +29,6 @@ export const PATCH = async (req: NextRequest, { params }: { params: { id: string
         }
         return NextResponse.json(updatedEntry, { status: 200 });
     } catch (error) {
-        console.error('Error updating water entry:', error);
         return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
     }
 };

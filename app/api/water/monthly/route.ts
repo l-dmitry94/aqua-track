@@ -15,7 +15,6 @@ export const GET = async (req: NextRequest) => {
         const entries = await getMonthlyWaterEntries(user._id);
         return NextResponse.json(entries);
     } catch (error) {
-        console.error('Error fetching monthly water entries:', error);
         return NextResponse.json({ message: 'Error fetching data' }, { status: 500 });
     }
 };
