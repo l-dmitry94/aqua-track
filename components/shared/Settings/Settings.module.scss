@@ -1,0 +1,11 @@
+.settings {
+   @apply px-5 py-10 rounded-2xl bg-white;
+}
+
+.titleSettings {
+    @apply mb-5
+}
+
+.wrapper {
+    @apply flex flex-col gap-6 mb-10
+}
