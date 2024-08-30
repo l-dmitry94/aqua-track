@@ -1,9 +1,29 @@
 @import 'styles/mixins';
 
 .wrapper {
-    @apply py-10 pl-5;
+    @apply py-10 pl-5 font-sans text-primary;
 }
 
 .topBox {
-    @apply flex flex-row justify-between;
+    @apply flex flex-row justify-between pb-6 align-baseline;
+}
+
+.h2 {
+    @apply text-xl font-bold;
+
+    @include media-rules(tablet) {
+        @apply text-[28px];
+    }
+}
+
+.list {
+    @apply flex flex-row flex-nowrap gap-2;
+
+    @include media-rules(tablet) {
+        @apply gap-8;
+    }
+
+    @include media-rules(desktop) {
+        @apply gap-4;
+    }
 }

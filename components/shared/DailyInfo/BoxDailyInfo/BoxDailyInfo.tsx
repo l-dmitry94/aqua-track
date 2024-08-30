@@ -1,41 +1,41 @@
 import React from 'react';
-import { Box, Button, List, ListItem, ListItemText, Typography } from '@mui/material';
+import { Box, List, Typography } from '@mui/material';
 
 import { formatDate, isToday } from '@/helpers/getDate';
 
 import data from '../data.json';
 
-import scss from './BoxDailyInfo.module.scss';
 // import { DailyInfoTypes } from '../types';
+import ButtonWater from './ButtonWater';
+import ItemListDailyInfo from './ItemListDailyInfo';
 
-const MySection: React.FC = () => {
+import scss from './BoxDailyInfo.module.scss';
+
+const BoxDailyInfo: React.FC = () => {
     const dateObj = new Date(data.date);
     const displayDate = isToday(dateObj) ? 'Today' : formatDate(dateObj);
+
+    const items = Object.entries(data.item).map(([key, value]) => ({
+        key,
+        value,
+    }));
     return (
         <Box component="div" className={scss.wrapper}>
             <Box component="div" className={scss.topBox}>
-                <Typography variant="h4" component="h2">
+                <Typography component="h3" className={scss.h2}>
                     {displayDate}
                 </Typography>
 
-                <Button variant="contained" color="primary" sx={{ mb: 2 }}>
-                    Натисніть Мене
-                </Button>
+                <ButtonWater />
             </Box>
 
-            <List>
-                <ListItem>
-                    <ListItemText primary="Елемент 1" />
-                </ListItem>
-                <ListItem>
-                    <ListItemText primary="Елемент 2" />
-                </ListItem>
-                <ListItem>
-                    <ListItemText primary="Елемент 3" />
-                </ListItem>
+            <List className={scss.list}>
+                {items.map(({ key, value }) => (
+                    <ItemListDailyInfo key={key} dataItem={{ key, value }} />
+                ))}
             </List>
         </Box>
     );
 };
 
-export default MySection;
+export default BoxDailyInfo;
