@@ -2,10 +2,14 @@
 
 .wrapper {
     @apply py-10 pl-5 font-sans text-primary;
+
+    @include media-rules(tablet) {
+        @apply px-8;
+    }
 }
 
 .topBox {
-    @apply flex flex-row justify-between pb-6 align-baseline;
+    @apply flex flex-row justify-between pb-6 pr-5 align-baseline;
 }
 
 .h2 {

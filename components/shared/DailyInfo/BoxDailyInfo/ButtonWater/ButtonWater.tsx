@@ -9,7 +9,7 @@ import scss from './ButtonWater.module.scss';
 
 const ButtonWater = () => {
     return (
-        <Button color="primary" className={scss.waterBtn}>
+        <Button className={scss.waterBtn}>
             <Icon variant={'plus'} className={scss.svg} />
             <Typography component="p" className={scss.text}>
                 Add water

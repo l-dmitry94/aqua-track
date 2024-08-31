@@ -1,6 +1,8 @@
+'use client';
 import React from 'react';
 import { Box, List, Typography } from '@mui/material';
 
+import CustomScrollBar from '@/components/ui/Scrollbar/Srollbar';
 import { formatDate, isToday } from '@/helpers/getDate';
 
 import data from '../data.json';
@@ -28,12 +30,13 @@ const BoxDailyInfo: React.FC = () => {
 
                 <ButtonWater />
             </Box>
-
-            <List className={scss.list}>
-                {items.map(({ key, value }) => (
-                    <ItemListDailyInfo key={key} dataItem={{ key, value }} />
-                ))}
-            </List>
+            <CustomScrollBar style={{ maxWidth: '100%', height: 'auto' }}>
+                <List className={scss.list}>
+                    {items.map(({ key, value }) => (
+                        <ItemListDailyInfo key={key} dataItem={{ key, value }} />
+                    ))}
+                </List>
+            </CustomScrollBar>
         </Box>
     );
 };
