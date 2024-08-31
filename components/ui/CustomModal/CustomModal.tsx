@@ -9,7 +9,7 @@ import scss from './CustomModal.module.scss';
 
 interface CustomModalProps {
     open: boolean;
-    handleClose: () => void;
+    onClose: () => void;
     title: string;
     children: ReactNode;
     variant?: 'primary' | 'secondary';
@@ -17,7 +17,7 @@ interface CustomModalProps {
 
 const CustomModal: FC<CustomModalProps> = ({
     open,
-    handleClose,
+    onClose,
     title,
     children,
     variant = 'primary',
@@ -25,7 +25,7 @@ const CustomModal: FC<CustomModalProps> = ({
     return (
         <Modal
             open={open}
-            onClose={handleClose}
+            onClose={onClose}
             aria-labelledby="modal-title"
             aria-describedby="modal-content"
             closeAfterTransition
@@ -38,11 +38,7 @@ const CustomModal: FC<CustomModalProps> = ({
         >
             <Fade in={open}>
                 <Box className={clsx(scss.modalBox, scss[variant])}>
-                    <IconButton
-                        className={scss.closeButton}
-                        onClick={handleClose}
-                        aria-label="Close"
-                    >
+                    <IconButton className={scss.closeButton} onClick={onClose} aria-label="Close">
                         <Icon variant="close" />
                     </IconButton>
                     <Typography id="modal-title" className={scss.title} component="h2">
@@ -51,7 +47,7 @@ const CustomModal: FC<CustomModalProps> = ({
                     <div id="modal-content" className={scss.content}>
                         {children}
                     </div>
-                    <Button variant="contained" onClick={handleClose} className={scss.button}>
+                    <Button variant="contained" onClick={onClose} className={scss.button}>
                         Save
                     </Button>
                 </Box>

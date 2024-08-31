@@ -1,7 +1,7 @@
 @import 'styles/mixins';
 
 .modalBox {
-    @apply absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white outline-none shadow-2xl rounded-lg max-w-lg w-full;
+    @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white outline-none shadow-2xl rounded-[15px] max-w-lg w-full;
 }
 
 .primary {
@@ -17,7 +17,7 @@
 }
 
 .closeButton {
-    @apply absolute top-2 right-3 stroke-black z-10 w-4 p-0;
+    @apply absolute top-5 right-4 stroke-secondary;
 }
 
 .content {
