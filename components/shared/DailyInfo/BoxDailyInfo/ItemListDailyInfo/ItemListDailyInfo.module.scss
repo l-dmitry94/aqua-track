@@ -1,7 +1,7 @@
 @import 'styles/mixins';
 
 .item {
-    @apply flex max-w-[149px] flex-row gap-[10px] rounded-[15px] bg-white px-[14px] py-[18px];
+    @apply flex max-w-[149px] select-none flex-row gap-[10px] rounded-[15px] bg-white px-[14px] py-[18px];
 
     @include media-rules(tablet) {
         @apply min-w-[190px] gap-5 px-5 py-5;
@@ -49,7 +49,7 @@
 }
 
 .svg {
-    @apply size-[14px] fill-none stroke-primary;
+    @apply size-[14px] fill-none stroke-primary transition-colors duration-300 ease-linear;
 
     &:is(:hover, :focus) {
         @apply stroke-green;

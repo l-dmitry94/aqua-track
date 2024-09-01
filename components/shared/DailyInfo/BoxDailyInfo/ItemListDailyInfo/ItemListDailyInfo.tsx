@@ -10,14 +10,14 @@ import { ItemListDailyInfoProps } from './types';
 import scss from './ItemListDailyInfo.module.scss';
 
 const ItemListDailyInfo: React.FC<ItemListDailyInfoProps> = ({ dataItem }) => {
-    const { value, time } = dataItem.value;
+    const { volume, time } = dataItem;
     return (
         <ListItem className={scss.item}>
             <Image width={44} height={45} src={waterGlassImage} alt="Water glass" />
             <Box component="div" className={scss.wrapper}>
                 <Box component="div" className={scss.wrapperInfo}>
                     <Typography component="p" className={scss.textValue}>
-                        {value} ml
+                        {volume} ml
                     </Typography>
                     <IconButton size="small">
                         <Icon variant="edit" className={scss.svg} />
