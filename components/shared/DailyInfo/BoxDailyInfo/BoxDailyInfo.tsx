@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, List, Typography } from '@mui/material';
 
 import CustomScrollBar from '@/components/ui/Scrollbar/Srollbar';
@@ -9,6 +9,7 @@ import { formatTime } from '@/helpers/formatTime';
 import data from '../data.json';
 import { DailyInfoResponse } from '../types';
 
+import BoxSkeleton from './BoxSkeleton';
 import ButtonWater from './ButtonWater';
 import ItemListDailyInfo from './ItemListDailyInfo';
 
@@ -19,6 +20,28 @@ const BoxDailyInfo: React.FC<{ data: DailyInfoResponse }> = () => {
     const date = new Date(currentDate);
     const displayDate = isTodayDate(date) ? 'Today' : formatDate(date);
 
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        // Simulate an asynchronous request
+        const fetchData = () => {
+            setTimeout(() => {
+                setLoading(false); // Simulate loading completion
+            }, 2000);
+        };
+
+        fetchData();
+    }, []);
+
+    const formattedEntries = entries.map((item) => {
+        const dateObj = new Date(item.date);
+        const formattedTime = formatTime(dateObj);
+        return {
+            ...item,
+            formattedTime,
+        };
+    });
+
     return (
         <Box component="div" className={scss.wrapper}>
             <Box component="div" className={scss.topBox}>
@@ -27,21 +50,20 @@ const BoxDailyInfo: React.FC<{ data: DailyInfoResponse }> = () => {
                 </Typography>
                 <ButtonWater />
             </Box>
-            <CustomScrollBar style={{ maxWidth: '100%', height: 'auto' }}>
-                <List className={scss.list}>
-                    {entries.map((item) => {
-                        const dateObj = new Date(item.date);
-                        const formattedTime = formatTime(dateObj);
-
-                        return (
+            {loading ? (
+                <BoxSkeleton />
+            ) : (
+                <CustomScrollBar style={{ maxWidth: '100%', height: 'auto' }}>
+                    <List className={scss.list}>
+                        {formattedEntries.map((item) => (
                             <ItemListDailyInfo
                                 key={item._id}
-                                dataItem={{ time: formattedTime, volume: item.volume }}
+                                dataItem={{ time: item.formattedTime, volume: item.volume }}
                             />
-                        );
-                    })}
-                </List>
-            </CustomScrollBar>
+                        ))}
+                    </List>
+                </CustomScrollBar>
+            )}
         </Box>
     );
 };

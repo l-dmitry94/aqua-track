@@ -21,7 +21,7 @@
 }
 
 .list {
-    @apply flex flex-row flex-nowrap gap-2;
+    @apply flex min-h-20 flex-row flex-nowrap gap-2;
 
     @include media-rules(tablet) {
         @apply gap-8;
