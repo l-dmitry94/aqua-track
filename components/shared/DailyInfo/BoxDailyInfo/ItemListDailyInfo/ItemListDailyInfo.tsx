@@ -17,7 +17,7 @@ const ItemListDailyInfo: React.FC<ItemListDailyInfoProps> = ({ dataItem }) => {
             <Box component="div" className={scss.wrapper}>
                 <Box component="div" className={scss.wrapperInfo}>
                     <Typography component="p" className={scss.textValue}>
-                        {volume} ml
+                        {`${volume} ml`}
                     </Typography>
                     <IconButton size="small">
                         <Icon variant="edit" className={scss.svg} />
