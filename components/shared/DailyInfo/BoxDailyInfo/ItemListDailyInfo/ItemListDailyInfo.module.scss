@@ -1,0 +1,61 @@
+@import 'styles/mixins';
+
+.item {
+    @apply flex max-w-[149px] select-none flex-row gap-[10px] rounded-[15px] bg-white px-[14px] py-[18px];
+
+    @include media-rules(tablet) {
+        @apply min-w-[190px] gap-5 px-5 py-5;
+    }
+
+    & img {
+        @apply h-auto max-w-11;
+
+        @include media-rules(mobile) {
+            @apply size-[38px];
+        }
+    }
+}
+
+.wrapper {
+    @apply flex flex-col;
+
+    @include media-rules(tablet) {
+        @apply gap-2;
+    }
+}
+
+.wrapperInfo {
+    @apply flex flex-row items-center justify-between gap-[6px];
+
+    @include media-rules(tablet) {
+        @apply gap-5;
+    }
+
+    & p {
+        @apply text-nowrap;
+    }
+}
+
+.textValue {
+    @apply font-sans text-sm font-bold text-primary;
+
+    @include media-rules(tablet) {
+        @apply text-[15px];
+    }
+}
+
+.textTime {
+    @apply font-sans text-xs font-normal text-secondary text-opacity-60;
+}
+
+.svg {
+    @apply size-[14px] fill-none stroke-primary transition-colors duration-300 ease-linear;
+
+    &:is(:hover, :focus) {
+        @apply stroke-green;
+    }
+
+    @include media-rules(tablet) {
+        @apply size-4;
+    }
+}
