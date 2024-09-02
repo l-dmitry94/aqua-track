@@ -22,6 +22,67 @@
             }
         },
         "schemas": {
+            "UserDetails": {
+                "type": "object",
+                "properties": {
+                    "_id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "token": {
+                        "type": "string"
+                    },
+                    "gender": {
+                        "type": "string",
+                        "enum": ["woman", "man"]
+                    },
+                    "weight": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "activeTime": {
+                        "type": "number"
+                    },
+                    "waterIntake": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "avatar": {
+                        "type": "string",
+                        "format": "uri"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "required": [
+                    "_id",
+                    "name",
+                    "email",
+                    "password",
+                    "token",
+                    "gender",
+                    "weight",
+                    "activeTime",
+                    "waterIntake",
+                    "avatar",
+                    "createdAt",
+                    "updatedAt"
+                ]
+            },
             "User": {
                 "type": "object",
                 "properties": {
@@ -147,6 +208,19 @@
             }
         },
         "responses": {
+            "UserListResponse": {
+                "description": "List of users",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/components/schemas/UserDetails"
+                            }
+                        }
+                    }
+                }
+            },
             "UserLoginSuccess": {
                 "description": "User logged in successfully",
                 "content": {
@@ -329,7 +403,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/User"
+                                    "$ref": "#/components/schemas/UserUpdateRequest"
                                 }
                             }
                         }
@@ -394,6 +468,20 @@
                 "responses": {
                     "204": {
                         "description": "User logout successfully"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
+        "/users": {
+            "get": {
+                "summary": "Get list of users",
+                "tags": ["Users"],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/UserListResponse"
                     },
                     "500": {
                         "$ref": "#/components/responses/InternalServerError"
