@@ -25,6 +25,9 @@ const config: Config = {
             letterSpacing: {
                 tight: '-0.01em',
             },
+            borderRadius: {
+                custom: '1.875rem',
+            },
             screens: {
                 mobile: '375px',
                 tablet: '768px',

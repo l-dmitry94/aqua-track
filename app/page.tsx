@@ -1,7 +1,7 @@
-import Container from '@/components/ui/Container';
+import Welcome from '@/components/shared/Welcome';
 
 const HomePage = () => {
-    return <Container>HomePage</Container>;
+    return <Welcome />;
 };
 
 export default HomePage;
