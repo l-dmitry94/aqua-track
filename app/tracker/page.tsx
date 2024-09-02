@@ -1,7 +1,12 @@
-export interface TrackerPageProps {}
+import { WaterMainInfo } from '@/components/shared/WaterMainInfo';
+import Container from '@/components/ui/Container';
 
-const TrackerPage = ({}: TrackerPageProps) => {
-    return <div>TrackerPage</div>;
+const TrackerPage = () => {
+    return (
+        <Container>
+            <WaterMainInfo />
+        </Container>
+    );
 };
 
 export default TrackerPage;

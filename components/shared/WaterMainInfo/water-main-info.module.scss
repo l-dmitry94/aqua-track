@@ -1,0 +1,7 @@
+.box {
+  background-image: url(../../../public/images/tracker-bg-mob@2x.png);
+  background-repeat: no-repeat;
+  background-size: 262px 335px;
+  background-position: center;
+  @apply relative mt-[16px] h-[415px] rounded-[30px] bg-green p-[16px];
+}
