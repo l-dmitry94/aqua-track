@@ -25,6 +25,11 @@
             "WaterEntry": {
                 "type": "object",
                 "properties": {
+                    "_id": {
+                        "type": "string",
+                        "description": "Id of water entry",
+                        "example": "66d6c013157ef1c67f7f096e"
+                    },
                     "user": {
                         "type": "string",
                         "description": "ID of the user"
@@ -37,11 +42,6 @@
                     "volume": {
                         "type": "number",
                         "description": "Volume of water consumed"
-                    },
-                    "_id": {
-                        "type": "string",
-                        "description": "Id of water entry",
-                        "example": "66d6c013157ef1c67f7f096e"
                     },
                     "createdAt": {
                         "type": "string",
@@ -574,6 +574,195 @@
                     },
                     "500": {
                         "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
+        "/water/{id}/update": {
+            "patch": {
+                "summary": "Update data on the volume and date of water",
+                "tags": ["Water"],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "ID of the water entry to update",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Update water information",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "date": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "description": "The date of the water entry in ISO 8601 format"
+                                    },
+                                    "volume": {
+                                        "type": "number",
+                                        "description": "The volume of water consumed in milliliters"
+                                    }
+                                },
+                                "required": ["date", "volume"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Data of entry water updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/WaterEntry"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "400": {
+                        "description": "Entry ID is required"
+                    },
+                    "404": {
+                        "description": "Entry not found"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
+        "/water/{id}/delete": {
+            "delete": {
+                "summary": "Delete data on the volume and date of water",
+                "tags": ["Water"],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "ID of the water entry to delete",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Entry deleted successfully"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "400": {
+                        "description": "Entry ID is required"
+                    },
+                    "404": {
+                        "description": "Entry not found or forbidden"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
+        "/water/daily": {
+            "post": {
+                "summary": "Obtaining data on the user's water consumption per day",
+                "tags": ["Water"],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "description": "Get information about user's water consumption per day. The date field is optional. If it is missing, the data for the current day will be returned",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "date": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "description": "The date of the water entry in ISO 8601 format"
+                                    }
+                                },
+                                "required": ["date", "volume"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Data of entry water updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": { "$ref": "#/components/schemas/WaterEntry" }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "500": {
+                        "description": "Error fetching data"
+                    }
+                }
+            }
+        },
+        "/water/monthly": {
+            "get": {
+                "summary": "Obtaining data on the user's water consumption per month",
+                "tags": ["Water"],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Monthly data of water consumption retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/WaterEntry"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "500": {
+                        "description": "Error fetching data"
                     }
                 }
             }
