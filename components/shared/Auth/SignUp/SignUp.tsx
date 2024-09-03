@@ -4,6 +4,7 @@ import { Box, Typography } from '@mui/material';
 import Link from 'next/link';
 
 import Button from '@/components/ui/Button';
+import Container from '@/components/ui/Container';
 import Form from '@/components/ui/Form';
 import { NameValues } from '@/components/ui/Form/Form.types';
 import Input from '@/components/ui/Input';
@@ -18,7 +19,7 @@ import scss from './SignUp.module.scss';
 
 const SignUp = () => {
     return (
-        <Box className={scss.SignUpPage}>
+        <Container className={scss.SignUpPage}>
             <Auth>
                 <Typography variant="h1" className={scss.title}>
                     Sign Up
@@ -60,10 +61,11 @@ const SignUp = () => {
                     )}
                 </Form>
             </Auth>
+
             <Box className={scss.img}>
                 <WelcomeAdvantages />
             </Box>
-        </Box>
+        </Container>
     );
 };
 

@@ -4,12 +4,22 @@
     @apply flex flex-row ;
 }
 
-.img{
+// .img{
 
-    @apply  w-full mt-4 mb-4;
-    @media (min-width: 375px) and (max-width: 1439px){
-        @apply hidden;
+//     @apply  w-full mt-4 mb-4;
+//     @media (min-width: 375px) and (max-width: 1439px){
+//         @apply hidden;
+//     }
+// }
+.img {
+    @apply hidden;
+
+    @include media-rules(desktop) {
+        @apply block relative mt-4 mb-4 w-full;
     }
+}
+.imgSection{
+    @apply flex flex-row
 }
 
 .title {

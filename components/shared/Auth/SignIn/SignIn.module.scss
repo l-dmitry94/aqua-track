@@ -3,12 +3,19 @@
 .SignInPage{
     @apply flex flex-row;
 }
-.img {
+// .img {
 
-    @apply w-full mt-4 mb-4;
+//     @apply w-full mt-4 mb-4;
 
-    @media (min-width: 375px) and (max-width: 1439px) {
-        @apply hidden;
+//     @media (min-width: 375px) and (max-width: 1439px) {
+//         @apply hidden;
+//     }
+// }
+
+.img{
+    @apply hidden ;
+    @include media-rules(desktop){
+        @apply block w-full mt-4 mb-4  ;
     }
 }
 
