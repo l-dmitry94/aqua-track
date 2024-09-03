@@ -1,0 +1,39 @@
+@import 'styles/mixins';
+
+.modalBox {
+    @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white outline-none shadow-2xl rounded-[15px] max-w-lg w-full;
+}
+
+.primary {
+    @apply p-10;
+}
+
+.secondary {
+    @apply py-10 px-5;
+}
+
+.title {
+    @apply text-xl font-bold tracking-tight mb-4 leading-6;
+
+    @include media-rules(tablet) {
+        @apply text-[28px] leading-8;
+    }
+}
+
+.closeButton {
+    @apply absolute top-5 right-4 stroke-secondary;
+    
+    .icon {
+        @include media-rules(tablet) {
+            @apply h-7 w-7;
+        }
+    }
+}
+
+.content {
+    @apply mb-4;
+}
+
+.button {
+    @apply mt-4;
+}
