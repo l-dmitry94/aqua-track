@@ -22,6 +22,40 @@
             }
         },
         "schemas": {
+            "WaterEntry": {
+                "type": "object",
+                "properties": {
+                    "user": {
+                        "type": "string",
+                        "description": "ID of the user"
+                    },
+                    "date": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Date of the water entry"
+                    },
+                    "volume": {
+                        "type": "number",
+                        "description": "Volume of water consumed"
+                    },
+                    "_id": {
+                        "type": "string",
+                        "description": "Id of water entry",
+                        "example": "66d6c013157ef1c67f7f096e"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp of when the entry was created"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp of the last update"
+                    }
+                },
+                "required": ["user", "date", "volume"]
+            },
             "UserDetails": {
                 "type": "object",
                 "properties": {
@@ -482,6 +516,61 @@
                 "responses": {
                     "200": {
                         "$ref": "#/components/responses/UserListResponse"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
+        "/water/create": {
+            "post": {
+                "summary": "Adding data on the volume of water consumed",
+                "tags": ["Water"],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "description": "Water creating information",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "date": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "description": "The date of the water entry in ISO 8601 format"
+                                    },
+                                    "volume": {
+                                        "type": "number",
+                                        "description": "The volume of water consumed in milliliters"
+                                    }
+                                },
+                                "required": ["date", "volume"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Getting information successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/WaterEntry"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "400": {
+                        "description": "Bad Request: Missing required fields"
                     },
                     "500": {
                         "$ref": "#/components/responses/InternalServerError"
