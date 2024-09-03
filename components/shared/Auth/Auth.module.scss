@@ -1,7 +1,11 @@
 @import 'styles/mixins';
 
 .auth {
-    @apply h-screen w-[672px] py-4;
+    @apply h-screen w-screen py-4;
+
+    // @media (min-width: 375px) and (max-width: 1439px)  {
+    //     @apply w-screen ; 
+    // }
 }
 
 .container {
@@ -9,7 +13,10 @@
 }
 
 .wrapper {
-    @apply relative h-full rounded-[30px] bg-gray px-4 py-6;
+    @apply  relative h-full rounded-[30px] bg-gray px-4 py-6;
+    @media (min-width: 1440px) {
+                @apply w-[672px] ; 
+            }
 }
 
 .link {

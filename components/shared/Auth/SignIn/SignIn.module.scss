@@ -1,5 +1,17 @@
 @import 'styles/mixins';
 
+.SignInPage{
+    @apply flex flex-row;
+}
+.img {
+
+    @apply w-full mt-4 mb-4;
+
+    @media (min-width: 375px) and (max-width: 1439px) {
+        @apply hidden;
+    }
+}
+
 .title {
     @apply mb-8 text-[2rem] font-bold leading-none tracking-tight;
 

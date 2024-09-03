@@ -1,7 +1,7 @@
 @import 'styles/mixins';
 
 .section {
-    @apply relative ;
+    @apply relative  ;
 
     @include media-rules(desktop) {
         @apply w-1/2;
@@ -20,7 +20,7 @@
 } 
 
 .image {
-    @apply rounded-custom h-full ;
+    @apply max-w-[672px] rounded-custom h-full ;
 }
 
 .customers {

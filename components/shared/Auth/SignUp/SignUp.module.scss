@@ -5,13 +5,11 @@
 }
 
 .img{
-    
-    @apply w-[672px] mt-4 mb-4  ;
-    
 
-    // @include media-rules(mobile){
-    //     @apply hidden
-    // }
+    @apply  w-full mt-4 mb-4;
+    @media (min-width: 375px) and (max-width: 1439px){
+        @apply hidden;
+    }
 }
 
 .title {

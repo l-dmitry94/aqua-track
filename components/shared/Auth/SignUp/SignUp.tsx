@@ -47,7 +47,7 @@ const SignUp = () => {
                                 fullWidth
                                 className={scss.button}
                             >
-                                Sign In
+                                Sign Up
                             </Button>
 
                             <Typography variant="body2" className={scss.linkWrapper}>
@@ -61,7 +61,7 @@ const SignUp = () => {
                 </Form>
             </Auth>
             <Box className={scss.img}>
-            <WelcomeAdvantages />
+                <WelcomeAdvantages />
             </Box>
         </Box>
     );
