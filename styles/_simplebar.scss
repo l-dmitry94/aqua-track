@@ -1,0 +1,19 @@
+@import 'styles/mixins';
+
+.simplebar-track {
+    @apply rounded-[50px] bg-white;
+
+    .simplebar-scrollbar.simplebar-visible:before {
+        @apply bottom-0 left-0 right-0 top-0 bg-primary opacity-100;
+    }
+}
+
+.scrollBar {
+    .simplebar-track.simplebar-horizontal {
+        @apply h-2;
+    }
+}
+
+.simplebar-wrapper {
+    @apply pb-6;
+}

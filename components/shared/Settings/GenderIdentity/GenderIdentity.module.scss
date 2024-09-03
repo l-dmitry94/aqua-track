@@ -1,0 +1,19 @@
+.formControl {
+    @apply mb-6;
+}
+
+.label {
+    @apply mb-[14px] text-base font-bold leading-[1.25] tracking-tight text-primary font-sans;
+}
+
+.radioGroup {
+    @apply ml-[10px] flex gap-5;
+}
+
+.radio {
+    @apply mr-0 text-sm leading-[1.29] tracking-tight text-secondary;
+}
+
+.radioButton {
+    @apply mr-[10px] p-0;
+}

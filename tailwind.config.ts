@@ -19,8 +19,14 @@ const config: Config = {
                 gray: '#f0eff4',
                 error: '#ef5050',
             },
+            fontFamily: {
+                sans: ['Poppins', 'sans-serif'],
+            },
             letterSpacing: {
                 tight: '-0.01em',
+            },
+            borderRadius: {
+                custom: '1.875rem',
             },
             screens: {
                 mobile: '375px',

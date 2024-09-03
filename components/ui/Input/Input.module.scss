@@ -6,6 +6,10 @@
     @apply mb-2 inline-block text-base font-bold leading-normal tracking-tight text-secondary;
 }
 
+.lightLabel {
+    @apply text-sm leading-[1.29] font-normal;
+}
+
 .input {
     @apply flex h-[50px] w-full justify-center rounded-2xl border border-secondary/20 bg-transparent px-4 outline-none transition-colors duration-200 ease-linear;
 

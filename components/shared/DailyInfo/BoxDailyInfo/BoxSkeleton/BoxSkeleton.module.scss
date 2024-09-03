@@ -1,0 +1,13 @@
+@import 'styles/mixins';
+
+.item:nth-child(3) {
+    @apply hidden;
+
+    @include media-rules(tablet) {
+        @apply flex;
+    }
+}
+
+.scroll {
+    @apply mt-4 h-2;
+}

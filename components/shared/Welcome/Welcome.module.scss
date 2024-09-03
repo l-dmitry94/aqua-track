@@ -1,0 +1,17 @@
+@import 'styles/mixins';
+
+.section {
+    @apply py-4;
+}
+
+.wrapper {
+    @apply flex flex-col gap-4;
+
+    @include media-rules(tablet) {
+        @apply  gap-8 py-8;
+    }
+
+    @include media-rules(desktop) {
+        @apply flex-row;
+    }
+}

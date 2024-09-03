@@ -1,0 +1,9 @@
+@import 'styles/mixins';
+
+.boxTrackerInfo {
+    @apply my-4 rounded-[30px] bg-gray;
+
+    @include media-rules(desktop) {
+        @apply my-8 max-w-[672px];
+    }
+}

@@ -1,0 +1,46 @@
+@import 'styles/mixins';
+
+.section {
+    @apply pb-[67px] pt-[74px];
+
+    @include media-rules(tablet) {
+        @apply pb-10 py-[50px] pl-12;
+    }
+
+    @include media-rules(desktop) {
+        @apply pt-[132px] pb-[176px]; 
+    }
+
+}
+
+.subtitle {
+    @apply mb-4 leading-[1.29] tracking-[0.06em] text-secondary font-sans;
+
+    @include media-rules(tablet) {
+        @apply text-base leading-normal;
+    }
+
+    @include media-rules(desktop) {
+        @apply text-[1.5rem] leading-[1.29];
+    }
+}
+
+.title {
+    @apply mb-8 text-[2.375rem] font-bold leading-none tracking-tight font-sans;
+
+    @include media-rules(tablet) {
+        @apply text-[4rem] leading-[1.09];
+    }
+
+    @include media-rules(desktop) {
+        @apply text-[5rem] leading-[0.95];
+    }
+}
+
+.buttonsWrapper {
+    @apply flex items-center gap-3;
+
+    @include media-rules(tablet) {
+        @apply gap-4;
+    }
+}

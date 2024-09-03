@@ -1,0 +1,11 @@
+.amount {
+    @apply mb-[14px]
+}
+
+.title {
+    @apply mb-1 text-sm leading-[1.29] tracking-tight text-secondary font-sans;
+}
+
+.text {
+    @apply text-sm font-bold leading-[1.29] text-green font-sans;
+}
