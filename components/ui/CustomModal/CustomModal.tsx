@@ -2,7 +2,6 @@ import React, { FC, ReactNode } from 'react';
 import { Backdrop, Box, Fade, IconButton, Modal, Typography } from '@mui/material';
 import clsx from 'clsx';
 
-import Button from '@/components/ui/Button/Button';
 import Icon from '@/components/ui/Icon/Icon';
 
 import scss from './CustomModal.module.scss';
@@ -47,9 +46,6 @@ const CustomModal: FC<CustomModalProps> = ({
                     <div id="modal-content" className={scss.content}>
                         {children}
                     </div>
-                    <Button variant="contained" className={scss.button}>
-                        Save
-                    </Button>
                 </Box>
             </Fade>
         </Modal>
