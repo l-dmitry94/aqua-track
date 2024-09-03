@@ -1,19 +1,5 @@
 @import 'styles/mixins';
 
-.SignUpPage{
-    @apply flex flex-row ;
-}
-
-.img{
-    
-    @apply w-[672px] mt-4 mb-4  ;
-    
-
-    // @include media-rules(mobile){
-    //     @apply hidden
-    // }
-}
-
 .title {
     @apply mb-8 text-[2rem] font-bold leading-none tracking-tight;
 
@@ -46,4 +32,3 @@
     @apply font-bold underline text-secondary;
     text-decoration-skip-ink: none;
 }
-
