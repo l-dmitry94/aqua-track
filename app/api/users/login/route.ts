@@ -31,8 +31,13 @@ export const POST = async (req: NextRequest) => {
             user: {
                 name: user.name,
                 email: user.email,
+                gender: user.gender,
+                weight: user.weight,
+                activeTime: user.activeTime,
+                waterIntake: user.waterIntake,
+                avatar: user.avatar,
+                token: token,
             },
-            token,
         },
         { status: 200 }
     );

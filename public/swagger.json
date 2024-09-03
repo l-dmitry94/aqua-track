@@ -124,7 +124,38 @@
                         "type": "string"
                     },
                     "email": {
-                        "type": "string"
+                        "type": "string",
+                        "unique": true,
+                        "required": true
+                    },
+                    "password": {
+                        "type": "string",
+                        "required": true
+                    },
+                    "token": {
+                        "type": "string",
+                        "default": null
+                    },
+                    "gender": {
+                        "type": "string",
+                        "enum": ["woman", "man"],
+                        "default": "woman"
+                    },
+                    "weight": {
+                        "type": "number",
+                        "default": 0
+                    },
+                    "activeTime": {
+                        "type": "number",
+                        "default": 0
+                    },
+                    "waterIntake": {
+                        "type": "number",
+                        "default": 1.8
+                    },
+                    "avatar": {
+                        "type": "string",
+                        "default": null
                     }
                 }
             },
@@ -133,9 +164,6 @@
                 "properties": {
                     "user": {
                         "$ref": "#/components/schemas/User"
-                    },
-                    "token": {
-                        "type": "string"
                     },
                     "message": {
                         "type": "string"
@@ -147,9 +175,6 @@
                 "properties": {
                     "user": {
                         "$ref": "#/components/schemas/User"
-                    },
-                    "token": {
-                        "type": "string"
                     }
                 }
             },

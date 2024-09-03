@@ -35,8 +35,13 @@ export const POST = async (req: NextRequest) => {
             user: {
                 name: newUser.name,
                 email: newUser.email,
+                gender: newUser.gender,
+                weight: newUser.weight,
+                activeTime: newUser.activeTime,
+                waterIntake: newUser.waterIntake,
+                avatar: newUser.avatar,
+                token: token,
             },
-            token,
             message: 'User created successfully',
         },
         { status: 201 }
