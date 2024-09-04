@@ -1,4 +1,4 @@
-import SignIn from "@/components/shared/Auth/SignIn/SignIn";
+import SignIn from '@/components/shared/Auth/SignIn/SignIn';
 
 const SignInPage = () => {
     return <SignIn />;
