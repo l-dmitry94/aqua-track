@@ -22,10 +22,7 @@ export const PATCH = async (req: NextRequest, { params }: { params: { id: string
     try {
         const updatedEntry = await updateWaterEntry(id, user._id, new Date(date), volume);
         if (!updatedEntry) {
-            return NextResponse.json(
-                { message: 'Entry not found or user unauthorized' },
-                { status: 404 }
-            );
+            return NextResponse.json({ message: 'Entry not found' }, { status: 404 });
         }
         return NextResponse.json(updatedEntry, { status: 200 });
     } catch (error) {
