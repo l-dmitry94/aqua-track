@@ -2,7 +2,6 @@ import React, { FC, ReactNode } from 'react';
 import { Backdrop, Box, Fade, IconButton, Modal, Typography } from '@mui/material';
 import clsx from 'clsx';
 
-import Button from '@/components/ui/Button/Button';
 import Icon from '@/components/ui/Icon/Icon';
 
 import scss from './CustomModal.module.scss';
@@ -13,6 +12,7 @@ interface CustomModalProps {
     title: string;
     children: ReactNode;
     variant?: 'primary' | 'secondary';
+    profile?: boolean;
 }
 
 const CustomModal: FC<CustomModalProps> = ({
@@ -21,6 +21,7 @@ const CustomModal: FC<CustomModalProps> = ({
     title,
     children,
     variant = 'primary',
+    profile = false,
 }) => {
     return (
         <Modal
@@ -37,19 +38,22 @@ const CustomModal: FC<CustomModalProps> = ({
             }}
         >
             <Fade in={open}>
-                <Box className={clsx(scss.modalBox, scss[variant])}>
-                    <IconButton className={scss.closeButton} onClick={onClose} aria-label="Close">
-                        <Icon variant="close" />
-                    </IconButton>
-                    <Typography id="modal-title" className={scss.title} component="h2">
-                        {title}
-                    </Typography>
-                    <div id="modal-content" className={scss.content}>
-                        {children}
-                    </div>
-                    <Button variant="contained" onClick={onClose} className={scss.button}>
-                        Save
-                    </Button>
+                <Box component="div" className={scss.wrapper}>
+                    <Box className={clsx(scss.modalBox, scss[variant], profile && scss.profile)}>
+                        <IconButton
+                            className={scss.closeButton}
+                            onClick={onClose}
+                            aria-label="Close"
+                        >
+                            <Icon variant="close" />
+                        </IconButton>
+                        <Typography id="modal-title" className={scss.title} component="h2">
+                            {title}
+                        </Typography>
+                        <div id="modal-content" className={scss.content}>
+                            {children}
+                        </div>
+                    </Box>
                 </Box>
             </Fade>
         </Modal>

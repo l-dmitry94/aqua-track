@@ -1,7 +1,26 @@
 @import 'styles/mixins';
 
+.wrapper {
+    @apply flex h-full w-full items-center justify-center px-6;
+}
+
 .modalBox {
-    @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white outline-none shadow-2xl rounded-[15px] max-w-lg w-full;
+    @apply relative w-full max-w-[343px] rounded-[15px] bg-white shadow-2xl outline-none;
+
+    @include media-rules(tablet) {
+        @apply max-w-[516px];
+    }
+}
+
+.profile {
+    
+    @include media-rules(tablet) {
+        @apply max-w-[648px];
+    }
+
+    @include media-rules(desktop) {
+        @apply max-w-[920px];
+    }
 }
 
 .primary {
@@ -9,15 +28,25 @@
 }
 
 .secondary {
-    @apply py-10 px-5;
+    @apply px-5 py-10;
 }
 
 .title {
-    @apply text-2xl font-bold leading-8 tracking-tight mb-4;
+    @apply mb-4 text-xl font-bold leading-6 tracking-tight;
+
+    @include media-rules(tablet) {
+        @apply text-[28px] leading-8;
+    }
 }
 
 .closeButton {
-    @apply absolute top-5 right-4 stroke-secondary;
+    @apply absolute right-4 top-5 stroke-secondary;
+
+    .icon {
+        @include media-rules(tablet) {
+            @apply h-7 w-7;
+        }
+    }
 }
 
 .content {
