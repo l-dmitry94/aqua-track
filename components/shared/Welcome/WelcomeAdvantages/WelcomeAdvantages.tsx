@@ -22,7 +22,10 @@ interface IWelcomeAdvantages {
 
 const WelcomeAdvantages: FC<IWelcomeAdvantages> = ({ desktop }) => {
     return (
-        <Box component="section" className={clsx(scss.section, desktop && scss.desktop)}>
+        <Box
+            component="section"
+            className={clsx(scss.container, scss.section, desktop && scss.desktop)}
+        >
             <Box component="picture">
                 <Box
                     component="source"

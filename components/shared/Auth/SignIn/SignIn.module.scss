@@ -1,25 +1,22 @@
 @import 'styles/mixins';
 
-.SignUpPage{
-    @apply flex flex-row ;
+.SignInPage{
+    @apply flex flex-row;
 }
+// .img {
 
-// .img{
+//     @apply w-full mt-4 mb-4;
 
-//     @apply  w-full mt-4 mb-4;
-//     @media (min-width: 375px) and (max-width: 1439px){
+//     @media (min-width: 375px) and (max-width: 1439px) {
 //         @apply hidden;
 //     }
 // }
-.img {
-    @apply hidden;
 
-    @include media-rules(desktop) {
-        @apply block relative mt-4 mb-4 w-full;
+.img{
+    @apply hidden ;
+    @include media-rules(desktop){
+        @apply block w-full mt-4 mb-4  ;
     }
-}
-.imgSection{
-    @apply flex flex-row
 }
 
 .title {
@@ -54,4 +51,3 @@
     @apply font-bold underline text-secondary;
     text-decoration-skip-ink: none;
 }
-

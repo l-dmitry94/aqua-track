@@ -1,7 +1,7 @@
-export interface SignInPage {}
+import SignIn from "@/components/shared/Auth/SignIn/SignIn";
 
-const SignInPage = ({}: SignInPage) => {
-    return <div>SignIn</div>;
+const SignInPage = () => {
+    return <SignIn />;
 };
 
 export default SignInPage;
