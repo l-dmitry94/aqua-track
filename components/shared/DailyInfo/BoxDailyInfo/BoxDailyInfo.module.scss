@@ -1,0 +1,33 @@
+@import 'styles/mixins';
+
+.wrapper {
+    @apply py-10 pl-5 font-sans text-primary;
+
+    @include media-rules(tablet) {
+        @apply px-8;
+    }
+}
+
+.topBox {
+    @apply flex flex-row justify-between pb-6 pr-5 align-baseline;
+}
+
+.h2 {
+    @apply text-xl font-bold;
+
+    @include media-rules(tablet) {
+        @apply text-[28px];
+    }
+}
+
+.list {
+    @apply flex min-h-20 flex-row flex-nowrap gap-2;
+
+    @include media-rules(tablet) {
+        @apply gap-8;
+    }
+
+    @include media-rules(desktop) {
+        @apply gap-4;
+    }
+}

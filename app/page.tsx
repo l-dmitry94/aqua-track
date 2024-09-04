@@ -1,13 +1,7 @@
-'use client';
-
-import Container from '@/components/ui/Container';
+import Welcome from '@/components/shared/Welcome';
 
 const HomePage = () => {
-    return (
-        <Container>
-            <p>HomePage</p>
-        </Container>
-    );
+    return <Welcome />;
 };
 
 export default HomePage;
