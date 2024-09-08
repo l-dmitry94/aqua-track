@@ -1,6 +1,14 @@
-import SignIn from "@/components/shared/Auth/SignIn/SignIn";
+import { redirect } from 'next/navigation';
+import { getServerSession } from 'next-auth';
 
-const SignInPage = () => {
+import SignIn from '@/components/shared/Auth/SignIn/SignIn';
+import { authOptions } from '@/lib/authOptions';
+
+const SignInPage = async () => {
+    const session = await getServerSession(authOptions);
+
+    if (session) redirect('/tracker');
+
     return <SignIn />;
 };
 
