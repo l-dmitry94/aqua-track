@@ -2,8 +2,7 @@ import { redirect } from 'next/navigation';
 import { getServerSession } from 'next-auth';
 
 import Welcome from '@/components/shared/Welcome';
-
-import { authOptions } from './api/auth/[...nextauth]/route';
+import { authOptions } from '@/lib/authOptions';
 
 const HomePage = async () => {
     const session = await getServerSession(authOptions);

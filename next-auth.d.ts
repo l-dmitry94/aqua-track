@@ -3,6 +3,7 @@ import 'next-auth';
 
 declare module 'next-auth' {
     interface User {
+        id?: string;
         gender?: string;
         weight?: number;
         activeTime?: number;
@@ -10,12 +11,6 @@ declare module 'next-auth' {
     }
 
     interface Session {
-        user: {
-            id?: string;
-            gender?: string;
-            weight?: number;
-            activeTime?: number;
-            volume?: number;
-        } & DefaultSession['user'];
+        user: User & DefaultSession['user'];
     }
 }

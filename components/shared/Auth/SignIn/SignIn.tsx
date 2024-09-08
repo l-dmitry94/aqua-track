@@ -70,8 +70,10 @@ const SignIn = () => {
                         </>
                     )}
                 </Form>
-                <div>or</div>
-                <button onClick={() => signIn('google')}>Google</button>
+                <div className={scss.or}>or</div>
+                <Button variant="contained" fullWidth onClick={() => signIn('google')}>
+                    Google
+                </Button>
             </Auth>
             <Box className={scss.img}>
                 <WelcomeAdvantages />

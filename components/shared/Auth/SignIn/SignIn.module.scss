@@ -51,3 +51,11 @@
     @apply font-bold underline text-secondary;
     text-decoration-skip-ink: none;
 }
+
+.or {
+    @apply flex items-center gap-2 text-base font-sans leading-[1.29] tracking-tight my-4;
+
+    &::before, &::after {
+        @apply content-[''] h-[1px] w-full bg-secondary/50;
+    }
+}

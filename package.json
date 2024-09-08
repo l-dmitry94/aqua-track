@@ -6,7 +6,10 @@
         "dev": "next dev",
         "build": "next build",
         "start": "next start",
-        "lint": "next lint --fix"
+        "lint": "next lint --fix",
+        "prisma:push": "prisma db push",
+        "postinstall": "prisma generate",
+        "prisma:studio": "prisma studio"
     },
     "dependencies": {
         "@emotion/cache": "^11.13.1",
