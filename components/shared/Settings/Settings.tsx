@@ -2,6 +2,7 @@
 
 import { Box } from '@mui/material';
 import clsx from 'clsx';
+import { useSession } from 'next-auth/react';
 
 import Button from '@/components/ui/Button';
 import Form from '@/components/ui/Form';
@@ -17,8 +18,11 @@ import UploadImage from './UploadImage';
 import scss from './Settings.module.scss';
 
 const Settings = () => {
+    const session = useSession();
+    console.log(session);
+
     return (
-        <Form operation={() => {}}>
+        <Form onSubmit={() => {}}>
             {(register, control, errors) => (
                 <Box component="div" className={scss.settings}>
                     <Title className={clsx(scss.title, scss.titleSettings)}>Settings</Title>

@@ -2,11 +2,14 @@
 
 import { Box, Typography } from '@mui/material';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { signIn } from 'next-auth/react';
 
+import { signup } from '@/api/auth.api';
 import Button from '@/components/ui/Button';
 import Container from '@/components/ui/Container';
 import Form from '@/components/ui/Form';
-import { NameValues } from '@/components/ui/Form/Form.types';
+import { FormValues, NameValues } from '@/components/ui/Form/Form.types';
 import Input from '@/components/ui/Input';
 
 import WelcomeAdvantages from '../../Welcome/WelcomeAdvantages/WelcomeAdvantages';
@@ -18,6 +21,20 @@ import validationSchema from './validationSchema';
 import scss from './SignUp.module.scss';
 
 const SignUp = () => {
+    const router = useRouter();
+    const handleSubmit = async (data: FormValues) => {
+        const response = await signup(data);
+
+        if (response.status === 201) {
+            const response = await signIn('credentials', { ...data, redirect: false });
+
+            if (response?.ok) {
+                router.replace('/tracker');
+            }
+        }
+        console.log(response);
+    };
+
     return (
         <Container className={scss.SignUpPage}>
             <Auth>
@@ -25,7 +42,7 @@ const SignUp = () => {
                     Sign Up
                 </Typography>
 
-                <Form validationSchema={validationSchema} operation={() => {}}>
+                <Form validationSchema={validationSchema} onSubmit={handleSubmit}>
                     {(register, control, errors) => (
                         <>
                             <Box component="div" className={scss.wrapper}>

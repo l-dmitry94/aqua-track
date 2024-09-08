@@ -2,10 +2,12 @@
 
 import { Box, Typography } from '@mui/material';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { signIn } from 'next-auth/react';
 
 import Button from '@/components/ui/Button';
 import Form from '@/components/ui/Form';
-import { NameValues } from '@/components/ui/Form/Form.types';
+import { FormValues, NameValues } from '@/components/ui/Form/Form.types';
 import Input from '@/components/ui/Input';
 
 import WelcomeAdvantages from '../../Welcome/WelcomeAdvantages/WelcomeAdvantages';
@@ -17,13 +19,25 @@ import validationSchema from './validationSchema';
 import scss from './SignIn.module.scss';
 
 const SignIn = () => {
+    const router = useRouter();
+
+    const handleSubmit = async (data: FormValues) => {
+        const result = await signIn('credentials', { ...data, redirect: false });
+
+        if (result?.ok) {
+            router.replace('/tracker');
+        } else {
+            console.log(result);
+        }
+    };
+
     return (
         <Box className={scss.SignInPage}>
             <Auth>
                 <Typography variant="h1" className={scss.title}>
                     SignIn
                 </Typography>
-                <Form validationSchema={validationSchema} operation={() => {}}>
+                <Form validationSchema={validationSchema} onSubmit={handleSubmit}>
                     {(signin, control, errors) => (
                         <>
                             <Box component="div" className={scss.wrapper}>
@@ -56,6 +70,8 @@ const SignIn = () => {
                         </>
                     )}
                 </Form>
+                <div>or</div>
+                <button onClick={() => signIn('google')}>Google</button>
             </Auth>
             <Box className={scss.img}>
                 <WelcomeAdvantages />

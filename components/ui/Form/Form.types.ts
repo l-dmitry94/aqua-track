@@ -26,7 +26,7 @@ export type NameValues = keyof UserLogin & keyof UserRegister;
 
 export interface IForm {
     validationSchema?: yup.AnyObjectSchema;
-    operation: (data: FormValues) => Promise<void> | any;
+    onSubmit: (data: FormValues) => void;
     children: (
         register: UseFormRegister<FormValues>,
         control: UseControllerProps<FormValues>['control'],
