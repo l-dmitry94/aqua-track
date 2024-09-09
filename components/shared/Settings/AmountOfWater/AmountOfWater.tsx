@@ -6,11 +6,9 @@ import Input from '@/components/ui/Input';
 
 import { IProfileData } from '../ProfileData/ProfileData.types';
 
-import fields from './fields';
-
 import scss from './AmountOfWater.module.scss';
 
-const AmountOfWater: FC<IProfileData> = ({ register, errors }) => {
+const AmountOfWater: FC<IProfileData> = ({ register, errors, user }) => {
     return (
         <Box component="div" className={scss.wrapper}>
             <Box component="div" className={scss.amount}>
@@ -23,17 +21,15 @@ const AmountOfWater: FC<IProfileData> = ({ register, errors }) => {
             </Box>
 
             <Box component="div" className={scss.inputWrapper}>
-                {fields.map(({ name, type, label, placeholder }) => (
-                    <Input
-                        key={name}
-                        register={register}
-                        name={name as NameValues}
-                        type={type}
-                        label={label}
-                        placeholder={placeholder}
-                        errors={errors}
-                    />
-                ))}
+                <Input
+                    register={register}
+                    name={'waterIntake' as NameValues}
+                    type="string"
+                    label="Write down how much water you will drink:"
+                    placeholder="How much water you will drink"
+                    errors={errors}
+                    defaultValue={user?.volume}
+                />
             </Box>
         </Box>
     );

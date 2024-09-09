@@ -4,4 +4,5 @@ import { FormValues } from '@/components/ui/Form/Form.types';
 
 export interface IUploadImage {
     register: UseFormRegister<FormValues>;
+    avatar?: string;
 }

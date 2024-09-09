@@ -12,17 +12,17 @@ export interface UserRegister extends UserLogin {
 }
 
 export interface ISettings {
-    name: string;
-    email: string;
+    name?: string;
+    email?: string;
     gender: 'woman' | 'man';
-    weight: number;
-    activeTime: number;
-    waterIntake: number;
-    avatar: FileList | null;
+    weight?: number;
+    activeTime?: number;
+    volume?: number;
+    image?: string | null;
 }
 
 export type FormValues = UserLogin & UserRegister & ISettings;
-export type NameValues = keyof UserLogin & keyof UserRegister;
+export type NameValues = keyof UserLogin & keyof UserRegister & keyof ISettings;
 
 export interface IForm {
     validationSchema?: yup.AnyObjectSchema;

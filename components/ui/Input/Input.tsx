@@ -9,7 +9,16 @@ import { IInput } from './Input.types';
 
 import scss from './Input.module.scss';
 
-const Input: FC<IInput> = ({ register, name, type, placeholder, label, light, errors }) => {
+const Input: FC<IInput> = ({
+    register,
+    name,
+    type,
+    placeholder,
+    label,
+    light,
+    defaultValue,
+    errors,
+}) => {
     const [showPassword, setShowPassword] = useState(false);
 
     const togglePassword = () => {
@@ -29,6 +38,7 @@ const Input: FC<IInput> = ({ register, name, type, placeholder, label, light, er
                 <input
                     type={showPassword ? 'text' : type}
                     {...register(name)}
+                    defaultValue={defaultValue}
                     placeholder={placeholder}
                     id={name}
                     autoComplete={type === 'password' ? 'current-password' : 'off'}

@@ -7,3 +7,8 @@ export const signup = async (body: FormValues) => {
     const response = await instance.post(ENDPOINTS.auth.signup, body);
     return response;
 };
+
+export const removeAvatar = async (publicId: string) => {
+    const response = await instance.post(ENDPOINTS.auth.removeAvatar, { publicId });
+    return response;
+};

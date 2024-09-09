@@ -1,23 +1,27 @@
 .wrapper {
-    @apply flex flex-col items-center justify-center mb-10;
+    @apply mb-10 flex flex-col gap-3 w-full;
 }
 
 .imageWrapper {
-    @apply mb-[10px] flex h-[75px] w-[75px] items-end justify-center overflow-hidden rounded-full bg-[#f0eff4];
-}
-
-.defaultImage {
-    @apply h-auto w-auto object-cover;
+    @apply flex gap-3 justify-center items-center;
 }
 
 .image {
-    @apply h-full w-full;
-}
-
-.label {
-    @apply flex items-center gap-2 text-sm leading-[1.29] tracking-tight text-secondary;
+    @apply mx-auto h-[75px] w-[75px] rounded-full object-cover;
 }
 
 .uploadIcon {
     @apply h-[18px] w-[18px] fill-none stroke-secondary;
+}
+
+.defaultImage {
+    @apply relative mx-auto flex h-[75px] w-[75px] items-center justify-center rounded-full bg-[#F0EFF4];
+}
+
+.publicId {
+    @apply absolute top-0 right-0 p-1 rounded-md bg-green/50;
+}
+
+.trashIcon {
+    @apply h-3 w-3 fill-none stroke-secondary;
 }

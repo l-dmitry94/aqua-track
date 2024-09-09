@@ -6,6 +6,7 @@ import { useSession } from 'next-auth/react';
 
 import Button from '@/components/ui/Button';
 import Form from '@/components/ui/Form';
+import { FormValues } from '@/components/ui/Form/Form.types';
 import Title from '@/components/ui/Title';
 
 import AdditionalInfo from './AdditionalInfo';
@@ -18,27 +19,37 @@ import UploadImage from './UploadImage';
 import scss from './Settings.module.scss';
 
 const Settings = () => {
-    const session = useSession();
-    console.log(session);
+    const { data: session } = useSession();
 
+    const handleSubmit = (data: FormValues) => {
+        console.log(data);
+    };
     return (
-        <Form onSubmit={() => {}}>
+        <Form onSubmit={handleSubmit}>
             {(register, control, errors) => (
                 <Box component="div" className={scss.settings}>
                     <Title className={clsx(scss.title, scss.titleSettings)}>Settings</Title>
 
-                    <UploadImage register={register} />
+                    <UploadImage register={register} avatar={session?.user?.image} />
 
                     <Box component="div" className={scss.wrapper}>
                         <Box component="div">
-                            <GenderIdentity control={control} />
-                            <ProfileData register={register} errors={errors} />
+                            <GenderIdentity control={control} gender={session?.user?.gender} />
+                            <ProfileData register={register} errors={errors} user={session?.user} />
                             <DailyNorma />
                         </Box>
 
                         <Box component="div">
-                            <AdditionalInfo register={register} errors={errors} />
-                            <AmountOfWater register={register} errors={errors} />
+                            <AdditionalInfo
+                                register={register}
+                                errors={errors}
+                                user={session?.user}
+                            />
+                            <AmountOfWater
+                                register={register}
+                                errors={errors}
+                                user={session?.user}
+                            />
                         </Box>
                     </Box>
 

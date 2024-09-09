@@ -6,14 +6,14 @@ import { IGenderIdentity } from './GenderIdentity.types';
 
 import scss from './GenderIdentity.module.scss';
 
-const GenderIdentity: FC<IGenderIdentity> = ({ control }) => {
+const GenderIdentity: FC<IGenderIdentity> = ({ control, gender }) => {
     return (
         <FormControl component="fieldset" className={scss.formControl}>
             <FormLabel className={scss.label}>Your gender identity</FormLabel>
             <Controller
                 name="gender"
                 control={control}
-                defaultValue="woman"
+                defaultValue={!gender ? 'woman' : gender}
                 render={({ field }) => (
                     <RadioGroup row {...field} className={scss.radioGroup}>
                         <FormControlLabel
