@@ -12,13 +12,14 @@
             "url": "https://aqua-track-olive.vercel.app/api"
         }
     ],
-    "tags": ["Users", "Water"],
+    "tags": ["Users", "Water", "Auth"],
     "components": {
         "securitySchemes": {
-            "bearerAuth": {
-                "type": "http",
-                "scheme": "bearer",
-                "bearerFormat": "JWT"
+            "cookieAuth": {
+                "type": "apiKey",
+                "in": "cookie",
+                "name": "next-auth.session-token",
+                "description": "Authentication using a session token stored in a cookie. The cookie name is 'next-auth.session-token'. This token is used to authenticate requests and manage user sessions. You can find it in yours browser devtools in section Cockies. But this is not necessary, because next-auth automatically substitutes the token."
             }
         },
         "schemas": {
@@ -355,9 +356,9 @@
         }
     },
     "paths": {
-        "/auth/signin": {
+        "/auth/callback/credentials": {
             "post": {
-                "summary": "Login a user",
+                "summary": "Log in a user with credentials",
                 "tags": ["Users"],
                 "requestBody": {
                     "description": "User login credentials",
@@ -385,24 +386,15 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "User logged in successfully and will be redirected",
-                        "headers": {
-                            "Location": {
-                                "description": "URL to redirect the client to after login",
-                                "schema": {
-                                    "type": "string",
-                                    "example": "/tracker"
-                                }
-                            }
-                        },
+                        "description": "User logged in successfully and redirected to /tracker",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "type": "object",
                                     "properties": {
-                                        "message": {
+                                        "redirect": {
                                             "type": "string",
-                                            "example": "Login successful, redirecting..."
+                                            "example": "/tracker"
                                         }
                                     }
                                 }
@@ -410,13 +402,135 @@
                         }
                     },
                     "400": {
-                        "$ref": "#/components/responses/BadRequest"
-                    },
-                    "404": {
-                        "description": "Email or password is wrong"
+                        "description": "Invalid login credentials",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Invalid email or password"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "500": {
-                        "$ref": "#/components/responses/InternalServerError"
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "An error occurred"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/session": {
+            "get": {
+                "summary": "Get current session information",
+                "tags": ["Users"],
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Retrieve session information for the authenticated user. Requires authentication via cookies.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "user": {
+                                            "type": "object",
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "John Doe"
+                                                },
+                                                "image": {
+                                                    "type": "string"
+                                                },
+                                                "id": {
+                                                    "type": "string",
+                                                    "example": "user-id"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "format": "email",
+                                                    "example": "john.doe@example.com"
+                                                },
+                                                "gender": {
+                                                    "type": "string",
+                                                    "example": "male"
+                                                },
+                                                "activeTime": {
+                                                    "type": "string",
+                                                    "example": "2024-09-09T00:00:00Z"
+                                                },
+                                                "weight": {
+                                                    "type": "number",
+                                                    "example": 70
+                                                },
+                                                "volume": {
+                                                    "type": "number",
+                                                    "example": 10
+                                                }
+                                            }
+                                        },
+                                        "expires": {
+                                            "type": "string",
+                                            "format": "date-time",
+                                            "example": "2024-09-10T00:00:00Z"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "User not authenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Not authenticated"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "An error occurred"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -505,21 +619,26 @@
                 }
             }
         },
-        "/users/logout": {
-            "post": {
-                "summary": "Logout user",
+        "/auth/signout": {
+            "get": {
+                "summary": "Log out a user",
                 "tags": ["Users"],
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "requestBody": {
-                    "description": "User information about logout"
-                },
                 "responses": {
-                    "204": {
-                        "description": "User logout successfully"
+                    "200": {
+                        "description": "User logged out successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Logged out successfully"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "500": {
                         "$ref": "#/components/responses/InternalServerError"
