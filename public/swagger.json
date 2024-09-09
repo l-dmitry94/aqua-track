@@ -355,7 +355,7 @@
         }
     },
     "paths": {
-        "/users/login": {
+        "/auth/signin": {
             "post": {
                 "summary": "Login a user",
                 "tags": ["Users"],
@@ -385,7 +385,29 @@
                 },
                 "responses": {
                     "200": {
-                        "$ref": "#/components/responses/UserLoginSuccess"
+                        "description": "User logged in successfully and will be redirected",
+                        "headers": {
+                            "Location": {
+                                "description": "URL to redirect the client to after login",
+                                "schema": {
+                                    "type": "string",
+                                    "example": "/tracker"
+                                }
+                            }
+                        },
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Login successful, redirecting..."
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "$ref": "#/components/responses/BadRequest"
@@ -399,7 +421,7 @@
                 }
             }
         },
-        "/users/register": {
+        "/auth/signup": {
             "post": {
                 "summary": "Register a new user",
                 "tags": ["Users"],
@@ -433,42 +455,13 @@
                 },
                 "responses": {
                     "201": {
-                        "$ref": "#/components/responses/UserRegisterSuccess"
+                        "description": "User registered successfully"
                     },
                     "400": {
                         "$ref": "#/components/responses/BadRequest"
                     },
                     "409": {
                         "description": "User already exists"
-                    },
-                    "500": {
-                        "$ref": "#/components/responses/InternalServerError"
-                    }
-                }
-            }
-        },
-        "/users/current": {
-            "get": {
-                "summary": "Get current user",
-                "tags": ["Users"],
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Getting information successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/UserUpdateRequest"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/Unauthorized"
                     },
                     "500": {
                         "$ref": "#/components/responses/InternalServerError"
