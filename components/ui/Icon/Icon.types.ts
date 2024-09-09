@@ -10,7 +10,8 @@ type IconVariant =
     | 'plus'
     | 'settings'
     | 'trash'
-    | 'upload';
+    | 'upload'
+    | 'exclamation';
 
 export interface IIcon {
     variant: IconVariant;

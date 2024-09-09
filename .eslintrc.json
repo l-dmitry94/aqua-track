@@ -20,6 +20,7 @@
             }
         ],
         "@typescript-eslint/no-explicit-any": "off",
+        "@next/next/no-img-element": "off",
         "simple-import-sort/exports": "warn",
         "simple-import-sort/imports": [
             "warn",

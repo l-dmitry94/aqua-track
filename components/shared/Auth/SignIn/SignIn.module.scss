@@ -1,0 +1,61 @@
+@import 'styles/mixins';
+
+.SignInPage{
+    @apply flex flex-row;
+}
+// .img {
+
+//     @apply w-full mt-4 mb-4;
+
+//     @media (min-width: 375px) and (max-width: 1439px) {
+//         @apply hidden;
+//     }
+// }
+
+.img{
+    @apply hidden ;
+    @include media-rules(desktop){
+        @apply block w-full mt-4 mb-4  ;
+    }
+}
+
+.title {
+    @apply mb-8 text-[2rem] font-bold leading-none tracking-tight;
+
+    @include media-rules(tablet) {
+        @apply text-[1.5rem];
+    }
+}
+
+.wrapper {
+    @apply mb-8 flex flex-col gap-4;
+
+    @include media-rules(tablet) {
+        @aply gap-2
+    }
+}
+
+.button {
+    @apply mb-4;
+
+    @include media-rules(tablet) {
+        @aply mb-2
+    }
+}
+
+.linkWrapper {
+    @apply text-center text-sm leading-[1.29] tracking-tight text-secondary/50;
+}
+
+.link {
+    @apply font-bold underline text-secondary;
+    text-decoration-skip-ink: none;
+}
+
+.or {
+    @apply flex items-center gap-2 text-base font-sans leading-[1.29] tracking-tight my-4;
+
+    &::before, &::after {
+        @apply content-[''] h-[1px] w-full bg-secondary/50;
+    }
+}

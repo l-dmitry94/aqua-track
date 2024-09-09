@@ -1,0 +1,17 @@
+@import 'styles/mixins';
+
+.waterBtn {
+    @apply transition-colors duration-300 ease-linear;
+
+    &:is(:hover, :focus) .svg {
+        @apply bg-primary stroke-white;
+    }
+
+    .svg {
+        @apply mr-[10px] h-[30px] w-[30px] rounded-[30px] bg-green stroke-primary p-2 transition-colors duration-300 ease-linear;
+    }
+
+    .text {
+        @apply font-sans text-base font-bold text-primary;
+    }
+}
