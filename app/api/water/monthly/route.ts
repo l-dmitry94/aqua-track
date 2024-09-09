@@ -1,32 +1,33 @@
-export const dynamic = 'force-dynamic';
-
 import { NextRequest, NextResponse } from 'next/server';
 
-import { connectMongoDB } from '@/lib/mongodb';
+import { authenticate } from '@/middlewares/authenticate';
 
 import { getMonthlyWaterEntries } from '../services';
 
 export const GET = async (req: NextRequest) => {
-    await connectMongoDB();
+    const user = await authenticate(req);
+    if (!user) {
+        return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+    }
+
+    const month = req.nextUrl.searchParams.get('month');
+    const year = req.nextUrl.searchParams.get('year');
+
+    if (!month || !year) {
+        return NextResponse.json(
+            { message: 'Month and year parameters are required' },
+            { status: 400 }
+        );
+    }
 
     try {
-        const userHeader = req.headers.get('X-User');
+        const entries = await getMonthlyWaterEntries(user._id, month, year);
 
-        if (!userHeader) {
-            return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
-        }
-
-        const user = JSON.parse(userHeader);
-        const userId = user.id;
-
-        if (!userId) {
-            return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
-        }
-
-        const entries = await getMonthlyWaterEntries(userId);
-        return NextResponse.json(entries);
+        return NextResponse.json({
+            selectedMonth: `${year}-${month}`,
+            entries,
+        });
     } catch (error) {
-        console.error('Error fetching monthly water entries:', error);
         return NextResponse.json({ message: 'Error fetching data' }, { status: 500 });
     }
 };

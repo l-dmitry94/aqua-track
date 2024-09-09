@@ -1,30 +1,30 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { connectMongoDB } from '@/lib/mongodb';
+import { authenticate } from '@/middlewares/authenticate';
 
 import { getDailyWaterEntries } from '../services';
 
 export const GET = async (req: NextRequest) => {
-    await connectMongoDB();
-
-    const userHeader = req.headers.get('X-User');
-
-    if (!userHeader) {
+    const user = await authenticate(req);
+    if (!user) {
         return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     }
 
+    const date = req.nextUrl.searchParams.get('date');
+    if (!date) {
+        return NextResponse.json({ message: 'Date parameter is required' }, { status: 400 });
+    }
+
     try {
-        const user = JSON.parse(userHeader);
-        const userId = user.id;
+        const entries = await getDailyWaterEntries(user._id, date);
+        const totalWater = entries.reduce((sum, { volume = 0 }) => sum + volume, 0);
 
-        if (!userId) {
-            return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
-        }
-
-        const entries = await getDailyWaterEntries(userId);
-        return NextResponse.json(entries);
+        return NextResponse.json({
+            currentDate: date,
+            entries,
+            totalWater,
+        });
     } catch (error) {
-        console.error('Error fetching daily water entries:', error);
         return NextResponse.json({ message: 'Error fetching data' }, { status: 500 });
     }
 };

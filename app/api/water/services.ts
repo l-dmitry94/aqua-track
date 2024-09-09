@@ -25,7 +25,7 @@ export const deleteWaterEntry = async (id: string, userId: string) => {
     return waterEntry;
 };
 
-export const getDailyWaterEntries = async (userId: string) => {
+export const getDailyWaterEntries = async (userId: string, selectedDate?: string) => {
     try {
         if (!userId) {
             return [];
@@ -33,7 +33,7 @@ export const getDailyWaterEntries = async (userId: string) => {
 
         const userObjectId = new ObjectId(userId);
 
-        const startOfDay = new Date();
+        const startOfDay = selectedDate ? new Date(selectedDate) : new Date();
         startOfDay.setUTCHours(0, 0, 0, 0);
 
         const endOfDay = new Date(startOfDay);
@@ -51,16 +51,19 @@ export const getDailyWaterEntries = async (userId: string) => {
     }
 };
 
-export const getMonthlyWaterEntries = async (userId: string) => {
+export const getMonthlyWaterEntries = async (userId: string, month: string, year: string) => {
     try {
-        const startDate = new Date();
-        startDate.setDate(1);
-        startDate.setHours(0, 0, 0, 0);
+        if (!userId || !month || !year) {
+            return [];
+        }
 
-        const endDate = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 1);
+        const userObjectId = new ObjectId(userId);
+
+        const startDate = new Date(Number(year), Number(month) - 1, 1);
+        const endDate = new Date(Number(year), Number(month), 1);
 
         const entries = await WaterEntry.find({
-            user: userId,
+            user: userObjectId,
             date: { $gte: startDate, $lt: endDate },
         }).exec();
 
