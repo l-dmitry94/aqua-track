@@ -14,9 +14,13 @@ import { IUploadImage } from './UploadImage.types';
 
 import scss from './UploadImage.module.scss';
 
-const UploadImage: FC<IUploadImage> = ({ register, avatar }) => {
+const UploadImage: FC<IUploadImage> = ({ register, avatar, setValue }) => {
     const [image, setImage] = useState<string | null>(avatar || null);
     const [publicId, setPublicId] = useState<string | null>(null);
+    
+    if(avatar) {
+        setValue('image', avatar);
+    }
 
     const handleImageUpload = (result: CloudinaryUploadWidgetResults) => {
         const info = result.info as CloudinaryUploadWidgetInfo;

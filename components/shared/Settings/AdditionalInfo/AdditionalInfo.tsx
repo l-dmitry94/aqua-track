@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { Box } from '@mui/material';
 
 import { NameValues } from '@/components/ui/Form/Form.types';
@@ -8,26 +8,34 @@ import { IProfileData } from '../ProfileData/ProfileData.types';
 
 import scss from './AdditionalInfo.module.scss';
 
-const AdditionalInfo: FC<IProfileData> = ({ register, errors, user }) => {
+const AdditionalInfo: FC<IProfileData> = ({ register, errors, user, setValue }) => {
     const fields = [
         {
             name: 'weight',
             type: 'string',
             label: 'Your weight in kilograms:',
-            defaultValue: user?.weight,
             placeholder: 'Enter your weight',
         },
         {
             name: 'activeTime',
             type: 'string',
             label: 'The time of active participation in sports:',
-            defaultValue: user?.activeTime,
             placeholder: 'Enter your time of active participation',
         },
     ];
+
+    useEffect(() => {
+        if (user?.weight !== undefined) {
+            setValue('weight', user.weight);
+        }
+        if (user?.activeTime !== undefined) {
+            setValue('activeTime', user.activeTime);
+        }
+    }, [user, setValue]);
+
     return (
         <Box component="div" className={scss.wrapper}>
-            {fields.map(({ name, type, label, placeholder, defaultValue }) => (
+            {fields.map(({ name, type, label, placeholder }) => (
                 <Input
                     key={name}
                     name={name as NameValues}
@@ -37,7 +45,6 @@ const AdditionalInfo: FC<IProfileData> = ({ register, errors, user }) => {
                     label={label}
                     placeholder={placeholder}
                     light
-                    defaultValue={defaultValue}
                 />
             ))}
         </Box>

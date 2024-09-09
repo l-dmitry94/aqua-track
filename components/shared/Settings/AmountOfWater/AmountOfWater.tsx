@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { Box, Typography } from '@mui/material';
 
 import { NameValues } from '@/components/ui/Form/Form.types';
@@ -8,7 +8,10 @@ import { IProfileData } from '../ProfileData/ProfileData.types';
 
 import scss from './AmountOfWater.module.scss';
 
-const AmountOfWater: FC<IProfileData> = ({ register, errors, user }) => {
+const AmountOfWater: FC<IProfileData> = ({ register, errors, setValue, user }) => {
+    if(user?.volume) {
+        setValue('volume', user?.volume);
+    }
     return (
         <Box component="div" className={scss.wrapper}>
             <Box component="div" className={scss.amount}>
@@ -23,12 +26,11 @@ const AmountOfWater: FC<IProfileData> = ({ register, errors, user }) => {
             <Box component="div" className={scss.inputWrapper}>
                 <Input
                     register={register}
-                    name={'waterIntake' as NameValues}
-                    type="string"
+                    name={'volume' as NameValues}
+                    type="text"
                     label="Write down how much water you will drink:"
                     placeholder="How much water you will drink"
                     errors={errors}
-                    defaultValue={user?.volume}
                 />
             </Box>
         </Box>

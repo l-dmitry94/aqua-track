@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { FieldErrors, UseControllerProps, UseFormRegister } from 'react-hook-form';
+import { FieldErrors, UseControllerProps, UseFormRegister, UseFormSetValue } from 'react-hook-form';
 import * as yup from 'yup';
 
 export interface UserLogin {
@@ -30,6 +30,7 @@ export interface IForm {
     children: (
         register: UseFormRegister<FormValues>,
         control: UseControllerProps<FormValues>['control'],
+        setValue: UseFormSetValue<FormValues>,
         errors: FieldErrors<FormValues>
     ) => ReactNode;
 }

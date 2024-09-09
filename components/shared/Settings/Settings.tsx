@@ -24,18 +24,19 @@ const Settings = () => {
     const handleSubmit = (data: FormValues) => {
         console.log(data);
     };
+
     return (
         <Form onSubmit={handleSubmit}>
-            {(register, control, errors) => (
+            {(register, control, setValue, errors) => (
                 <Box component="div" className={scss.settings}>
                     <Title className={clsx(scss.title, scss.titleSettings)}>Settings</Title>
 
-                    <UploadImage register={register} avatar={session?.user?.image} />
+                    <UploadImage register={register} avatar={session?.user?.image} setValue={setValue} />
 
                     <Box component="div" className={scss.wrapper}>
                         <Box component="div">
                             <GenderIdentity control={control} gender={session?.user?.gender} />
-                            <ProfileData register={register} errors={errors} user={session?.user} />
+                            <ProfileData register={register} errors={errors} user={session?.user} setValue={setValue} />
                             <DailyNorma />
                         </Box>
 
@@ -44,11 +45,13 @@ const Settings = () => {
                                 register={register}
                                 errors={errors}
                                 user={session?.user}
+                                setValue={setValue}
                             />
                             <AmountOfWater
                                 register={register}
                                 errors={errors}
                                 user={session?.user}
+                                setValue={setValue}
                             />
                         </Box>
                     </Box>
