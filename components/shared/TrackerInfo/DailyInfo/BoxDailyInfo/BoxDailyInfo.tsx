@@ -6,7 +6,6 @@ import CustomScrollBar from '@/components/ui/Scrollbar/Srollbar';
 import { formatDate, isTodayDate } from '@/helpers/formatDate';
 import { formatTime } from '@/helpers/formatTime';
 
-import data from '../data.json';
 import { DailyInfoResponse } from '../types';
 
 import BoxSkeleton from './BoxSkeleton';
@@ -15,7 +14,7 @@ import ItemListDailyInfo from './ItemListDailyInfo';
 
 import scss from './BoxDailyInfo.module.scss';
 
-const BoxDailyInfo: React.FC<{ data: DailyInfoResponse }> = () => {
+const BoxDailyInfo: React.FC<{ data: DailyInfoResponse }> = ({ data }) => {
     const { currentDate, entries } = data;
     const date = new Date(currentDate);
     const displayDate = isTodayDate(date) ? 'Today' : formatDate(date);

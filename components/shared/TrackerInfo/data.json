@@ -1,4 +1,14 @@
 {
+    "label1": {
+        "text": "Settings",
+        "icon": "settings"
+    },
+    "label2": {
+        "text": "Log out",
+        "icon": "logout"
+    },
+    "name": "John",
+    "image": "https://th.bing.com/th/id/OIP.bl-zq1MnTF4__UpeBTYC5wHaEK?rs=1&pid=ImgDetMain",
     "currentDate": "2024-09-02T00:00:00.000Z",
     "entries": [
         {
