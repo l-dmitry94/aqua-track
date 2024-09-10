@@ -2,6 +2,10 @@
     @apply mb-10 flex flex-col gap-3 w-full;
 }
 
+.uploadButton {
+    @apply flex flex-col gap-3 justify-center items-center
+}
+
 .imageWrapper {
     @apply flex gap-3 justify-center items-center;
 }

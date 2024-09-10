@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { Controller } from 'react-hook-form';
 import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material';
 
@@ -6,14 +6,17 @@ import { IGenderIdentity } from './GenderIdentity.types';
 
 import scss from './GenderIdentity.module.scss';
 
-const GenderIdentity: FC<IGenderIdentity> = ({ control, gender }) => {
+const GenderIdentity: FC<IGenderIdentity> = ({ control, gender, setValue }) => {
+    useEffect(() => {
+        if (gender) setValue('gender', gender);
+    }, [gender, setValue]);
     return (
         <FormControl component="fieldset" className={scss.formControl}>
             <FormLabel className={scss.label}>Your gender identity</FormLabel>
             <Controller
                 name="gender"
                 control={control}
-                defaultValue={!gender ? 'woman' : gender}
+                defaultValue={gender || ''}
                 render={({ field }) => (
                     <RadioGroup row {...field} className={scss.radioGroup}>
                         <FormControlLabel

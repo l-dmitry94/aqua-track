@@ -9,9 +9,12 @@ import { IProfileData } from '../ProfileData/ProfileData.types';
 import scss from './AmountOfWater.module.scss';
 
 const AmountOfWater: FC<IProfileData> = ({ register, errors, setValue, user }) => {
-    if(user?.volume) {
-        setValue('volume', user?.volume);
-    }
+    useEffect(() => {
+        if (user?.volume) {
+            setValue('volume', user?.volume);
+        }
+    }, [setValue, user?.volume]);
+
     return (
         <Box component="div" className={scss.wrapper}>
             <Box component="div" className={scss.amount}>

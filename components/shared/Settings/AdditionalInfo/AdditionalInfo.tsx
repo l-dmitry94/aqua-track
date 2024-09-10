@@ -12,13 +12,13 @@ const AdditionalInfo: FC<IProfileData> = ({ register, errors, user, setValue }) 
     const fields = [
         {
             name: 'weight',
-            type: 'string',
+            type: 'text',
             label: 'Your weight in kilograms:',
             placeholder: 'Enter your weight',
         },
         {
             name: 'activeTime',
-            type: 'string',
+            type: 'text',
             label: 'The time of active participation in sports:',
             placeholder: 'Enter your time of active participation',
         },

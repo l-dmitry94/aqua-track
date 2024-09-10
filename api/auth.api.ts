@@ -8,6 +8,11 @@ export const signup = async (body: FormValues) => {
     return response;
 };
 
+export const update = async (body: FormValues) => {
+    const response = await instance.patch(ENDPOINTS.auth.update, body);
+    return response;
+};
+
 export const removeAvatar = async (publicId: string) => {
     const response = await instance.post(ENDPOINTS.auth.removeAvatar, { publicId });
     return response;

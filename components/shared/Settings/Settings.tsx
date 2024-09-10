@@ -4,6 +4,7 @@ import { Box } from '@mui/material';
 import clsx from 'clsx';
 import { useSession } from 'next-auth/react';
 
+import { update } from '@/api/auth.api';
 import Button from '@/components/ui/Button';
 import Form from '@/components/ui/Form';
 import { FormValues } from '@/components/ui/Form/Form.types';
@@ -19,10 +20,21 @@ import UploadImage from './UploadImage';
 import scss from './Settings.module.scss';
 
 const Settings = () => {
-    const { data: session } = useSession();
+    const { data: session, update: updateSession } = useSession();
 
-    const handleSubmit = (data: FormValues) => {
-        console.log(data);
+    console.log(session);
+
+    const handleSubmit = async (data: FormValues) => {
+        const normalizeData = {
+            ...data,
+            activeTime: Number(data.activeTime),
+            weight: Number(data.weight),
+            volume: Number(data.volume),
+        };
+
+        await update(normalizeData);
+
+        updateSession({ ...session, ...data });
     };
 
     return (
@@ -31,12 +43,21 @@ const Settings = () => {
                 <Box component="div" className={scss.settings}>
                     <Title className={clsx(scss.title, scss.titleSettings)}>Settings</Title>
 
-                    <UploadImage register={register} avatar={session?.user?.image} setValue={setValue} />
+                    <UploadImage avatar={session?.user?.image} setValue={setValue} />
 
                     <Box component="div" className={scss.wrapper}>
                         <Box component="div">
-                            <GenderIdentity control={control} gender={session?.user?.gender} />
-                            <ProfileData register={register} errors={errors} user={session?.user} setValue={setValue} />
+                            <GenderIdentity
+                                control={control}
+                                gender={session?.user?.gender}
+                                setValue={setValue}
+                            />
+                            <ProfileData
+                                register={register}
+                                errors={errors}
+                                user={session?.user}
+                                setValue={setValue}
+                            />
                             <DailyNorma />
                         </Box>
 

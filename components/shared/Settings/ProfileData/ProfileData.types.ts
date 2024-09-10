@@ -6,5 +6,5 @@ export interface IProfileData {
     register: UseFormRegister<FormValues>;
     errors: FieldErrors<FormValues>;
     user?: ISettings | null;
-    setValue: UseFormSetValue<FormValues>
+    setValue: UseFormSetValue<FormValues>;
 }

@@ -38,7 +38,6 @@ const Input: FC<IInput> = ({
                 <input
                     type={showPassword ? 'text' : type}
                     {...register(name)}
-                    defaultValue={defaultValue}
                     placeholder={placeholder}
                     id={name}
                     autoComplete={type === 'password' ? 'current-password' : 'off'}
