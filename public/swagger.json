@@ -12,14 +12,27 @@
             "url": "https://aqua-track-olive.vercel.app/api"
         }
     ],
-    "tags": ["Users", "Water", "Auth"],
+    "tags": [
+        {
+            "name": "Users",
+            "description": "Operations related to user management"
+        },
+        {
+            "name": "Water",
+            "description": "Operations related to water entries"
+        },
+        {
+            "name": "Auth",
+            "description": "Authentication operations"
+        }
+    ],
     "components": {
         "securitySchemes": {
             "cookieAuth": {
                 "type": "apiKey",
                 "in": "cookie",
                 "name": "next-auth.session-token",
-                "description": "Authentication using a session token stored in a cookie. The cookie name is 'next-auth.session-token'. This token is used to authenticate requests and manage user sessions. You can find it in yours browser devtools in section Cockies. But this is not necessary, because next-auth automatically substitutes the token."
+                "description": "Authentication using a session token stored in a cookie. The cookie name is 'next-auth.session-token'. This token is used to authenticate requests and manage user sessions. You can find it in your browser's dev tools under the Cookies section, but next-auth automatically substitutes the token."
             }
         },
         "schemas": {
@@ -57,849 +70,330 @@
                 },
                 "required": ["user", "date", "volume"]
             },
-            "UserDetails": {
-                "type": "object",
-                "properties": {
-                    "_id": {
-                        "type": "string"
-                    },
-                    "name": {
-                        "type": "string"
-                    },
-                    "email": {
-                        "type": "string"
-                    },
-                    "password": {
-                        "type": "string"
-                    },
-                    "token": {
-                        "type": "string"
-                    },
-                    "gender": {
-                        "type": "string",
-                        "enum": ["woman", "man"]
-                    },
-                    "weight": {
-                        "type": "number",
-                        "format": "float"
-                    },
-                    "activeTime": {
-                        "type": "number"
-                    },
-                    "waterIntake": {
-                        "type": "number",
-                        "format": "float"
-                    },
-                    "avatar": {
-                        "type": "string",
-                        "format": "uri"
-                    },
-                    "createdAt": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "updatedAt": {
-                        "type": "string",
-                        "format": "date-time"
-                    }
-                },
-                "required": [
-                    "_id",
-                    "name",
-                    "email",
-                    "password",
-                    "token",
-                    "gender",
-                    "weight",
-                    "activeTime",
-                    "waterIntake",
-                    "avatar",
-                    "createdAt",
-                    "updatedAt"
-                ]
-            },
             "User": {
                 "type": "object",
                 "properties": {
                     "name": {
-                        "type": "string"
-                    },
-                    "email": {
                         "type": "string",
-                        "unique": true,
-                        "required": true
-                    },
-                    "password": {
-                        "type": "string",
-                        "required": true
-                    },
-                    "token": {
-                        "type": "string",
-                        "default": null
-                    },
-                    "gender": {
-                        "type": "string",
-                        "enum": ["woman", "man"],
-                        "default": "woman"
-                    },
-                    "weight": {
-                        "type": "number",
-                        "default": 0
-                    },
-                    "activeTime": {
-                        "type": "number",
-                        "default": 0
-                    },
-                    "waterIntake": {
-                        "type": "number",
-                        "default": 1.8
-                    },
-                    "avatar": {
-                        "type": "string",
-                        "default": null
-                    }
-                }
-            },
-            "UserResponseWithMessage": {
-                "type": "object",
-                "properties": {
-                    "user": {
-                        "$ref": "#/components/schemas/User"
-                    },
-                    "message": {
-                        "type": "string"
-                    }
-                }
-            },
-            "UserResponseWithoutMessage": {
-                "type": "object",
-                "properties": {
-                    "user": {
-                        "$ref": "#/components/schemas/User"
-                    }
-                }
-            },
-            "UserUpdateRequest": {
-                "type": "object",
-                "properties": {
-                    "name": {
-                        "type": "string",
-                        "example": "John Doe"
+                        "nullable": true,
+                        "example": null
                     },
                     "email": {
                         "type": "string",
                         "format": "email",
-                        "example": "john.doe@example.com"
+                        "example": "kurkayetra@gufum.com"
+                    },
+                    "image": {
+                        "type": "string",
+                        "nullable": true,
+                        "example": null
+                    },
+                    "id": {
+                        "type": "string",
+                        "example": "66e159b9d94b57c78830d8aa"
                     },
                     "gender": {
                         "type": "string",
                         "enum": ["woman", "man"],
-                        "example": "man",
-                        "default": "woman"
+                        "example": "woman"
+                    },
+                    "activeTime": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 0
                     },
                     "weight": {
                         "type": "number",
                         "format": "float",
-                        "example": 70.5
+                        "example": 0
                     },
-                    "activeTime": {
-                        "type": "number",
-                        "example": "2"
-                    },
-                    "waterIntake": {
+                    "volume": {
                         "type": "number",
                         "format": "float",
-                        "example": 2000
-                    },
-                    "avatar": {
-                        "type": "string",
-                        "format": "binary",
-                        "description": "New avatar image (JPEG or PNG)"
+                        "example": 1.8
                     }
                 }
             },
-            "UserUpdateResponse": {
+            "UserSession": {
                 "type": "object",
                 "properties": {
-                    "message": {
-                        "type": "string",
-                        "example": "User updated successfully"
-                    },
                     "user": {
-                        "type": "object",
-                        "properties": {
-                            "name": {
-                                "type": "string"
-                            },
-                            "email": {
-                                "type": "string"
-                            },
-                            "gender": {
-                                "type": "string",
-                                "enum": ["woman", "man"],
-                                "example": "man"
-                            },
-                            "weight": {
-                                "type": "number",
-                                "format": "float"
-                            },
-                            "activeTime": {
-                                "type": "number"
-                            },
-                            "waterIntake": {
-                                "type": "number",
-                                "format": "float"
-                            },
-                            "avatar": {
-                                "type": "string",
-                                "format": "uri"
-                            }
-                        }
-                    }
-                }
-            },
-            "ErrorResponse": {
-                "type": "object",
-                "properties": {
-                    "message": {
-                        "type": "string"
-                    }
-                }
-            }
-        },
-        "responses": {
-            "UserListResponse": {
-                "description": "List of users",
-                "content": {
-                    "application/json": {
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/components/schemas/UserDetails"
-                            }
-                        }
-                    }
-                }
-            },
-            "UserLoginSuccess": {
-                "description": "User logged in successfully",
-                "content": {
-                    "application/json": {
-                        "schema": {
-                            "$ref": "#/components/schemas/UserResponseWithoutMessage"
-                        }
-                    }
-                }
-            },
-            "UserRegisterSuccess": {
-                "description": "User registered successfully",
-                "content": {
-                    "application/json": {
-                        "schema": {
-                            "$ref": "#/components/schemas/UserResponseWithMessage"
-                        }
-                    }
-                }
-            },
-            "Unauthorized": {
-                "description": "Unauthorized",
-                "content": {
-                    "application/json": {
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "message": {
-                                    "type": "string",
-                                    "example": "Unauthorized"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "BadRequest": {
-                "description": "Bad request",
-                "content": {
-                    "application/json": {
-                        "schema": {
-                            "$ref": "#/components/schemas/ErrorResponse"
-                        }
-                    }
-                }
-            },
-            "InternalServerError": {
-                "description": "Internal server error",
-                "content": {
-                    "application/json": {
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "message": {
-                                    "type": "string",
-                                    "example": "Internal server error"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "UserUpdateSuccess": {
-                "description": "User updated successfully",
-                "content": {
-                    "application/json": {
-                        "schema": {
-                            "$ref": "#/components/schemas/UserUpdateResponse"
-                        }
+                        "$ref": "#/components/schemas/User"
+                    },
+                    "expires": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-10-11T09:43:23.309Z"
                     }
                 }
             }
         }
     },
     "paths": {
-        "/auth/callback/credentials": {
+        "/auth/providers": {
+            "get": {
+                "tags": ["Auth"],
+                "summary": "Callback URL for providers",
+                "description": "Handles the response from providers after authentication.",
+                "responses": {
+                    "200": {
+                        "description": "Successfully handled provider response"
+                    },
+                    "401": {
+                        "description": "User not authenticated or error occurred"
+                    }
+                }
+            }
+        },
+        "/auth/csrf": {
+            "get": {
+                "tags": ["Auth"],
+                "summary": "Get CSRF token",
+                "description": "Returns a CSRF token to secure requests.",
+                "responses": {
+                    "200": {
+                        "description": "CSRF token"
+                    }
+                }
+            }
+        },
+        "/auth/signin/google": {
             "post": {
-                "summary": "Log in a user with credentials",
-                "tags": ["Users"],
+                "tags": ["Auth"],
+                "summary": "Sign-in through the specified provider",
+                "description": "Authenticates the user via the selected provider.",
                 "requestBody": {
-                    "description": "User login credentials",
-                    "required": true,
+                    "description": "Authentication data",
                     "content": {
                         "application/json": {
                             "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "email": {
-                                        "type": "string",
-                                        "format": "email",
-                                        "example": "john.doe@example.com"
+                                "oneOf": [
+                                    {
+                                        "type": "object",
+                                        "properties": {
+                                            "provider": {
+                                                "type": "string",
+                                                "example": "google"
+                                            }
+                                        },
+                                        "required": ["provider"]
                                     },
-                                    "password": {
-                                        "type": "string",
-                                        "format": "password",
-                                        "example": "password123"
+                                    {
+                                        "type": "object",
+                                        "properties": {
+                                            "provider": {
+                                                "type": "string",
+                                                "example": "credentials"
+                                            },
+                                            "email": {
+                                                "type": "string",
+                                                "description": "User email for credential-based login",
+                                                "example": "user@example.com"
+                                            },
+                                            "password": {
+                                                "type": "string",
+                                                "description": "User password for credential-based login",
+                                                "example": "password123"
+                                            },
+                                            "csrfToken": {
+                                                "type": "string",
+                                                "description": "CSRF token for security",
+                                                "example": "c4a0350112b456810d26fc20d9e8e0ffdd2d6b8b705dafdfd18c8903a2ac7b8e"
+                                            },
+                                            "callbackUrl": {
+                                                "type": "string",
+                                                "description": "URL to redirect after authentication",
+                                                "example": "http://localhost:3000/signin"
+                                            },
+                                            "redirect": {
+                                                "type": "boolean",
+                                                "description": "Whether to redirect or not",
+                                                "example": false
+                                            }
+                                        },
+                                        "required": [
+                                            "provider",
+                                            "email",
+                                            "password",
+                                            "csrfToken",
+                                            "callbackUrl",
+                                            "redirect"
+                                        ]
+                                    }
+                                ]
+                            },
+                            "examples": {
+                                "googleExample": {
+                                    "summary": "Example for Google provider",
+                                    "value": {
+                                        "csrfToken": "c4a0350112b456810d26fc20d9e8e0ffdd2d6b8b705dafdfd18c8903a2ac7b8e",
+                                        "callbackUrl": "http://localhost:3000/signin",
+                                        "json": true
                                     }
                                 },
-                                "required": ["email", "password"]
+                                "credentialsExample": {
+                                    "summary": "Example for Credentials provider",
+                                    "value": {
+                                        "provider": "credentials",
+                                        "email": "user@example.com",
+                                        "password": "password123",
+                                        "csrfToken": "c4a0350112b456810d26fc20d9e8e0ffdd2d6b8b705dafdfd18c8903a2ac7b8e",
+                                        "callbackUrl": "http://localhost:3000/signin",
+                                        "redirect": false
+                                    }
+                                }
                             }
                         }
                     }
                 },
                 "responses": {
                     "200": {
-                        "description": "User logged in successfully and redirected to /tracker",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "redirect": {
-                                            "type": "string",
-                                            "example": "/tracker"
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                        "description": "Successful authentication"
                     },
-                    "400": {
-                        "description": "Invalid login credentials",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "error": {
-                                            "type": "string",
-                                            "example": "Invalid email or password"
-                                        }
+                    "401": {
+                        "description": "Invalid credentials or provider not found"
+                    }
+                }
+            }
+        },
+        "/auth/callback/{provider}": {
+            "post": {
+                "tags": ["Auth"],
+                "summary": "Sign-in through the specified provider",
+                "description": "Authenticates the user via the selected provider.",
+                "parameters": [
+                    {
+                        "name": "provider",
+                        "in": "path",
+                        "description": "Name of the provider",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": ["google", "credentials"]
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Authentication data",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "oneOf": [
+                                    {
+                                        "type": "object",
+                                        "properties": {
+                                            "provider": {
+                                                "type": "string",
+                                                "example": "google"
+                                            }
+                                        },
+                                        "required": ["provider"]
+                                    },
+                                    {
+                                        "type": "object",
+                                        "properties": {
+                                            "provider": {
+                                                "type": "string",
+                                                "example": "credentials"
+                                            },
+                                            "email": {
+                                                "type": "string",
+                                                "description": "User email for credential-based login",
+                                                "example": "user@example.com"
+                                            },
+                                            "password": {
+                                                "type": "string",
+                                                "description": "User password for credential-based login",
+                                                "example": "password123"
+                                            },
+                                            "csrfToken": {
+                                                "type": "string",
+                                                "description": "CSRF token for security",
+                                                "example": "c4a0350112b456810d26fc20d9e8e0ffdd2d6b8b705dafdfd18c8903a2ac7b8e"
+                                            },
+                                            "callbackUrl": {
+                                                "type": "string",
+                                                "description": "URL to redirect after authentication",
+                                                "example": "http://localhost:3000/signin"
+                                            },
+                                            "redirect": {
+                                                "type": "boolean",
+                                                "description": "Whether to redirect or not",
+                                                "example": false
+                                            }
+                                        },
+                                        "required": [
+                                            "provider",
+                                            "email",
+                                            "password",
+                                            "csrfToken",
+                                            "callbackUrl",
+                                            "redirect"
+                                        ]
+                                    }
+                                ]
+                            },
+                            "examples": {
+                                "googleExample": {
+                                    "summary": "Example for Google provider",
+                                    "value": {
+                                        "csrfToken": "c4a0350112b456810d26fc20d9e8e0ffdd2d6b8b705dafdfd18c8903a2ac7b8e",
+                                        "callbackUrl": "http://localhost:3000/signin",
+                                        "json": true
+                                    }
+                                },
+                                "credentialsExample": {
+                                    "summary": "Example for Credentials provider",
+                                    "value": {
+                                        "provider": "credentials",
+                                        "email": "user@example.com",
+                                        "password": "password123",
+                                        "csrfToken": "c4a0350112b456810d26fc20d9e8e0ffdd2d6b8b705dafdfd18c8903a2ac7b8e",
+                                        "callbackUrl": "http://localhost:3000/signin",
+                                        "redirect": false
                                     }
                                 }
                             }
                         }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful authentication"
                     },
-                    "500": {
-                        "description": "Internal server error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "error": {
-                                            "type": "string",
-                                            "example": "An error occurred"
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                    "401": {
+                        "description": "Invalid credentials or provider not found"
+                    }
+                }
+            }
+        },
+        "auth/signout": {
+            "post": {
+                "tags": ["Auth"],
+                "summary": "User sign-out",
+                "description": "Terminates the user's session.",
+                "responses": {
+                    "200": {
+                        "description": "Successful sign-out"
+                    },
+                    "401": {
+                        "description": "User not authenticated"
                     }
                 }
             }
         },
         "/auth/session": {
             "get": {
+                "tags": ["Auth"],
                 "summary": "Get current session information",
-                "tags": ["Users"],
-                "security": [
-                    {
-                        "cookieAuth": []
-                    }
-                ],
+                "description": "Returns information about the user's current session.",
                 "responses": {
                     "200": {
-                        "description": "Retrieve session information for the authenticated user. Requires authentication via cookies.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "user": {
-                                            "type": "object",
-                                            "properties": {
-                                                "name": {
-                                                    "type": "string",
-                                                    "example": "John Doe"
-                                                },
-                                                "image": {
-                                                    "type": "string"
-                                                },
-                                                "id": {
-                                                    "type": "string",
-                                                    "example": "user-id"
-                                                },
-                                                "email": {
-                                                    "type": "string",
-                                                    "format": "email",
-                                                    "example": "john.doe@example.com"
-                                                },
-                                                "gender": {
-                                                    "type": "string",
-                                                    "example": "male"
-                                                },
-                                                "activeTime": {
-                                                    "type": "string",
-                                                    "example": "2024-09-09T00:00:00Z"
-                                                },
-                                                "weight": {
-                                                    "type": "number",
-                                                    "example": 70
-                                                },
-                                                "volume": {
-                                                    "type": "number",
-                                                    "example": 10
-                                                }
-                                            }
-                                        },
-                                        "expires": {
-                                            "type": "string",
-                                            "format": "date-time",
-                                            "example": "2024-09-10T00:00:00Z"
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                        "ref$": "#/components/schemas/UserSession",
+                        "description": "Current user session"
                     },
                     "401": {
-                        "description": "User not authenticated",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "error": {
-                                            "type": "string",
-                                            "example": "Not authenticated"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Internal server error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "error": {
-                                            "type": "string",
-                                            "example": "An error occurred"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/auth/signup": {
-            "post": {
-                "summary": "Register a new user",
-                "tags": ["Users"],
-                "requestBody": {
-                    "description": "User registration information",
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "name": {
-                                        "type": "string",
-                                        "example": "John Doe"
-                                    },
-                                    "email": {
-                                        "type": "string",
-                                        "format": "email",
-                                        "example": "john.doe@example.com"
-                                    },
-                                    "password": {
-                                        "type": "string",
-                                        "format": "password",
-                                        "example": "password123"
-                                    }
-                                },
-                                "required": ["name", "email", "password"]
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "User registered successfully"
-                    },
-                    "400": {
-                        "$ref": "#/components/responses/BadRequest"
-                    },
-                    "409": {
-                        "description": "User already exists"
-                    },
-                    "500": {
-                        "$ref": "#/components/responses/InternalServerError"
-                    }
-                }
-            }
-        },
-        "/users/update": {
-            "patch": {
-                "summary": "Update user information",
-                "tags": ["Users"],
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "requestBody": {
-                    "description": "User information and avatar to update",
-                    "required": true,
-                    "content": {
-                        "multipart/form-data": {
-                            "schema": {
-                                "$ref": "#/components/schemas/UserUpdateRequest"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "$ref": "#/components/responses/UserUpdateSuccess"
-                    },
-                    "400": {
-                        "$ref": "#/components/responses/BadRequest"
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/Unauthorized"
-                    },
-                    "500": {
-                        "$ref": "#/components/responses/InternalServerError"
-                    }
-                }
-            }
-        },
-        "/auth/signout": {
-            "get": {
-                "summary": "Log out a user",
-                "tags": ["Users"],
-                "responses": {
-                    "200": {
-                        "description": "User logged out successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Logged out successfully"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "$ref": "#/components/responses/InternalServerError"
-                    }
-                }
-            }
-        },
-        "/users": {
-            "get": {
-                "summary": "Get list of users",
-                "tags": ["Users"],
-                "responses": {
-                    "200": {
-                        "$ref": "#/components/responses/UserListResponse"
-                    },
-                    "500": {
-                        "$ref": "#/components/responses/InternalServerError"
-                    }
-                }
-            }
-        },
-        "/water/create": {
-            "post": {
-                "summary": "Adding data on the volume of water consumed",
-                "tags": ["Water"],
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "requestBody": {
-                    "description": "Water creating information",
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "date": {
-                                        "type": "string",
-                                        "format": "date-time",
-                                        "description": "The date of the water entry in ISO 8601 format"
-                                    },
-                                    "volume": {
-                                        "type": "number",
-                                        "description": "The volume of water consumed in milliliters"
-                                    }
-                                },
-                                "required": ["date", "volume"]
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Getting information successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/WaterEntry"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/Unauthorized"
-                    },
-                    "400": {
-                        "description": "Bad Request: Missing required fields"
-                    },
-                    "500": {
-                        "$ref": "#/components/responses/InternalServerError"
-                    }
-                }
-            }
-        },
-        "/water/{id}/update": {
-            "patch": {
-                "summary": "Update data on the volume and date of water",
-                "tags": ["Water"],
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "description": "ID of the water entry to update",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "description": "Update water information",
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "date": {
-                                        "type": "string",
-                                        "format": "date-time",
-                                        "description": "The date of the water entry in ISO 8601 format"
-                                    },
-                                    "volume": {
-                                        "type": "number",
-                                        "description": "The volume of water consumed in milliliters"
-                                    }
-                                },
-                                "required": ["date", "volume"]
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Data of entry water updated successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/WaterEntry"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/Unauthorized"
-                    },
-                    "400": {
-                        "description": "Entry ID is required"
-                    },
-                    "404": {
-                        "description": "Entry not found"
-                    },
-                    "500": {
-                        "$ref": "#/components/responses/InternalServerError"
-                    }
-                }
-            }
-        },
-        "/water/{id}/delete": {
-            "delete": {
-                "summary": "Delete data on the volume and date of water",
-                "tags": ["Water"],
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "description": "ID of the water entry to delete",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Entry deleted successfully"
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/Unauthorized"
-                    },
-                    "400": {
-                        "description": "Entry ID is required"
-                    },
-                    "404": {
-                        "description": "Entry not found or forbidden"
-                    },
-                    "500": {
-                        "$ref": "#/components/responses/InternalServerError"
-                    }
-                }
-            }
-        },
-        "/water/daily": {
-            "post": {
-                "summary": "Obtaining data on the user's water consumption per day",
-                "tags": ["Water"],
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "requestBody": {
-                    "description": "Get information about user's water consumption per day. The date field is optional. If it is missing, the data for the current day will be returned",
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "date": {
-                                        "type": "string",
-                                        "format": "date-time",
-                                        "description": "The date of the water entry in ISO 8601 format"
-                                    }
-                                },
-                                "required": ["date", "volume"]
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Data of entry water updated successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": { "$ref": "#/components/schemas/WaterEntry" }
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/Unauthorized"
-                    },
-                    "500": {
-                        "description": "Error fetching data"
-                    }
-                }
-            }
-        },
-        "/water/monthly": {
-            "get": {
-                "summary": "Obtaining data on the user's water consumption per month",
-                "tags": ["Water"],
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Monthly data of water consumption retrieved successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/WaterEntry"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/Unauthorized"
-                    },
-                    "500": {
-                        "description": "Error fetching data"
+                        "description": "User not authenticated"
                     }
                 }
             }
