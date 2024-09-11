@@ -5,6 +5,7 @@ import clsx from 'clsx';
 import { useSession } from 'next-auth/react';
 
 import Button from '@/components/ui/Button';
+import CustomModal from '@/components/ui/CustomModal';
 import Form from '@/components/ui/Form';
 import Title from '@/components/ui/Title';
 
@@ -17,37 +18,44 @@ import UploadImage from './UploadImage';
 
 import scss from './Settings.module.scss';
 
-const Settings = () => {
+interface SettingsProps {
+    isModalOpen: boolean;
+    handleModalClose: () => void;
+}
+
+const Settings: React.FC<SettingsProps> = ({ isModalOpen, handleModalClose }) => {
     const session = useSession();
     console.log(session);
 
     return (
-        <Form onSubmit={() => {}}>
-            {(register, control, errors) => (
-                <Box component="div" className={scss.settings}>
-                    <Title className={clsx(scss.title, scss.titleSettings)}>Settings</Title>
+        <CustomModal title="Settings" profile open={isModalOpen} onClose={handleModalClose}>
+            <Form onSubmit={() => {}}>
+                {(register, control, errors) => (
+                    <Box component="div" className={scss.settings}>
+                        <Title className={clsx(scss.title, scss.titleSettings)}>Settings</Title>
 
-                    <UploadImage register={register} />
+                        <UploadImage register={register} />
 
-                    <Box component="div" className={scss.wrapper}>
-                        <Box component="div">
-                            <GenderIdentity control={control} />
-                            <ProfileData register={register} errors={errors} />
-                            <DailyNorma />
+                        <Box component="div" className={scss.wrapper}>
+                            <Box component="div">
+                                <GenderIdentity control={control} />
+                                <ProfileData register={register} errors={errors} />
+                                <DailyNorma />
+                            </Box>
+
+                            <Box component="div">
+                                <AdditionalInfo register={register} errors={errors} />
+                                <AmountOfWater register={register} errors={errors} />
+                            </Box>
                         </Box>
 
-                        <Box component="div">
-                            <AdditionalInfo register={register} errors={errors} />
-                            <AmountOfWater register={register} errors={errors} />
-                        </Box>
+                        <Button type="submit" variant="contained">
+                            Save
+                        </Button>
                     </Box>
-
-                    <Button type="submit" variant="contained">
-                        Save
-                    </Button>
-                </Box>
-            )}
-        </Form>
+                )}
+            </Form>
+        </CustomModal>
     );
 };
 

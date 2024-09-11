@@ -7,6 +7,13 @@
         @apply p-8;
     }
 }
+
+.name {
+    @apply font-sans text-[32px] font-bold leading-10 text-primary;
+    @include media-rules(tablet) {
+        @apply text-4xl;
+    }
+}
 .text {
     @apply font-sans text-[32px] font-normal leading-10 text-primary;
 

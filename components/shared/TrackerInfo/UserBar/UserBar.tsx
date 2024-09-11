@@ -10,7 +10,7 @@ const UserBar: React.FC<UserBarProps> = ({ name, image }) => {
         <Box component="div" className={scss.wrapper}>
             <Typography component="p" className={scss.text}>
                 {`Hello`}
-                <span style={{ fontWeight: 'bold' }}>{`, ${name}`}</span>
+                <Typography component="span" className={scss.name}>{`, ${name}`}</Typography>
             </Typography>
             <UserButton name={name} image={image} />
         </Box>

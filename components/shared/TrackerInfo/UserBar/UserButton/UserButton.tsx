@@ -1,22 +1,20 @@
-'use client';
-
 import React from 'react';
-import { Avatar, Box, Menu, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 
-import Button from '@/components/ui/Button';
-import Icon from '@/components/ui/Icon';
-import { useUserButton } from '@/hooks/useUserButton';
+import Settings from '@/components/shared/Settings';
 
+import Logout from '../Logout';
 import { UserBarProps } from '../types';
 
-import MenuItems from './MenuItems';
-import UserModal from './UserModal';
+import UserBarPopover from './UserBarPopover';
+import { useUserButton } from './useUserButton';
 
 import scss from './UserButton.module.scss';
 
 const UserButton: React.FC<UserBarProps> = ({ name, image }) => {
     const {
         anchorEl,
+        isModalOpen,
         open,
         modalType,
         handleClick,
@@ -29,50 +27,26 @@ const UserButton: React.FC<UserBarProps> = ({ name, image }) => {
 
     return (
         <Box component="div" className={scss.wrapper}>
-            <Button
-                aria-controls={open ? 'simple-menu' : undefined}
-                aria-haspopup="true"
-                onClick={handleClick}
-                className={scss.btn}
-            >
-                <Typography component="p" className={scss.text}>
-                    {name}
-                </Typography>
-                <Avatar alt="User Avatar" src={image} />
-                <Icon
-                    variant={'chevron-down'}
-                    className={`${scss.svg} ${open ? scss.rotate : ''}`}
-                />
-            </Button>
-
-            <Menu
-                className={scss.menu}
-                id="simple-menu"
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                MenuListProps={{
-                    'aria-labelledby': 'basic-button',
+            <UserBarPopover
+                {...{
+                    open,
+                    anchorEl,
+                    handleClick,
+                    handleClose,
+                    name,
+                    image,
+                    handleLogoutClick,
+                    handleSettingsClick,
                 }}
-                slotProps={{
-                    paper: {
-                        style: { width: anchorEl ? anchorEl.clientWidth : 'auto' },
-                    },
-                }}
-            >
-                <MenuItems
-                    handleLogoutClick={handleLogoutClick}
-                    handleSettingsClick={handleSettingsClick}
+            />
+            {modalType === 'logout' ? (
+                <Logout
+                    isModalOpen={isModalOpen}
+                    onLogoutConfirm={handleLogoutConfirm}
+                    handleModalClose={handleModalClose}
                 />
-            </Menu>
-
-            {modalType && (
-                <UserModal
-                    open={Boolean(modalType)}
-                    onClose={handleModalClose}
-                    modalType={modalType}
-                    onLogoutConfirm={modalType === 'logout' ? handleLogoutConfirm : undefined}
-                />
+            ) : (
+                <Settings isModalOpen={isModalOpen} handleModalClose={handleModalClose}></Settings>
             )}
         </Box>
     );
