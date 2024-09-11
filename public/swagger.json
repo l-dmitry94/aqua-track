@@ -33,6 +33,22 @@
                 "in": "cookie",
                 "name": "next-auth.session-token",
                 "description": "Authentication using a session token stored in a cookie. The cookie name is 'next-auth.session-token'. This token is used to authenticate requests and manage user sessions. You can find it in your browser's dev tools under the Cookies section, but next-auth automatically substitutes the token."
+            },
+            "OAuth2": {
+                "type": "oauth2",
+                "description": "OAuth2 authentication with support for multiple providers like Google.",
+                "flows": {
+                    "authorizationCode": {
+                        "authorizationUrl": "https://accounts.google.com/o/oauth2/auth",
+                        "tokenUrl": "https://oauth2.googleapis.com/token",
+                        "refreshUrl": "https://oauth2.googleapis.com/token",
+                        "scopes": {
+                            "openid": "OpenID Connect scope",
+                            "profile": "Access to basic profile information",
+                            "email": "Access to the user's email"
+                        }
+                    }
+                }
             }
         },
         "schemas": {
@@ -162,64 +178,41 @@
                 "tags": ["Auth"],
                 "summary": "Sign-in through the specified provider",
                 "description": "Authenticates the user via the selected provider.",
+                "security": [
+                    {
+                        "OAuth2": ["openid", "profile", "email"]
+                    }
+                ],
                 "requestBody": {
                     "description": "Authentication data",
                     "content": {
                         "application/json": {
                             "schema": {
-                                "oneOf": [
-                                    {
-                                        "type": "object",
-                                        "properties": {
-                                            "provider": {
-                                                "type": "string",
-                                                "example": "google"
-                                            }
-                                        },
-                                        "required": ["provider"]
+                                "type": "object",
+                                "properties": {
+                                    "csrfToken": {
+                                        "type": "string",
+                                        "description": "CSRF token for security",
+                                        "example": "c4a0350112b456810d26fc20d9e8e0ffdd2d6b8b705dafdfd18c8903a2ac7b8e"
                                     },
-                                    {
-                                        "type": "object",
-                                        "properties": {
-                                            "provider": {
-                                                "type": "string",
-                                                "example": "credentials"
-                                            },
-                                            "email": {
-                                                "type": "string",
-                                                "description": "User email for credential-based login",
-                                                "example": "user@example.com"
-                                            },
-                                            "password": {
-                                                "type": "string",
-                                                "description": "User password for credential-based login",
-                                                "example": "password123"
-                                            },
-                                            "csrfToken": {
-                                                "type": "string",
-                                                "description": "CSRF token for security",
-                                                "example": "c4a0350112b456810d26fc20d9e8e0ffdd2d6b8b705dafdfd18c8903a2ac7b8e"
-                                            },
-                                            "callbackUrl": {
-                                                "type": "string",
-                                                "description": "URL to redirect after authentication",
-                                                "example": "http://localhost:3000/signin"
-                                            },
-                                            "redirect": {
-                                                "type": "boolean",
-                                                "description": "Whether to redirect or not",
-                                                "example": false
-                                            }
-                                        },
-                                        "required": [
-                                            "provider",
-                                            "email",
-                                            "password",
-                                            "csrfToken",
-                                            "callbackUrl",
-                                            "redirect"
-                                        ]
+                                    "callbackUrl": {
+                                        "type": "string",
+                                        "description": "URL to redirect after authentication",
+                                        "example": "http://localhost:3000/signin"
+                                    },
+                                    "json": {
+                                        "type": "boolean",
+                                        "description": "Whether to redirect or not",
+                                        "example": true
                                     }
+                                },
+                                "required": [
+                                    "provider",
+                                    "email",
+                                    "password",
+                                    "csrfToken",
+                                    "callbackUrl",
+                                    "redirect"
                                 ]
                             },
                             "examples": {
@@ -229,17 +222,6 @@
                                         "csrfToken": "c4a0350112b456810d26fc20d9e8e0ffdd2d6b8b705dafdfd18c8903a2ac7b8e",
                                         "callbackUrl": "http://localhost:3000/signin",
                                         "json": true
-                                    }
-                                },
-                                "credentialsExample": {
-                                    "summary": "Example for Credentials provider",
-                                    "value": {
-                                        "provider": "credentials",
-                                        "email": "user@example.com",
-                                        "password": "password123",
-                                        "csrfToken": "c4a0350112b456810d26fc20d9e8e0ffdd2d6b8b705dafdfd18c8903a2ac7b8e",
-                                        "callbackUrl": "http://localhost:3000/signin",
-                                        "redirect": false
                                     }
                                 }
                             }
@@ -256,23 +238,11 @@
                 }
             }
         },
-        "/auth/callback/{provider}": {
+        "/auth/callback/credentials": {
             "post": {
                 "tags": ["Auth"],
                 "summary": "Sign-in through the specified provider",
                 "description": "Authenticates the user via the selected provider.",
-                "parameters": [
-                    {
-                        "name": "provider",
-                        "in": "path",
-                        "description": "Name of the provider",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "enum": ["google", "credentials"]
-                        }
-                    }
-                ],
                 "requestBody": {
                     "description": "Authentication data",
                     "content": {
