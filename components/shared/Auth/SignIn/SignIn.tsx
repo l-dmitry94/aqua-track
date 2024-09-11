@@ -5,9 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 
-import { signup } from '@/api/auth.api';
 import Button from '@/components/ui/Button';
-import Container from '@/components/ui/Container';
 import Form from '@/components/ui/Form';
 import { FormValues, NameValues } from '@/components/ui/Form/Form.types';
 import Input from '@/components/ui/Input';
@@ -18,38 +16,35 @@ import Auth from '../Auth';
 import fields from './fields';
 import validationSchema from './validationSchema';
 
-import scss from './SignUp.module.scss';
+import scss from './SignIn.module.scss';
 
-const SignUp = () => {
+const SignIn = () => {
     const router = useRouter();
+
     const handleSubmit = async (data: FormValues) => {
-        const response = await signup(data);
+        const result = await signIn('credentials', { ...data, redirect: false });
 
-        if (response.status === 201) {
-            const response = await signIn('credentials', { ...data, redirect: false });
-
-            if (response?.ok) {
-                router.replace('/tracker');
-            }
+        if (result?.ok) {
+            router.replace('/tracker');
+        } else {
+            console.log(result);
         }
-        console.log(response);
     };
 
     return (
-        <Container className={scss.SignUpPage}>
+        <Box className={scss.SignInPage}>
             <Auth>
                 <Typography variant="h1" className={scss.title}>
-                    Sign Up
+                    SignIn
                 </Typography>
-
                 <Form validationSchema={validationSchema} onSubmit={handleSubmit}>
-                    {(register, control, errors) => (
+                    {(signin, control, errors) => (
                         <>
                             <Box component="div" className={scss.wrapper}>
                                 {fields.map(({ type, name, placeholder, label }) => (
                                     <Input
                                         key={name}
-                                        register={register}
+                                        register={signin}
                                         type={type}
                                         errors={errors}
                                         name={name as NameValues}
@@ -58,32 +53,33 @@ const SignUp = () => {
                                     />
                                 ))}
                             </Box>
-
                             <Button
                                 type="submit"
                                 variant="contained"
                                 fullWidth
                                 className={scss.button}
                             >
-                                Sign Up
+                                Sign In
                             </Button>
-
                             <Typography variant="body2" className={scss.linkWrapper}>
-                                Already have an account?{' '}
-                                <Link href="/signin" className={scss.link}>
-                                    Sign In
+                                Do not have an account?{' '}
+                                <Link href="/signup" className={scss.link}>
+                                    Sign Up
                                 </Link>
                             </Typography>
                         </>
                     )}
                 </Form>
+                <div className={scss.or}>or</div>
+                <Button variant="contained" fullWidth onClick={() => signIn('google')}>
+                    Google
+                </Button>
             </Auth>
-
             <Box className={scss.img}>
                 <WelcomeAdvantages />
             </Box>
-        </Container>
+        </Box>
     );
 };
 
-export default SignUp;
+export default SignIn;
