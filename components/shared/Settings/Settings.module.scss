@@ -1,11 +1,15 @@
-.settings {
-   @apply px-5 py-10 rounded-2xl bg-white;
-}
-
-.titleSettings {
-    @apply mb-5
-}
+@import 'styles/mixins';
 
 .wrapper {
-    @apply flex flex-col gap-6 mb-10
+    @apply mb-10 flex flex-col gap-6;
+
+    @include media-rules(desktop) {
+        @apply flex-row gap-10;
+    }
+}
+
+.box {
+    @include media-rules(desktop) {
+        @apply w-1/2;
+    }
 }
