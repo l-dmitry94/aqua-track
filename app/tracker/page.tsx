@@ -2,7 +2,6 @@ import React from 'react';
 import { redirect } from 'next/navigation';
 import { getServerSession } from 'next-auth';
 
-import Settings from '@/components/shared/Settings';
 import TrackerInfo from '@/components/shared/TrackerInfo';
 import { WaterMainInfo } from '@/components/shared/WaterMainInfo';
 import Container from '@/components/ui/Container';
@@ -19,7 +18,6 @@ const TrackerPage = async () => {
             <Container>
                 <TrackerInfo />
                 <WaterMainInfo />
-                <Settings />
             </Container>
         </div>
     );
