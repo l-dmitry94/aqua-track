@@ -22,8 +22,6 @@ import scss from './Settings.module.scss';
 const Settings = () => {
     const { data: session, update: updateSession } = useSession();
 
-    console.log(session);
-
     const handleSubmit = async (data: FormValues) => {
         const normalizeData = {
             ...data,
@@ -43,7 +41,11 @@ const Settings = () => {
                 <Box component="div" className={scss.settings}>
                     <Title className={clsx(scss.title, scss.titleSettings)}>Settings</Title>
 
-                    <UploadImage avatar={session?.user?.image} setValue={setValue} />
+                    <UploadImage
+                        avatar={session?.user?.image}
+                        publicId={session?.user?.publicId}
+                        setValue={setValue}
+                    />
 
                     <Box component="div" className={scss.wrapper}>
                         <Box component="div">

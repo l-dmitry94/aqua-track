@@ -18,7 +18,8 @@ export interface ISettings {
     weight?: number;
     activeTime?: number;
     volume?: number;
-    image?: string | null;
+    image?: string;
+    publicId?: string;
 }
 
 export type FormValues = UserLogin & UserRegister & ISettings;

@@ -13,7 +13,7 @@ export const update = async (body: FormValues) => {
     return response;
 };
 
-export const removeAvatar = async (publicId: string) => {
+export const removeImage = async (publicId: string) => {
     const response = await instance.post(ENDPOINTS.auth.removeAvatar, { publicId });
     return response;
 };

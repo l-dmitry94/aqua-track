@@ -9,16 +9,7 @@ import { IInput } from './Input.types';
 
 import scss from './Input.module.scss';
 
-const Input: FC<IInput> = ({
-    register,
-    name,
-    type,
-    placeholder,
-    label,
-    light,
-    defaultValue,
-    errors,
-}) => {
+const Input: FC<IInput> = ({ register, name, type, placeholder, label, light, errors }) => {
     const [showPassword, setShowPassword] = useState(false);
 
     const togglePassword = () => {

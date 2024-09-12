@@ -45,6 +45,7 @@ export const authOptions: NextAuthOptions = {
                 token.weight = session.weight;
                 token.volume = session.volume;
                 token.picture = session.image;
+                token.publicId = session.publicId;
             }
             if (user) {
                 token.id = user.id;
@@ -52,6 +53,7 @@ export const authOptions: NextAuthOptions = {
                 token.activeTime = user.activeTime;
                 token.weight = user.weight;
                 token.volume = user.volume;
+                token.publicId = session.publicId;
             }
             return token;
         },
@@ -61,6 +63,7 @@ export const authOptions: NextAuthOptions = {
             session.user.activeTime = token.activeTime;
             session.user.weight = token.weight;
             session.user.volume = token.volume;
+            session.user.publicId = token.publicId;
             return session;
         },
     },

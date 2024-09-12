@@ -7,58 +7,46 @@ import {
     CloudinaryUploadWidgetResults,
 } from 'next-cloudinary';
 
-import { removeAvatar } from '@/api/auth.api';
 import Icon from '@/components/ui/Icon';
+import removeAvatar from '@/helpers/removeAvatar';
 
 import { IUploadImage } from './UploadImage.types';
 
 import scss from './UploadImage.module.scss';
 
-const UploadImage: FC<IUploadImage> = ({ avatar, setValue }) => {
-    const [image, setImage] = useState<string | null>(avatar || null);
-    const [publicId, setPublicId] = useState<string | null>(null);
+const UploadImage: FC<IUploadImage> = ({ avatar, publicId, setValue }) => {
+    const [image, setImage] = useState(avatar || '');
+    const [imagePublicId, setImagePublicId] = useState(publicId || '');
 
     useEffect(() => {
-        if (avatar) {
-            setImage(avatar);
-            setValue('image', avatar);
-        }
-    }, [avatar, setValue]);
+        if (avatar) setImage(avatar);
+    }, [avatar]);
 
     useEffect(() => {
-        if (avatar) {
-            const publicId = avatar.split('/').pop()?.split('.')[0];
-            setPublicId(publicId || null);
-        }
-    }, [avatar, setValue]);
+        if (publicId) setImagePublicId(publicId);
+    }, [publicId]);
 
     const handleImageUpload = async (result: CloudinaryUploadWidgetResults) => {
         const info = result.info as CloudinaryUploadWidgetInfo;
 
         if ('secure_url' in info && 'public_id' in info) {
-            const prevPublicId = publicId;
-            setImage(info.secure_url);
-            setPublicId(info.public_id);
             setValue('image', info.secure_url);
+            setImage(info.secure_url);
 
-            console.log('Previous publicId:', prevPublicId);
-            console.log('New publicId:', info.public_id);
+            setValue('publicId', info.public_id);
+            setImagePublicId(info.public_id);
         }
+    };
+
+    const handleBeforeUpload = async () => {
+        removeAvatar(imagePublicId, setValue, setImage, setImagePublicId);
     };
 
     const removeImage = async (event: FormEvent) => {
         event.preventDefault();
         event.stopPropagation();
 
-        if (publicId) {
-            const response = await removeAvatar(publicId);
-
-            if (response.status === 200) {
-                setImage(null);
-                setPublicId(null);
-                setValue('image', null);
-            }
-        }
+        removeAvatar(imagePublicId, setValue, setImage, setImagePublicId);
     };
 
     return (
@@ -66,9 +54,10 @@ const UploadImage: FC<IUploadImage> = ({ avatar, setValue }) => {
             <CldUploadButton
                 uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
                 onSuccess={handleImageUpload}
+                onClick={handleBeforeUpload}
                 className={scss.uploadButton}
             >
-                {image ? (
+                {image && image.length > 0 ? (
                     <Box component="div" className={scss.defaultImage}>
                         <Image
                             src={image}
