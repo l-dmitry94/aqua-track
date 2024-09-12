@@ -13,6 +13,7 @@ interface CustomModalProps {
     children: ReactNode;
     variant?: 'primary' | 'secondary';
     profile?: boolean;
+    centerTitle?: boolean;
 }
 
 const CustomModal: FC<CustomModalProps> = ({
@@ -22,6 +23,7 @@ const CustomModal: FC<CustomModalProps> = ({
     children,
     variant = 'primary',
     profile = false,
+    centerTitle = false,
 }) => {
     return (
         <Modal
@@ -39,7 +41,14 @@ const CustomModal: FC<CustomModalProps> = ({
         >
             <Fade in={open}>
                 <Box component="div" className={scss.wrapper}>
-                    <Box className={clsx(scss.modalBox, scss[variant], profile && scss.profile)}>
+                    <Box
+                        className={clsx(
+                            scss.modalBox,
+                            scss[variant],
+                            profile && scss.profile,
+                            centerTitle && scss.centerTitle
+                        )}
+                    >
                         <IconButton
                             className={scss.closeButton}
                             onClick={onClose}

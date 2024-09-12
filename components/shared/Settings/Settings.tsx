@@ -1,5 +1,4 @@
 'use client';
-
 import { Box } from '@mui/material';
 import clsx from 'clsx';
 import { useSession } from 'next-auth/react';
