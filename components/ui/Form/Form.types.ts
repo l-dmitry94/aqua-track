@@ -13,7 +13,7 @@ export interface UserRegister extends UserLogin {
 
 export interface ISettings {
     name?: string;
-    email?: string;
+    email: string;
     gender: 'woman' | 'man';
     weight?: number;
     activeTime?: number;

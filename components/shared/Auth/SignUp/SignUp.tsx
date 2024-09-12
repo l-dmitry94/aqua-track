@@ -32,7 +32,6 @@ const SignUp = () => {
                 router.replace('/tracker');
             }
         }
-        console.log(response);
     };
 
     return (

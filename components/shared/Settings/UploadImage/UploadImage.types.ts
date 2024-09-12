@@ -6,4 +6,5 @@ export interface IUploadImage {
     setValue: UseFormSetValue<FormValues>;
     avatar?: string;
     publicId?: string;
+    isFormSubmitted: boolean;
 }

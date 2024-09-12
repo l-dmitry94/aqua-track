@@ -1,7 +1,7 @@
 'use client';
 
+import { useState } from 'react';
 import { Box } from '@mui/material';
-import clsx from 'clsx';
 import { useSession } from 'next-auth/react';
 
 import { update } from '@/api/auth.api';
@@ -21,34 +21,38 @@ import scss from './Settings.module.scss';
 
 const Settings = () => {
     const { data: session, update: updateSession } = useSession();
+    const [isFormSubmitted, setIsFormSubmitted] = useState(false);
 
     const handleSubmit = async (data: FormValues) => {
         const normalizeData = {
             ...data,
-            activeTime: Number(data.activeTime),
-            weight: Number(data.weight),
-            volume: Number(data.volume),
+            activeTime: Number(data.activeTime) || session?.user?.activeTime,
+            weight: Number(data.weight) || session?.user?.weight,
+            volume: Number(data.volume) || session?.user?.volume,
         };
 
         await update(normalizeData);
 
-        updateSession({ ...session, ...data });
+        updateSession({ ...session, ...normalizeData });
+
+        setIsFormSubmitted(true);
     };
 
     return (
         <Form onSubmit={handleSubmit}>
             {(register, control, setValue, errors) => (
                 <Box component="div" className={scss.settings}>
-                    <Title className={clsx(scss.title, scss.titleSettings)}>Settings</Title>
+                    <Title className={scss.title}>Settings</Title>
 
                     <UploadImage
                         avatar={session?.user?.image}
                         publicId={session?.user?.publicId}
                         setValue={setValue}
+                        isFormSubmitted={isFormSubmitted}
                     />
 
                     <Box component="div" className={scss.wrapper}>
-                        <Box component="div">
+                        <Box component="div" className={scss.box}>
                             <GenderIdentity
                                 control={control}
                                 gender={session?.user?.gender}
@@ -63,7 +67,7 @@ const Settings = () => {
                             <DailyNorma />
                         </Box>
 
-                        <Box component="div">
+                        <Box component="div" className={scss.box}>
                             <AdditionalInfo
                                 register={register}
                                 errors={errors}

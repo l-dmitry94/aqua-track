@@ -26,8 +26,6 @@ const SignIn = () => {
 
         if (result?.ok) {
             router.replace('/tracker');
-        } else {
-            console.log(result);
         }
     };
 

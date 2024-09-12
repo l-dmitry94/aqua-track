@@ -53,7 +53,7 @@ export const authOptions: NextAuthOptions = {
                 token.activeTime = user.activeTime;
                 token.weight = user.weight;
                 token.volume = user.volume;
-                token.publicId = session.publicId;
+                token.publicId = user.publicId;
             }
             return token;
         },

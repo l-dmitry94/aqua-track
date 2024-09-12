@@ -14,9 +14,9 @@ import { IUploadImage } from './UploadImage.types';
 
 import scss from './UploadImage.module.scss';
 
-const UploadImage: FC<IUploadImage> = ({ avatar, publicId, setValue }) => {
-    const [image, setImage] = useState(avatar || '');
-    const [imagePublicId, setImagePublicId] = useState(publicId || '');
+const UploadImage: FC<IUploadImage> = ({ avatar, publicId, setValue, isFormSubmitted }) => {
+    const [image, setImage] = useState('');
+    const [imagePublicId, setImagePublicId] = useState('');
 
     useEffect(() => {
         if (avatar) setImage(avatar);
@@ -25,6 +25,21 @@ const UploadImage: FC<IUploadImage> = ({ avatar, publicId, setValue }) => {
     useEffect(() => {
         if (publicId) setImagePublicId(publicId);
     }, [publicId]);
+
+    useEffect(() => {
+        const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+            if (!isFormSubmitted) {
+                event.preventDefault();
+                removeAvatar(imagePublicId, setValue, setImage, setImagePublicId);
+            }
+        };
+
+        window.addEventListener('beforeunload', handleBeforeUnload);
+
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, [imagePublicId, isFormSubmitted, setValue]);
 
     const handleImageUpload = async (result: CloudinaryUploadWidgetResults) => {
         const info = result.info as CloudinaryUploadWidgetInfo;
@@ -43,7 +58,6 @@ const UploadImage: FC<IUploadImage> = ({ avatar, publicId, setValue }) => {
     };
 
     const removeImage = async (event: FormEvent) => {
-        event.preventDefault();
         event.stopPropagation();
 
         removeAvatar(imagePublicId, setValue, setImage, setImagePublicId);
@@ -57,7 +71,7 @@ const UploadImage: FC<IUploadImage> = ({ avatar, publicId, setValue }) => {
                 onClick={handleBeforeUpload}
                 className={scss.uploadButton}
             >
-                {image && image.length > 0 ? (
+                {image ? (
                     <Box component="div" className={scss.defaultImage}>
                         <Image
                             src={image}

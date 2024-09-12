@@ -1,9 +1,15 @@
+@import 'styles/mixins';
+
 .formControl {
-    @apply mb-6;
+    @apply mb-6 font-sans;
 }
 
 .label {
     @apply mb-[14px] text-base font-bold leading-[1.25] tracking-tight text-primary font-sans;
+
+    @include media-rules(tablet) {
+        @apply text-[1.125rem] leading-[1.33];
+    }
 }
 
 .radioGroup {
@@ -12,8 +18,12 @@
 
 .radio {
     @apply mr-0 text-sm leading-[1.29] tracking-tight text-secondary;
+
+    @include media-rules(tablet) {
+        @apply text-base leading-normal;
+    }
 }
 
 .radioButton {
-    @apply mr-[10px] p-0;
+    @apply mr-[10px] p-0 font-sans;
 }
