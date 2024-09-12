@@ -1,7 +1,9 @@
+'use client';
 import React from 'react';
 import { Box } from '@mui/material';
 
 import Settings from '@/components/shared/Settings';
+import CustomModal from '@/components/ui/CustomModal';
 
 import Logout from '../Logout';
 import { UserBarProps } from '../types';
@@ -14,9 +16,9 @@ import scss from './UserButton.module.scss';
 const UserButton: React.FC<UserBarProps> = ({ name, image }) => {
     const {
         anchorEl,
-        isModalOpen,
+        isLogoutOpen,
+        isSettinsOpen,
         open,
-        modalType,
         handleClick,
         handleClose,
         handleLogoutClick,
@@ -39,15 +41,25 @@ const UserButton: React.FC<UserBarProps> = ({ name, image }) => {
                     handleSettingsClick,
                 }}
             />
-            {modalType === 'logout' ? (
-                <Logout
-                    isModalOpen={isModalOpen}
-                    onLogoutConfirm={handleLogoutConfirm}
-                    handleModalClose={handleModalClose}
-                />
-            ) : (
-                <Settings isModalOpen={isModalOpen} handleModalClose={handleModalClose}></Settings>
-            )}
+
+            <CustomModal
+                open={isLogoutOpen}
+                onClose={() => handleModalClose()}
+                variant="primary"
+                title="Log Out"
+                centerTitle={true}
+            >
+                <Logout onLogoutConfirm={handleLogoutConfirm} handleModalClose={handleModalClose} />
+            </CustomModal>
+
+            <CustomModal
+                open={isSettinsOpen}
+                onClose={() => handleModalClose()}
+                variant="primary"
+                title="Settings"
+            >
+                <Settings />
+            </CustomModal>
         </Box>
     );
 };

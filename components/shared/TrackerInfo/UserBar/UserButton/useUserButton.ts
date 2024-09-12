@@ -3,8 +3,8 @@ import { signOut } from 'next-auth/react';
 
 export const useUserButton = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const [modalType, setModalType] = useState<'logout' | 'settings' | null>(null);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isSettinsOpen, setIsSettingsOpen] = useState(false);
+    const [isLogoutOpen, setIsLogoutOpen] = useState(false);
 
     const open = Boolean(anchorEl);
 
@@ -18,14 +18,12 @@ export const useUserButton = () => {
 
     const handleLogoutClick = () => {
         setAnchorEl(null);
-        setModalType('logout');
-        setIsModalOpen(true);
+        setIsLogoutOpen(true);
     };
 
     const handleSettingsClick = () => {
         setAnchorEl(null);
-        setModalType('settings');
-        setIsModalOpen(true);
+        setIsSettingsOpen(true);
     };
 
     const handleLogoutConfirm = () => {
@@ -33,15 +31,15 @@ export const useUserButton = () => {
     };
 
     const handleModalClose = () => {
-        setModalType(null);
-        setIsModalOpen(false);
+        setIsLogoutOpen(false);
+        setIsSettingsOpen(false);
     };
 
     return {
         anchorEl,
         open,
-        isModalOpen,
-        modalType,
+        isLogoutOpen,
+        isSettinsOpen,
         handleClick,
         handleClose,
         handleLogoutClick,

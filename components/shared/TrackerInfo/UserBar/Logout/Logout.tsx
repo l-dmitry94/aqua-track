@@ -1,24 +1,16 @@
 'use client';
-
 import React from 'react';
 import { Box, Typography } from '@mui/material';
 
 import Button from '@/components/ui/Button';
-import CustomModal from '@/components/ui/CustomModal';
 
 import { LogoutProps } from './LogoutProps.types';
 
 import scss from './Logout.module.scss';
 
-const Logout: React.FC<LogoutProps> = ({ onLogoutConfirm, isModalOpen, handleModalClose }) => {
+const Logout: React.FC<LogoutProps> = ({ onLogoutConfirm, handleModalClose }) => {
     return (
-        <CustomModal
-            open={isModalOpen}
-            onClose={handleModalClose}
-            variant="primary"
-            title="Log Out"
-            centerTitle={true}
-        >
+        <Box component="div">
             <Typography component="p" className={scss.text}>
                 Do you really want to leave?
             </Typography>
@@ -30,7 +22,7 @@ const Logout: React.FC<LogoutProps> = ({ onLogoutConfirm, isModalOpen, handleMod
                     Cancel
                 </Button>
             </Box>
-        </CustomModal>
+        </Box>
     );
 };
 
