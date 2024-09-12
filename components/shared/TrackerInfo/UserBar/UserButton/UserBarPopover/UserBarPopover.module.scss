@@ -1,0 +1,44 @@
+@import 'styles/mixins';
+
+.menu {
+    @apply mt-[4px];
+    & ul {
+        @apply flex flex-col gap-2 bg-white px-[14px] py-5;
+
+        @include media-rules(tablet) {
+            @apply gap-[10px];
+        }
+
+        & li {
+            @apply min-h-4 px-0 py-0;
+        }
+    }
+
+    & div:nth-of-type(3) {
+        @apply rounded-[30px] shadow-none;
+    }
+}
+
+.svg {
+    @apply size-4 fill-primary stroke-white;
+
+    @include media-rules(tablet) {
+        @apply size-5;
+    }
+}
+
+.rotate {
+    @apply rotate-180;
+}
+
+.text {
+    @apply font-sans text-sm font-bold text-white;
+
+    @include media-rules(tablet) {
+        @apply text-base;
+    }
+}
+
+.btn {
+    @apply mb-1 flex flex-row items-center gap-[10px] rounded-[30px] bg-primary px-3 py-[6px] font-sans text-base font-bold transition-colors duration-300 ease-linear;
+}
