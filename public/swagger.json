@@ -14,7 +14,7 @@
     ],
     "tags": [
         {
-            "name": "Users",
+            "name": "User",
             "description": "Operations related to user management"
         },
         {
@@ -129,38 +129,33 @@
                         "example": 1.8
                     }
                 }
-            },
+            }
+        },
+        "responses": {
             "UserSession": {
-                "type": "object",
-                "properties": {
-                    "user": {
-                        "$ref": "#/components/schemas/User"
-                    },
-                    "expires": {
-                        "type": "string",
-                        "format": "date-time",
-                        "example": "2024-10-11T09:43:23.309Z"
+                "description": "The session is successful",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/User"
+                        }
+                    }
+                }
+            },
+            "RedirectSuccess": {
+                "description": "The redirect is successful",
+                "content": {
+                    "text/html": {
+                        "schema": {
+                            "type": "string",
+                            "example": "<html><body>page</body></html>"
+                        }
                     }
                 }
             }
         }
     },
     "paths": {
-        "/auth/providers": {
-            "get": {
-                "tags": ["Auth"],
-                "summary": "Callback URL for providers",
-                "description": "Handles the response from providers after authentication.",
-                "responses": {
-                    "200": {
-                        "description": "Successfully handled provider response"
-                    },
-                    "401": {
-                        "description": "User not authenticated or error occurred"
-                    }
-                }
-            }
-        },
         "/auth/csrf": {
             "get": {
                 "tags": ["Auth"],
@@ -178,11 +173,7 @@
                 "tags": ["Auth"],
                 "summary": "Sign-in through the specified provider",
                 "description": "Authenticates the user via the selected provider.",
-                "security": [
-                    {
-                        "OAuth2": ["openid", "profile", "email"]
-                    }
-                ],
+
                 "requestBody": {
                     "description": "Authentication data",
                     "content": {
@@ -206,14 +197,7 @@
                                         "example": true
                                     }
                                 },
-                                "required": [
-                                    "provider",
-                                    "email",
-                                    "password",
-                                    "csrfToken",
-                                    "callbackUrl",
-                                    "redirect"
-                                ]
+                                "required": ["csrfToken", "callbackUrl", "json"]
                             },
                             "examples": {
                                 "googleExample": {
@@ -230,7 +214,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Successful authentication"
+                        "$ref": "#/components/responses/RedirectSuccess"
                     },
                     "401": {
                         "description": "Invalid credentials or provider not found"
@@ -248,79 +232,58 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "oneOf": [
-                                    {
-                                        "type": "object",
-                                        "properties": {
-                                            "provider": {
-                                                "type": "string",
-                                                "example": "google"
-                                            }
-                                        },
-                                        "required": ["provider"]
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "description": "User email for credential-based login",
+                                        "example": "user@example.com"
                                     },
-                                    {
-                                        "type": "object",
-                                        "properties": {
-                                            "provider": {
-                                                "type": "string",
-                                                "example": "credentials"
-                                            },
-                                            "email": {
-                                                "type": "string",
-                                                "description": "User email for credential-based login",
-                                                "example": "user@example.com"
-                                            },
-                                            "password": {
-                                                "type": "string",
-                                                "description": "User password for credential-based login",
-                                                "example": "password123"
-                                            },
-                                            "csrfToken": {
-                                                "type": "string",
-                                                "description": "CSRF token for security",
-                                                "example": "c4a0350112b456810d26fc20d9e8e0ffdd2d6b8b705dafdfd18c8903a2ac7b8e"
-                                            },
-                                            "callbackUrl": {
-                                                "type": "string",
-                                                "description": "URL to redirect after authentication",
-                                                "example": "http://localhost:3000/signin"
-                                            },
-                                            "redirect": {
-                                                "type": "boolean",
-                                                "description": "Whether to redirect or not",
-                                                "example": false
-                                            }
-                                        },
-                                        "required": [
-                                            "provider",
-                                            "email",
-                                            "password",
-                                            "csrfToken",
-                                            "callbackUrl",
-                                            "redirect"
-                                        ]
+                                    "password": {
+                                        "type": "string",
+                                        "description": "User password for credential-based login",
+                                        "example": "password123"
+                                    },
+                                    "csrfToken": {
+                                        "type": "string",
+                                        "description": "CSRF token for security",
+                                        "example": "c4a0350112b456810d26fc20d9e8e0ffdd2d6b8b705dafdfd18c8903a2ac7b8e"
+                                    },
+                                    "callbackUrl": {
+                                        "type": "string",
+                                        "description": "URL to redirect after authentication",
+                                        "example": "http://localhost:3000/signin"
+                                    },
+                                    "redirect": {
+                                        "type": "boolean",
+                                        "description": "Whether to redirect or not",
+                                        "example": false
+                                    },
+                                    "json": {
+                                        "type": "boolean",
+                                        "description": "Whether to redirect as JSON",
+                                        "example": true
                                     }
+                                },
+                                "required": [
+                                    "provider",
+                                    "email",
+                                    "password",
+                                    "csrfToken",
+                                    "callbackUrl",
+                                    "redirect"
                                 ]
                             },
                             "examples": {
-                                "googleExample": {
-                                    "summary": "Example for Google provider",
-                                    "value": {
-                                        "csrfToken": "c4a0350112b456810d26fc20d9e8e0ffdd2d6b8b705dafdfd18c8903a2ac7b8e",
-                                        "callbackUrl": "http://localhost:3000/signin",
-                                        "json": true
-                                    }
-                                },
                                 "credentialsExample": {
                                     "summary": "Example for Credentials provider",
                                     "value": {
-                                        "provider": "credentials",
-                                        "email": "user@example.com",
-                                        "password": "password123",
+                                        "email": "kurkayetra@gufum.com",
+                                        "password": "Qwerty123",
                                         "csrfToken": "c4a0350112b456810d26fc20d9e8e0ffdd2d6b8b705dafdfd18c8903a2ac7b8e",
                                         "callbackUrl": "http://localhost:3000/signin",
-                                        "redirect": false
+                                        "redirect": false,
+                                        "json": true
                                     }
                                 }
                             }
@@ -329,7 +292,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Successful authentication"
+                        "$ref": "#/components/responses/RedirectSuccess"
                     },
                     "401": {
                         "description": "Invalid credentials or provider not found"
@@ -337,17 +300,14 @@
                 }
             }
         },
-        "auth/signout": {
+        "/auth/signout": {
             "post": {
                 "tags": ["Auth"],
                 "summary": "User sign-out",
                 "description": "Terminates the user's session.",
                 "responses": {
                     "200": {
-                        "description": "Successful sign-out"
-                    },
-                    "401": {
-                        "description": "User not authenticated"
+                        "$ref": "#/components/responses/RedirectSuccess"
                     }
                 }
             }
@@ -359,11 +319,74 @@
                 "description": "Returns information about the user's current session.",
                 "responses": {
                     "200": {
-                        "ref$": "#/components/schemas/UserSession",
-                        "description": "Current user session"
+                        "$ref": "#/components/responses/UserSession"
                     },
                     "401": {
                         "description": "User not authenticated"
+                    }
+                }
+            }
+        },
+        "/auth/signup": {
+            "post": {
+                "summary": "Register a new user",
+                "description": "Creates a new user with an email and password",
+                "tags": ["User"],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "example@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "securePassword123"
+                                    }
+                                },
+                                "required": ["email", "password"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User successfully registered",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User registered successfully"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "User already exists",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User already exists"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
