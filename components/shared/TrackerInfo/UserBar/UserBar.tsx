@@ -11,7 +11,6 @@ const UserBar: React.FC = () => {
     const image = userInfo?.user?.image;
     const fullName = userInfo?.user?.name ? userInfo.user.name : 'User';
     const firstName = fullName.split(' ')[0]; // тільки перше слово
-    console.log(userInfo);
 
     // якщо довше ім'я за 15 символів
     const displayName = firstName.length > 15 ? firstName.slice(0, 15) + '...' : firstName;
