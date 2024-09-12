@@ -1,3 +1,6 @@
+import { Box, Typography } from '@mui/material';
+import Image from 'next/image';
+
 import {
     AddWaterButton,
     CustomItemBox,
@@ -5,30 +8,29 @@ import {
 } from '@/components/shared/WaterMainInfo/index';
 import AuthWrapper from '@/components/shared/Welcome/AuthWrapper';
 
+import BG_IMG from '../../../public/images/bottle_bg.png';
+
 import styles from './water-main-info.module.scss';
 
 const WaterMainInfo = () => {
     return (
-        // <Box component="section">
         <AuthWrapper backgroundColor="green" fullHeight={true}>
-            {/*<h2*/}
-            {/*    className="text-[18px] font-bold uppercase leading-[1.11] tracking-[-0.01em]"*/}
-            {/*    style={{ fontFamily: 'Poppins' }}*/}
-            {/*>*/}
-            {/*    Aquatrack*/}
-            {/*</h2>*/}
-            <div className={styles.box}>
+            <Box component="div" className={styles.box}>
                 <CustomItemBox className="mt-[78px]">
-                    <p className="mb-[6px] text-[14px] font-bold leading-[1]">1.5 L</p>
-                    <p className="text-[10px] font-normal leading-[1]">My daily norma</p>
+                    <Typography className="mb-[6px] text-[14px] font-bold leading-[1]">
+                        1.5 L
+                    </Typography>
+                    <Typography className="text-[10px] font-normal leading-[1]">
+                        My daily norma
+                    </Typography>
                 </CustomItemBox>
+                <Image src={BG_IMG} alt={'bg'} className={styles.img} />
                 <CustomItemBox className="absolute left-1/2 top-1/2 translate-x-[-50%]">
                     <ProgressBar />
                 </CustomItemBox>
                 <AddWaterButton />
-            </div>
+            </Box>
         </AuthWrapper>
-        // </Box>
     );
 };
 

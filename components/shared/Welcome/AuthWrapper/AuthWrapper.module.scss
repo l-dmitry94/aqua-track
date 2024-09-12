@@ -16,8 +16,12 @@
   @apply bg-green;
 }
 
-.fullHeight {
+.wrapper {
   @apply h-full;
+}
+
+.fullHeight {
+  @apply h-screen;
 }
 
 .logo {

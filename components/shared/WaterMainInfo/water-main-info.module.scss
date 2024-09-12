@@ -1,16 +1,7 @@
 .box {
-  background-image: url(../../../public/images/tracker-bg-mob@2x.png);
-  background-repeat: no-repeat;
-  background-size: 472px 604px;
-  background-position: center;
-  @apply relative mt-[16px] h-full rounded-[30px];
+  @apply relative h-full rounded-[30px];
 }
 
-//.wrapper {
-//  @apply py-[100px] w-1/2;
-//  background-image: url("/images/bottle_bg.png");
-//  background-repeat: no-repeat;
-//  background-position: center;
-//  background-size: 472px 604px;
-//
-//}
+.img {
+  @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+}
