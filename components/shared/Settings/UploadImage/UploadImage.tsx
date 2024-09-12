@@ -70,6 +70,7 @@ const UploadImage: FC<IUploadImage> = ({ avatar, publicId, setValue, isFormSubmi
                 onSuccess={handleImageUpload}
                 onClick={handleBeforeUpload}
                 className={scss.uploadButton}
+                options={{ maxFiles: 1 }}
             >
                 {image ? (
                     <Box component="div" className={scss.defaultImage}>

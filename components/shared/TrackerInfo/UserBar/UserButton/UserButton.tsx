@@ -59,7 +59,7 @@ const UserButton: React.FC<UserBarProps> = ({ name, image }) => {
                 title="Settings"
                 profile
             >
-                <Settings />
+                <Settings onCloseModal={handleModalClose} />
             </CustomModal>
         </Box>
     );

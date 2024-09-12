@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import { Box } from '@mui/material';
 import { useSession } from 'next-auth/react';
 
@@ -15,11 +15,12 @@ import AmountOfWater from './AmountOfWater';
 import DailyNorma from './DailyNorma';
 import GenderIdentity from './GenderIdentity';
 import ProfileData from './ProfileData';
+import { ISettings } from './Settings.types';
 import UploadImage from './UploadImage';
 
 import scss from './Settings.module.scss';
 
-const Settings = () => {
+const Settings: FC<ISettings> = ({ onCloseModal }) => {
     const { data: session, update: updateSession } = useSession();
     const [isFormSubmitted, setIsFormSubmitted] = useState(false);
 
@@ -42,20 +43,20 @@ const Settings = () => {
         <Form onSubmit={handleSubmit}>
             {(register, control, setValue, errors) => (
                 <Box component="div" className={scss.settings}>
-                    <UploadImage
-                        avatar={session?.user?.image}
-                        publicId={session?.user?.publicId}
-                        setValue={setValue}
-                        isFormSubmitted={isFormSubmitted}
-                    />
-                    <CustomScrollBar profile style={{ height: '300px', width: '100%' }}>
+                    <CustomScrollBar profile style={{ height: '500px', width: '100%' }}>
+                        <UploadImage
+                            avatar={session?.user?.image}
+                            publicId={session?.user?.publicId}
+                            setValue={setValue}
+                            isFormSubmitted={isFormSubmitted}
+                        />
+                        <GenderIdentity
+                            control={control}
+                            gender={session?.user?.gender}
+                            setValue={setValue}
+                        />
                         <Box component="div" className={scss.wrapper}>
                             <Box component="div" className={scss.box}>
-                                <GenderIdentity
-                                    control={control}
-                                    gender={session?.user?.gender}
-                                    setValue={setValue}
-                                />
                                 <ProfileData
                                     register={register}
                                     errors={errors}
@@ -81,7 +82,7 @@ const Settings = () => {
                             </Box>
                         </Box>
 
-                        <Button type="submit" variant="contained">
+                        <Button onClick={onCloseModal} type="submit" variant="contained">
                             Save
                         </Button>
                     </CustomScrollBar>
