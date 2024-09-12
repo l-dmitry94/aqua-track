@@ -23,7 +23,11 @@
 }
 
 .primary {
-    @apply p-10;
+    @apply px-5 py-10;
+
+    @include media-rules(tablet) {
+        @apply px-10;
+    }
 }
 
 .centerTitle {
@@ -50,10 +54,6 @@
             @apply h-7 w-7;
         }
     }
-}
-
-.content {
-    @apply mb-4;
 }
 
 .button {
