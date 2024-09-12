@@ -3,7 +3,7 @@ import { CustomItemBox } from '@/components/shared/WaterMainInfo';
 import styles from './progress-bar.module.scss';
 
 const ProgressBar = () => {
-    const progress = 50;
+    const progress = 5;
 
     return (
         <CustomItemBox>
