@@ -13,7 +13,6 @@
 }
 
 .profile {
-    
     @include media-rules(tablet) {
         @apply max-w-[648px];
     }
@@ -27,12 +26,16 @@
     @apply p-10;
 }
 
+.centerTitle {
+    @apply text-center;
+}
+
 .secondary {
     @apply px-5 py-10;
 }
 
 .title {
-    @apply mb-4 text-xl font-bold leading-6 tracking-tight;
+    @apply mb-4 font-sans text-xl font-bold leading-6 tracking-tight;
 
     @include media-rules(tablet) {
         @apply text-[28px] leading-8;
