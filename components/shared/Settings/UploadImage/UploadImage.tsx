@@ -19,12 +19,18 @@ const UploadImage: FC<IUploadImage> = ({ avatar, publicId, setValue, isFormSubmi
     const [imagePublicId, setImagePublicId] = useState('');
 
     useEffect(() => {
-        if (avatar) setImage(avatar);
-    }, [avatar]);
+        if (avatar) {
+            setImage(avatar);
+            setValue('image', avatar);
+        }
+    }, [avatar, setValue]);
 
     useEffect(() => {
-        if (publicId) setImagePublicId(publicId);
-    }, [publicId]);
+        if (publicId) {
+            setImagePublicId(publicId);
+            setValue('publicId', publicId);
+        }
+    }, [publicId, setValue]);
 
     useEffect(() => {
         const handleBeforeUnload = (event: BeforeUnloadEvent) => {
