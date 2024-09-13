@@ -36,13 +36,24 @@ export const authOptions: NextAuthOptions = {
     ],
 
     callbacks: {
-        async jwt({ token, user }) {
+        async jwt({ token, user, trigger, session }) {
+            if (trigger === 'update' && session?.email) {
+                token.name = session.name;
+                token.email = session.email;
+                token.gender = session.gender;
+                token.activeTime = session.activeTime;
+                token.weight = session.weight;
+                token.volume = session.volume;
+                token.picture = session.image;
+                token.publicId = session.publicId;
+            }
             if (user) {
                 token.id = user.id;
                 token.gender = user.gender;
                 token.activeTime = user.activeTime;
                 token.weight = user.weight;
                 token.volume = user.volume;
+                token.publicId = user.publicId;
             }
             return token;
         },
@@ -52,6 +63,7 @@ export const authOptions: NextAuthOptions = {
             session.user.activeTime = token.activeTime;
             session.user.weight = token.weight;
             session.user.volume = token.volume;
+            session.user.publicId = token.publicId;
             return session;
         },
     },

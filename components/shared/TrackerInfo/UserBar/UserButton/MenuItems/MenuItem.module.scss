@@ -1,0 +1,23 @@
+@import 'styles/mixins';
+
+.menuItem {
+    @apply flex flex-row gap-2 bg-inherit font-sans text-sm font-bold text-primary opacity-40 transition-opacity duration-300 ease-linear;
+
+    @include media-rules(tablet) {
+        @apply text-[15px];
+    }
+}
+
+.menuItem:hover,
+.menuItem:focus,
+.active {
+    @apply bg-inherit opacity-100;
+
+    & .icon {
+        @apply opacity-100;
+    }
+}
+
+.icon {
+    @apply h-4 w-4 bg-inherit fill-none stroke-primary opacity-40 transition-opacity duration-300 ease-linear;
+}

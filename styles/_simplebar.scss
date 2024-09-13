@@ -12,6 +12,20 @@
     .simplebar-track.simplebar-horizontal {
         @apply h-2;
     }
+
+    &.profile {
+        & .simplebar-track.simplebar-vertical {
+            @apply pointer-events-auto -right-[14px] w-[6px];
+
+            @include media-rules(tablet) {
+                @apply w-[8px] -right-6;
+            }
+        }
+
+        & .simplebar-scrollbar.simplebar-visible:before {
+            @apply bg-gray;
+        }
+    }
 }
 
 .simplebar-wrapper {

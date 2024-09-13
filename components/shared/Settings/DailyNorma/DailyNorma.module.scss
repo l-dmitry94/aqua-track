@@ -1,13 +1,23 @@
+@import 'styles/mixins';
+
 .title {
     @apply mb-[14px] font-sans text-base font-bold leading-[1.25] tracking-tight text-primary;
+
+    @include media-rules(tablet) {
+        @apply text-[1.125rem] leading-[1.33];
+    }
 }
 
 .list {
     @apply mb-[14px] flex flex-col gap-3;
+
+    @include media-rules(tablet) {
+        @apply flex-row gap-7;
+    }
 }
 
 .listItem {
-    @apply block;
+    @apply block w-auto;
 }
 
 .listItemTextLabel {
@@ -15,6 +25,10 @@
 
     & span {
         @apply font-sans text-sm leading-[1.29] tracking-tight text-secondary;
+
+        @include media-rules(tablet) {
+            @apply text-base leading-normal;
+        }
     }
 }
 
@@ -23,14 +37,22 @@
 
     & span {
         @apply font-sans text-sm font-bold leading-[1.29] tracking-tight text-green;
+
+        @include media-rules(tablet) {
+            @apply text-base leading-normal;
+        }
     }
 }
 
 .description {
-    @apply p-4 border border-secondary/15 rounded-2xl text-sm  leading-[1.29] tracking-tight text-secondary/60 mb-[14px] font-sans;
+    @apply mb-[14px] rounded-2xl border border-secondary/15 p-4 font-sans text-sm leading-[1.29] tracking-tight text-secondary/60;
+
+    @include media-rules(tablet) {
+        @apply text-base leading-normal;
+    }
 
     & .asterisk {
-        @apply text-green
+        @apply text-green;
     }
 }
 
@@ -39,9 +61,17 @@
 }
 
 .icon {
-    @apply w-[18px] h-[18px] fill-green;
+    @apply h-[18px] w-[18px] fill-green;
+
+    @include media-rules(tablet) {
+        @apply h-[22px] w-[22px];
+    }
 }
 
 .text {
     @apply font-sans text-sm leading-[1.29] tracking-tight text-secondary;
+
+    @include media-rules(tablet) {
+        @apply text-base leading-normal;
+    }
 }

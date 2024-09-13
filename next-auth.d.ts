@@ -8,6 +8,7 @@ declare module 'next-auth' {
         weight?: number;
         activeTime?: number;
         volume?: number;
+        publicId?: string;
     }
 
     interface Session {

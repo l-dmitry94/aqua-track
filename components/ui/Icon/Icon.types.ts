@@ -1,4 +1,4 @@
-type IconVariant =
+export type IconVariant =
     | 'chevron-down'
     | 'chevron-left'
     | 'close'
