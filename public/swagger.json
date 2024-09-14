@@ -28,27 +28,11 @@
     ],
     "components": {
         "securitySchemes": {
-            "cookieAuth": {
+            "csrfTokenAuth": {
                 "type": "apiKey",
-                "in": "cookie",
-                "name": "next-auth.session-token",
-                "description": "Authentication using a session token stored in a cookie. The cookie name is 'next-auth.session-token'. This token is used to authenticate requests and manage user sessions. You can find it in your browser's dev tools under the Cookies section, but next-auth automatically substitutes the token."
-            },
-            "OAuth2": {
-                "type": "oauth2",
-                "description": "OAuth2 authentication with support for multiple providers like Google.",
-                "flows": {
-                    "authorizationCode": {
-                        "authorizationUrl": "https://accounts.google.com/o/oauth2/auth",
-                        "tokenUrl": "https://oauth2.googleapis.com/token",
-                        "refreshUrl": "https://oauth2.googleapis.com/token",
-                        "scopes": {
-                            "openid": "OpenID Connect scope",
-                            "profile": "Access to basic profile information",
-                            "email": "Access to the user's email"
-                        }
-                    }
-                }
+                "in": "header",
+                "name": "Cookie",
+                "description": "After the first login, the session token is stored in cookies and there is no need to receive the csrf token again during subsequent actions with requests. If you clear your cookies, you need to request the csrf token again. In this field, it is not necessary to enter the value for the header, because it still needs to be passed in the body of the request in the csrfToken field"
             }
         },
         "schemas": {
@@ -89,24 +73,76 @@
             "User": {
                 "type": "object",
                 "properties": {
+                    "user": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string",
+                                "example": "Любов"
+                            },
+                            "email": {
+                                "type": "string",
+                                "format": "email",
+                                "example": "drogaltseva92@gmail.com"
+                            },
+                            "image": {
+                                "type": "string",
+                                "example": "https://res.cloudinary.com/deer7odwf/image/upload/v1726217734/zyqfxdij07btxwuiqeyk.jpg"
+                            },
+                            "id": {
+                                "type": "string",
+                                "example": "66e15bdbd94b57c78830d8ab"
+                            },
+                            "gender": {
+                                "type": "string",
+                                "enum": ["woman", "man"],
+                                "example": "man"
+                            },
+                            "activeTime": {
+                                "type": "number",
+                                "format": "float",
+                                "example": 0
+                            },
+                            "weight": {
+                                "type": "number",
+                                "format": "float",
+                                "example": 0
+                            },
+                            "volume": {
+                                "type": "number",
+                                "format": "float",
+                                "example": 3
+                            },
+                            "publicId": {
+                                "type": "string",
+                                "example": "zyqfxdij07btxwuiqeyk"
+                            }
+                        }
+                    },
+                    "expires": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-10-13T10:46:06.373Z"
+                    }
+                }
+            },
+            "UserUpdate": {
+                "type": "object",
+                "properties": {
                     "name": {
                         "type": "string",
                         "nullable": true,
-                        "example": null
+                        "example": "Alice"
                     },
                     "email": {
                         "type": "string",
                         "format": "email",
-                        "example": "kurkayetra@gufum.com"
+                        "example": "alice@example.com"
                     },
                     "image": {
                         "type": "string",
                         "nullable": true,
-                        "example": null
-                    },
-                    "id": {
-                        "type": "string",
-                        "example": "66e159b9d94b57c78830d8aa"
+                        "example": "https://example.com/image.jpg"
                     },
                     "gender": {
                         "type": "string",
@@ -128,7 +164,9 @@
                         "format": "float",
                         "example": 1.8
                     }
-                }
+                },
+                "required": [],
+                "nullable": true
             }
         },
         "responses": {
@@ -173,6 +211,11 @@
                 "tags": ["Auth"],
                 "summary": "Sign-in through the specified provider",
                 "description": "Authenticates the user via the selected provider.",
+                "security": [
+                    {
+                        "csrfTokenAuth": []
+                    }
+                ],
 
                 "requestBody": {
                     "description": "Authentication data",
@@ -181,11 +224,6 @@
                             "schema": {
                                 "type": "object",
                                 "properties": {
-                                    "csrfToken": {
-                                        "type": "string",
-                                        "description": "CSRF token for security",
-                                        "example": "c4a0350112b456810d26fc20d9e8e0ffdd2d6b8b705dafdfd18c8903a2ac7b8e"
-                                    },
                                     "callbackUrl": {
                                         "type": "string",
                                         "description": "URL to redirect after authentication",
@@ -213,8 +251,18 @@
                     }
                 },
                 "responses": {
-                    "200": {
-                        "$ref": "#/components/responses/RedirectSuccess"
+                    "302": {
+                        "description": "Redirects to Google",
+                        "headers": {
+                            "Location": {
+                                "description": "The URL to which the user is redirected",
+                                "schema": {
+                                    "type": "string",
+                                    "format": "uri",
+                                    "example": "https://accounts.google.com/o/oauth2/v2/auth?client_id=YOUR_CLIENT_ID&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgoogle&response_type=code&scope=openid%20email%20profile"
+                                }
+                            }
+                        }
                     },
                     "401": {
                         "description": "Invalid credentials or provider not found"
@@ -227,6 +275,11 @@
                 "tags": ["Auth"],
                 "summary": "Sign-in through the specified provider",
                 "description": "Authenticates the user via the selected provider.",
+                "security": [
+                    {
+                        "csrfTokenAuth": []
+                    }
+                ],
                 "requestBody": {
                     "description": "Authentication data",
                     "content": {
@@ -244,11 +297,7 @@
                                         "description": "User password for credential-based login",
                                         "example": "password123"
                                     },
-                                    "csrfToken": {
-                                        "type": "string",
-                                        "description": "CSRF token for security",
-                                        "example": "c4a0350112b456810d26fc20d9e8e0ffdd2d6b8b705dafdfd18c8903a2ac7b8e"
-                                    },
+
                                     "callbackUrl": {
                                         "type": "string",
                                         "description": "URL to redirect after authentication",
@@ -382,6 +431,107 @@
                                         "message": {
                                             "type": "string",
                                             "example": "User already exists"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users": {
+            "get": {
+                "tags": ["User"],
+                "summary": "Get amount of users",
+                "description": "Returns the amount of users in the database.",
+                "responses": {
+                    "200": {
+                        "description": "Amount of users",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "users": {
+                                            "type": "number",
+                                            "example": 1
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/update": {
+            "patch": {
+                "summary": "Update info user",
+                "tags": ["User"],
+                "requestBody": {
+                    "description": "User info to be updated",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserUpdate"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Profile updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Profile updated successfully"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/avatar/remove": {
+            "patch": {
+                "summary": "Request to delete an image",
+                "tags": ["User"],
+                "requestBody": {
+                    "description": "Request to delete an image",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "publicId": {
+                                        "type": "string",
+                                        "example": "nztd1vmrqxgsvfarwyha"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Deleting an image",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Image removed"
                                         }
                                     }
                                 }
