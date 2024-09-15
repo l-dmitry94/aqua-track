@@ -1,6 +1,7 @@
 import { Box } from '@mui/material';
 
 import BoxDailyInfo from './DailyInfo/BoxDailyInfo';
+import CustomCalendar from './CustomCalendar';
 import datas from './data.json';
 import UserBar from './UserBar';
 
@@ -11,7 +12,7 @@ const TrackerInfo = () => {
         <Box component="section" className={scss.boxTrackerInfo}>
             <UserBar />
             <BoxDailyInfo data={datas} />
-            {/* There will be calendar */}
+            <CustomCalendar />
         </Box>
     );
 };
