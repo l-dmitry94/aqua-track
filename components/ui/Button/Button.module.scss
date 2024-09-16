@@ -16,7 +16,7 @@
     }
 
     @include media-rules(tablet) {
-        @apply w-[169px] h-[60px];
+        @apply h-[60px] w-[169px];
     }
 }
 
@@ -28,7 +28,7 @@
     }
 
     @include media-rules(tablet) {
-        @apply w-[135px] h-[60px];
+        @apply h-[60px] w-[135px];
     }
 }
 
