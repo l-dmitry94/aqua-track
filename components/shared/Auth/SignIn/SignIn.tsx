@@ -33,7 +33,7 @@ const SignIn = () => {
         <Box className={scss.SignInPage}>
             <Auth>
                 <Typography variant="h1" className={scss.title}>
-                    SignIn
+                    Sign In
                 </Typography>
                 <Form validationSchema={validationSchema} onSubmit={handleSubmit}>
                     {(signin, control, setValue, errors) => (
