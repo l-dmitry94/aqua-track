@@ -11,4 +11,5 @@ export interface IInput extends InputHTMLAttributes<HTMLInputElement> {
     label: string;
     placeholder: string;
     light?: boolean;
+    defaultValue?: string | number;
 }

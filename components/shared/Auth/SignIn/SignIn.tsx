@@ -26,8 +26,6 @@ const SignIn = () => {
 
         if (result?.ok) {
             router.replace('/tracker');
-        } else {
-            console.log(result);
         }
     };
 
@@ -38,7 +36,7 @@ const SignIn = () => {
                     SignIn
                 </Typography>
                 <Form validationSchema={validationSchema} onSubmit={handleSubmit}>
-                    {(signin, control, errors) => (
+                    {(signin, control, setValue, errors) => (
                         <>
                             <Box component="div" className={scss.wrapper}>
                                 {fields.map(({ type, name, placeholder, label }) => (

@@ -49,6 +49,7 @@ model User {
   password      String?
   emailVerified DateTime? @map("email_verified")
   image         String?
+  publicId      String?
   gender        Gender    @default(woman)
   activeTime    Float?    @default(0)
   weight        Float?    @default(0)

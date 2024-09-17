@@ -32,7 +32,6 @@ const SignUp = () => {
                 router.replace('/tracker');
             }
         }
-        console.log(response);
     };
 
     return (
@@ -43,7 +42,7 @@ const SignUp = () => {
                 </Typography>
 
                 <Form validationSchema={validationSchema} onSubmit={handleSubmit}>
-                    {(register, control, errors) => (
+                    {(register, control, setValue, errors) => (
                         <>
                             <Box component="div" className={scss.wrapper}>
                                 {fields.map(({ type, name, placeholder, label }) => (
