@@ -1,5 +1,6 @@
 import React from 'react';
 import { Avatar, Box, Menu, Typography } from '@mui/material';
+import clsx from 'clsx';
 
 import Icon from '@/components/ui/Icon';
 
@@ -26,10 +27,7 @@ const UserBarPopover: React.FC<UserBarPopoverProps> = ({
                     {name}
                 </Typography>
                 <Avatar alt="User Avatar" src={image} />
-                <Icon
-                    variant={'chevron-down'}
-                    className={`${scss.svg} ${open ? scss.rotate : ''}`}
-                />
+                <Icon variant={'chevron-down'} className={clsx(scss.svg, open && scss.rotate)} />
             </Box>
 
             <Menu
