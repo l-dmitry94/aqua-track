@@ -1,0 +1,9 @@
+.mui-i5q14k-MuiDayCalendar-header {
+    @apply hidden;
+}
+.MuiPickersDay-root {
+    width: 100%;
+    &.Mui-selected {
+        @apply bg-primary text-white;
+    }
+}

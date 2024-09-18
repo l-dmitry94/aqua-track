@@ -32,7 +32,7 @@
 }
 
 .text {
-    @apply font-sans text-sm font-bold text-white;
+    @apply select-none font-sans text-sm font-bold text-white;
 
     @include media-rules(tablet) {
         @apply text-base;
@@ -40,5 +40,5 @@
 }
 
 .btn {
-    @apply mb-1 flex flex-row items-center gap-[10px] rounded-[30px] bg-primary px-3 py-[6px] font-sans text-base font-bold transition-colors duration-300 ease-linear;
+    @apply mb-1 flex cursor-pointer flex-row items-center gap-[10px] rounded-[30px] bg-primary px-3 py-[6px] font-sans text-base font-bold transition-colors duration-300 ease-linear;
 }

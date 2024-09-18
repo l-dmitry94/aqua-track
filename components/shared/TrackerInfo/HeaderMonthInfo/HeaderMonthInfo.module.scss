@@ -1,24 +1,25 @@
+.wrapper {
+    @apply flex items-center justify-between;
+}
+
 .svg {
-    @apply fill-gray stroke-primary;
+    @apply fill-gray stroke-primary transition-opacity duration-300 ease-linear;
 
     &.right {
         @apply rotate-180;
     }
+    &:is(:hover, :focus),
+    &.active {
+        @apply opacity-60;
+    }
 }
 
 .textDate,
-.boxCalendar {
+.boxCalendar,
+.title {
     @apply font-sans text-sm font-bold text-primary;
 }
 
-.path1 {
-    stroke: red;
-    fill: gray; /* Set the stroke color for the first path */
-    stroke-width: 2.6667;
-}
-
-.path2 {
-    stroke: green;
-    font: grey; /* Set the stroke color for the second path */
-    stroke-width: 2.6667;
+.title {
+    @apply text-xl;
 }
