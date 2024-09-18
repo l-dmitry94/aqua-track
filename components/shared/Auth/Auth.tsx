@@ -13,16 +13,16 @@ interface IAuth {
 const Auth: FC<IAuth> = ({ children }) => {
     return (
         <Box component="section" className={scss.auth}>
-            <Container className={scss.container}>
-                <Box component="div" className={scss.wrapper}>
-                    <Link href="/" className={scss.link}>
-                        AquaTrack
-                    </Link>
-                    <Box component="div" className={scss.content}>
-                        {children}
-                    </Box>
+            {/* <Container className={scss.container}> */}
+            <Box component="div" className={scss.wrapper}>
+                <Link href="/" className={scss.link}>
+                    AquaTrack
+                </Link>
+                <Box component="div" className={scss.content}>
+                    {children}
                 </Box>
-            </Container>
+            </Box>
+            {/* </Container> */}
         </Box>
     );
 };

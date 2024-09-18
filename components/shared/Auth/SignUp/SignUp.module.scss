@@ -1,7 +1,7 @@
 @import 'styles/mixins';
 
 .SignUpPage{
-    @apply flex flex-row ;
+    @apply flex flex-row gap-8 ;
 }
 
 // .img{
