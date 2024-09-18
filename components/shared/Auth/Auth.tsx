@@ -2,8 +2,6 @@ import { FC, ReactNode } from 'react';
 import { Box } from '@mui/material';
 import Link from 'next/link';
 
-import Container from '@/components/ui/Container';
-
 import scss from './Auth.module.scss';
 
 interface IAuth {
