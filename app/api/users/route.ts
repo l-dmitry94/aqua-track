@@ -1,12 +1,9 @@
 import { NextResponse } from 'next/server';
 
-import { connectMongoDB } from '@/lib/mongodb';
-
-import { allUsers } from './services';
+import prisma from '@/prisma/prisma';
 
 export const GET = async () => {
-    await connectMongoDB();
-    const users = await allUsers();
+    const users = await prisma.user.findMany();
 
-    return NextResponse.json(users);
+    return NextResponse.json({ users: users.length });
 };

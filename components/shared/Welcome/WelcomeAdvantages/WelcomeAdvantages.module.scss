@@ -1,0 +1,120 @@
+@import 'styles/mixins';
+
+.section {
+    @apply relative  ;
+
+    // @include media-rules(desktop) {
+    //     @apply w-1/2;
+    // }
+
+    &.desktop {
+        @apply hidden;
+
+        @include media-rules(desktop) {
+            @apply block h-full;
+        }
+    }
+}
+.container {
+    @apply h-full max-w-screen-tablet;
+} 
+
+.image {
+    @apply max-w-[672px] rounded-custom h-full ;
+}
+
+.customers {
+    @apply rounded-custom absolute bottom-24 left-4 flex items-center gap-1 bg-white px-[14px] py-[10px];
+
+    @include media-rules(tablet) {
+        @apply bottom-24 px-5;
+    }
+
+    @include media-rules(desktop) {
+        @apply bottom-[132px] left-8;
+    }
+}
+
+.customersList {
+    @apply flex flex-row-reverse items-center;
+}
+
+.customer {
+    @apply relative -ml-4;
+
+    @include media-rules(tablet) {
+        @apply -ml-5;
+    }
+
+    &:last-child {
+        @apply ml-0;
+    }
+}
+
+.avatar {
+    @apply -ml-2 h-7 w-7;
+
+    &:last-child {
+        @apply ml-0;
+    }
+
+    @include media-rules(tablet) {
+        @apply -ml-5 h-12 w-12;
+    }
+}
+
+.text {
+    @apply max-w-[68px] text-xs font-bold leading-[1.17] font-sans;
+
+    @include media-rules(tablet) {
+        @apply max-w-[90px] text-base leading-[1.49];
+    }
+
+    &Color {
+        @apply text-green;
+    }
+}
+
+.advantages {
+    @apply absolute bottom-8 right-4;
+
+    @include media-rules(tablet) {
+        @apply right-8;
+    }
+
+    @include media-rules(desktop) {
+        @apply bottom-16;
+    }
+}
+
+.advantagesList {
+    @apply flex max-w-[168px] flex-wrap items-center gap-1;
+
+    @include media-rules(tablet) {
+        @apply max-w-[242px] gap-[10px];
+    }
+}
+
+.advantage {
+    @apply rounded-custom flex items-center gap-1 px-3 py-2 text-[0.5rem] font-bold leading-none tracking-tight w-auto;
+
+    @include media-rules(tablet) {
+        @apply px-4 py-3 text-xs;
+    }
+
+    &:first-child {
+        @apply bg-primary text-white;
+
+        &::before {
+            @apply block h-2 w-2 rounded-full bg-green content-[''];
+        }
+    }
+
+    &:nth-child(2) {
+        @apply bg-green text-primary;
+    }
+
+    &:last-child {
+        @apply bg-white;
+    }
+}

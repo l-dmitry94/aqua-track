@@ -1,37 +1,41 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { getServerSession } from 'next-auth/next';
 
-import { connectMongoDB } from '@/lib/mongodb';
-
-import { updateWaterEntry } from '../../services';
+import { authOptions } from '@/lib/authOptions';
+import prisma from '@/prisma/prisma';
 
 export const PATCH = async (req: NextRequest, { params }: { params: { id: string } }) => {
-    await connectMongoDB();
+    const session = await getServerSession(authOptions);
 
-    const userHeader = req.headers.get('X-User');
-    if (!userHeader) {
-        return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+    if (!session) {
+        return NextResponse.redirect('/signin');
     }
 
-    const user = JSON.parse(userHeader);
     const { id } = params;
-    const { date, volume } = await req.json();
 
     if (!id) {
         return NextResponse.json({ message: 'Entry ID is required' }, { status: 400 });
     }
 
-    if (!date || volume === undefined) {
-        return NextResponse.json({ message: 'Date and volume are required' }, { status: 400 });
+    const { volume }: { volume: number } = await req.json();
+
+    if (!volume) {
+        return NextResponse.json({ message: 'Volume is required' }, { status: 400 });
     }
 
-    const updatedEntry = await updateWaterEntry(id, user.id, new Date(date), volume);
+    try {
+        const updatedEntry = await prisma.water.update({
+            where: {
+                id,
+                userId: session.user.id,
+            },
+            data: {
+                volume,
+            },
+        });
 
-    if (!updatedEntry) {
-        return NextResponse.json(
-            { message: 'Entry not found or user unauthorized' },
-            { status: 404 }
-        );
+        return NextResponse.json(updatedEntry, { status: 200 });
+    } catch (error) {
+        return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
     }
-
-    return NextResponse.json(updatedEntry, { status: 200 });
 };

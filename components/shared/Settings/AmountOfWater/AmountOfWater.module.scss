@@ -1,0 +1,21 @@
+@import 'styles/mixins';
+
+.amount {
+    @apply mb-[14px];
+
+    @include media-rules(tablet) {
+        @apply flex items-center gap-1;
+    }
+}
+
+.title {
+    @apply mb-1 text-sm leading-[1.29] tracking-tight text-secondary;
+
+    @include media-rules(tablet) {
+        @apply text-base leading-normal flex items-center gap-2 mb-0;
+    }
+}
+
+.text {
+    @apply text-sm leading-[1.29] tracking-tight font-bold text-green;
+}

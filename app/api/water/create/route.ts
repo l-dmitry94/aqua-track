@@ -1,20 +1,17 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
+import { getServerSession } from 'next-auth/next';
 
-import { connectMongoDB } from '@/lib/mongodb';
+import { authOptions } from '@/lib/authOptions';
+import prisma from '@/prisma/prisma';
 
-import { createWaterEntry } from '../services';
+export const POST = async (req: Request) => {
+    const session = await getServerSession(authOptions);
 
-export const POST = async (req: NextRequest) => {
-    await connectMongoDB();
-
-    const userHeader = req.headers.get('X-User');
-    if (!userHeader) {
+    if (!session) {
         return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     }
 
-    const user = JSON.parse(userHeader);
-
-    const { date, volume } = await req.json();
+    const { date, volume }: { date: string; volume: number } = await req.json();
 
     if (!date || volume === undefined) {
         return NextResponse.json(
@@ -24,7 +21,14 @@ export const POST = async (req: NextRequest) => {
     }
 
     try {
-        const waterEntry = await createWaterEntry(user.id, new Date(date), volume);
+        const waterEntry = await prisma.water.create({
+            data: {
+                userId: session.user.id,
+                date: new Date(date),
+                volume,
+            },
+        });
+
         return NextResponse.json(waterEntry, { status: 201 });
     } catch (error) {
         return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });

@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { FieldErrors, UseFormRegister } from 'react-hook-form';
+import { FieldErrors, UseControllerProps, UseFormRegister, UseFormSetValue } from 'react-hook-form';
 import * as yup from 'yup';
 
 export interface UserLogin {
@@ -11,11 +11,27 @@ export interface UserRegister extends UserLogin {
     repeatPassword: string;
 }
 
-export type FormValues = UserLogin & UserRegister;
-export type NameValues = keyof UserLogin & keyof UserRegister;
+export interface ISettings {
+    name?: string;
+    email: string;
+    gender: 'woman' | 'man';
+    weight?: number;
+    activeTime?: number;
+    volume?: number;
+    image?: string;
+    publicId?: string;
+}
+
+export type FormValues = UserLogin & UserRegister & ISettings;
+export type NameValues = keyof UserLogin & keyof UserRegister & keyof ISettings;
 
 export interface IForm {
     validationSchema?: yup.AnyObjectSchema;
-    operation: (data: FormValues) => Promise<void> | any;
-    children: (register: UseFormRegister<FormValues>, errors: FieldErrors<FormValues>) => ReactNode;
+    onSubmit: (data: FormValues) => void;
+    children: (
+        register: UseFormRegister<FormValues>,
+        control: UseControllerProps<FormValues>['control'],
+        setValue: UseFormSetValue<FormValues>,
+        errors: FieldErrors<FormValues>
+    ) => ReactNode;
 }

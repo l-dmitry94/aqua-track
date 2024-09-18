@@ -1,13 +1,31 @@
+@import 'styles/mixins';
+
 .inputWrapper {
     @apply relative;
 }
 
 .label {
     @apply mb-2 inline-block text-base font-bold leading-normal tracking-tight text-secondary;
+
+    @include media-rules(tablet) {
+        @apply text-[1.125rem] leading-[1.33];
+    }
+}
+
+.lightLabel {
+    @apply text-sm leading-[1.29] font-normal;
+
+    @include media-rules(tablet) {
+        @apply text-base leading-normal;
+    }
 }
 
 .input {
-    @apply flex h-[50px] w-full justify-center rounded-2xl border border-secondary/20 bg-transparent px-4 outline-none transition-colors duration-200 ease-linear;
+    @apply flex h-[50px] w-full justify-center rounded-2xl border border-secondary/20 bg-transparent px-4 outline-none transition-colors duration-200 ease-linear text-sm leading-[1.29] tracking-tight;
+
+    @include media-rules(tablet) {
+        @apply h-[56px] text-base leading-normal;
+    }
 
     &:focus {
         @apply border-secondary/40;
@@ -28,4 +46,8 @@
 
 .error {
     @apply text-error text-sm leading-[1.29] tracking-tight mt-[10px];
+
+    @include media-rules(tablet) {
+        @apply text-base leading-normal;
+    }
 }

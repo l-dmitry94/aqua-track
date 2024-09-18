@@ -1,0 +1,77 @@
+@import 'styles/mixins';
+
+.title {
+    @apply mb-[14px] font-sans text-base font-bold leading-[1.25] tracking-tight text-primary;
+
+    @include media-rules(tablet) {
+        @apply text-[1.125rem] leading-[1.33];
+    }
+}
+
+.list {
+    @apply mb-[14px] flex flex-col gap-3;
+
+    @include media-rules(tablet) {
+        @apply flex-row gap-7;
+    }
+}
+
+.listItem {
+    @apply block w-auto;
+}
+
+.listItemTextLabel {
+    @apply m-0 mb-1;
+
+    & span {
+        @apply font-sans text-sm leading-[1.29] tracking-tight text-secondary;
+
+        @include media-rules(tablet) {
+            @apply text-base leading-normal;
+        }
+    }
+}
+
+.listItemText {
+    @apply m-0 text-sm font-bold leading-[1.29] tracking-tight;
+
+    & span {
+        @apply font-sans text-sm font-bold leading-[1.29] tracking-tight text-green;
+
+        @include media-rules(tablet) {
+            @apply text-base leading-normal;
+        }
+    }
+}
+
+.description {
+    @apply mb-[14px] rounded-2xl border border-secondary/15 p-4 font-sans text-sm leading-[1.29] tracking-tight text-secondary/60;
+
+    @include media-rules(tablet) {
+        @apply text-base leading-normal;
+    }
+
+    & .asterisk {
+        @apply text-green;
+    }
+}
+
+.activeTime {
+    @apply flex items-center gap-1;
+}
+
+.icon {
+    @apply h-[18px] w-[18px] fill-green;
+
+    @include media-rules(tablet) {
+        @apply h-[22px] w-[22px];
+    }
+}
+
+.text {
+    @apply font-sans text-sm leading-[1.29] tracking-tight text-secondary;
+
+    @include media-rules(tablet) {
+        @apply text-base leading-normal;
+    }
+}

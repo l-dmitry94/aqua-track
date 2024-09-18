@@ -1,0 +1,61 @@
+@import 'styles/mixins';
+
+.wrapper {
+    @apply mb-10 mt-5 flex w-full flex-col;
+}
+
+.uploadButton {
+    @apply inline-flex flex-col items-center justify-center gap-3;
+}
+
+.imageWrapper {
+    @apply flex items-center justify-center gap-3;
+}
+
+.image {
+    @apply mx-auto h-[75px] w-[75px] rounded-full object-cover;
+
+    @include media-rules(tablet) {
+        @apply h-[100px] min-w-[100px];
+    }
+}
+
+.uploadIcon {
+    @apply h-[18px] w-[18px] fill-none stroke-secondary;
+
+    @include media-rules(tablet) {
+        @apply h-5 w-5;
+    }
+}
+
+.defaultImage {
+    @apply relative mx-auto flex h-[75px] w-[75px] items-center justify-center rounded-full bg-[#F0EFF4];
+
+    @include media-rules(tablet) {
+        @apply h-[100px] min-w-[100px];
+    }
+}
+
+.publicId {
+    @apply absolute right-0 top-0 rounded-md bg-green/50 p-1;
+
+    @include media-rules(tablet) {
+        @apply p-2 -right-1 top-0;
+    }
+}
+
+.trashIcon {
+    @apply h-3 w-3 fill-none stroke-secondary;
+
+    @include media-rules(tablet) {
+        @apply h-4 w-4;
+    }
+}
+
+.text {
+    @apply font-sans text-sm leading-[1.29] tracking-tight text-secondary;
+
+    @include media-rules(tablet) {
+        @apply text-base leading-normal;
+    }
+}

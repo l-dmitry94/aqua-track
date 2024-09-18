@@ -1,0 +1,24 @@
+@import 'styles/mixins';
+
+.text {
+    @apply font-sans text-sm font-normal text-primary;
+
+    @include media-rules(tablet) {
+        @apply text-lg;
+    }
+}
+
+.buttons {
+    @apply mt-7 flex flex-col gap-2;
+
+    @include media-rules(tablet) {
+        @apply flex-row justify-center gap-[10px] align-baseline;
+    }
+}
+.btn {
+    @apply min-w-full;
+
+    @include media-rules(tablet) {
+        @apply h-[60px] min-w-[173px];
+    }
+}

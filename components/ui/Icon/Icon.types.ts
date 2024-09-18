@@ -1,4 +1,4 @@
-type IconVariant =
+export type IconVariant =
     | 'chevron-down'
     | 'chevron-left'
     | 'close'
@@ -10,7 +10,8 @@ type IconVariant =
     | 'plus'
     | 'settings'
     | 'trash'
-    | 'upload';
+    | 'upload'
+    | 'exclamation';
 
 export interface IIcon {
     variant: IconVariant;

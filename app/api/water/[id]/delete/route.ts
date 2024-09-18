@@ -1,29 +1,39 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { getServerSession } from 'next-auth/next';
 
-import { connectMongoDB } from '@/lib/mongodb';
-
-import { deleteWaterEntry } from '../../services';
+import { authOptions } from '@/lib/authOptions';
+import prisma from '@/prisma/prisma';
 
 export const DELETE = async (req: NextRequest, { params }: { params: { id: string } }) => {
-    await connectMongoDB();
+    const session = await getServerSession(authOptions);
 
-    const userHeader = req.headers.get('X-User');
-    if (!userHeader) {
-        return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+    if (!session) {
+        return NextResponse.redirect('/signin');
     }
 
     const { id } = params;
-    const user = JSON.parse(userHeader);
 
     if (!id) {
         return NextResponse.json({ message: 'Entry ID is required' }, { status: 400 });
     }
 
-    const waterEntry = await deleteWaterEntry(id, user.id);
+    try {
+        const deletedEntry = await prisma.water.deleteMany({
+            where: {
+                id: id,
+                userId: session.user.id,
+            },
+        });
 
-    if (!waterEntry) {
-        return NextResponse.json({ message: 'Entry not found or forbidden' }, { status: 404 });
+        if (deletedEntry.count === 0) {
+            return NextResponse.json(
+                { message: 'Entry not found or you do not have permission to delete it' },
+                { status: 404 }
+            );
+        }
+
+        return NextResponse.json({ message: 'Entry deleted successfully' }, { status: 200 });
+    } catch (error) {
+        return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
     }
-
-    return NextResponse.json({ message: 'Entry deleted successfully' });
 };

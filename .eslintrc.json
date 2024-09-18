@@ -12,7 +12,7 @@
     "parser": "@typescript-eslint/parser",
     "plugins": ["react-refresh", "simple-import-sort"],
     "rules": {
-        "max-lines": ["warn", { "max": 80, "skipComments": true, "skipBlankLines": true }],
+        "max-lines": ["warn", { "max": 100, "skipComments": true, "skipBlankLines": true }],
         "prettier/prettier": [
             "warn",
             {
@@ -20,6 +20,7 @@
             }
         ],
         "@typescript-eslint/no-explicit-any": "off",
+        "@next/next/no-img-element": "off",
         "simple-import-sort/exports": "warn",
         "simple-import-sort/imports": [
             "warn",

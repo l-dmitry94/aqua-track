@@ -1,0 +1,33 @@
+@import 'styles/mixins';
+
+.logoSection {
+  @apply relative rounded-custom bg-gray px-4 pt-6;
+
+  @include media-rules(tablet) {
+    @apply px-8 pt-8;
+  }
+
+  @include media-rules(desktop) {
+    @apply w-1/2 px-8 pt-8;
+  }
+}
+
+.green {
+  @apply bg-green;
+}
+
+.wrapper {
+  @apply h-full;
+}
+
+.fullHeight {
+  @apply h-screen;
+}
+
+.logo {
+  @apply text-lg font-bold uppercase leading-[1.11] tracking-tight;
+
+  @include media-rules(tablet) {
+    @apply text-2xl leading-none;
+  }
+}

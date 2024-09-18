@@ -22,6 +22,101 @@
             }
         },
         "schemas": {
+            "WaterEntry": {
+                "type": "object",
+                "properties": {
+                    "_id": {
+                        "type": "string",
+                        "description": "Id of water entry",
+                        "example": "66d6c013157ef1c67f7f096e"
+                    },
+                    "user": {
+                        "type": "string",
+                        "description": "ID of the user"
+                    },
+                    "date": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Date of the water entry"
+                    },
+                    "volume": {
+                        "type": "number",
+                        "description": "Volume of water consumed"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp of when the entry was created"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp of the last update"
+                    }
+                },
+                "required": ["user", "date", "volume"]
+            },
+            "UserDetails": {
+                "type": "object",
+                "properties": {
+                    "_id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "token": {
+                        "type": "string"
+                    },
+                    "gender": {
+                        "type": "string",
+                        "enum": ["woman", "man"]
+                    },
+                    "weight": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "activeTime": {
+                        "type": "number"
+                    },
+                    "waterIntake": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "avatar": {
+                        "type": "string",
+                        "format": "uri"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "required": [
+                    "_id",
+                    "name",
+                    "email",
+                    "password",
+                    "token",
+                    "gender",
+                    "weight",
+                    "activeTime",
+                    "waterIntake",
+                    "avatar",
+                    "createdAt",
+                    "updatedAt"
+                ]
+            },
             "User": {
                 "type": "object",
                 "properties": {
@@ -29,7 +124,38 @@
                         "type": "string"
                     },
                     "email": {
-                        "type": "string"
+                        "type": "string",
+                        "unique": true,
+                        "required": true
+                    },
+                    "password": {
+                        "type": "string",
+                        "required": true
+                    },
+                    "token": {
+                        "type": "string",
+                        "default": null
+                    },
+                    "gender": {
+                        "type": "string",
+                        "enum": ["woman", "man"],
+                        "default": "woman"
+                    },
+                    "weight": {
+                        "type": "number",
+                        "default": 0
+                    },
+                    "activeTime": {
+                        "type": "number",
+                        "default": 0
+                    },
+                    "waterIntake": {
+                        "type": "number",
+                        "default": 1.8
+                    },
+                    "avatar": {
+                        "type": "string",
+                        "default": null
                     }
                 }
             },
@@ -38,9 +164,6 @@
                 "properties": {
                     "user": {
                         "$ref": "#/components/schemas/User"
-                    },
-                    "token": {
-                        "type": "string"
                     },
                     "message": {
                         "type": "string"
@@ -52,14 +175,111 @@
                 "properties": {
                     "user": {
                         "$ref": "#/components/schemas/User"
+                    }
+                }
+            },
+            "UserUpdateRequest": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "John Doe"
                     },
-                    "token": {
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "example": "john.doe@example.com"
+                    },
+                    "gender": {
+                        "type": "string",
+                        "enum": ["woman", "man"],
+                        "example": "man",
+                        "default": "woman"
+                    },
+                    "weight": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 70.5
+                    },
+                    "activeTime": {
+                        "type": "number",
+                        "example": "2"
+                    },
+                    "waterIntake": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 2000
+                    },
+                    "avatar": {
+                        "type": "string",
+                        "format": "binary",
+                        "description": "New avatar image (JPEG or PNG)"
+                    }
+                }
+            },
+            "UserUpdateResponse": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "User updated successfully"
+                    },
+                    "user": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "email": {
+                                "type": "string"
+                            },
+                            "gender": {
+                                "type": "string",
+                                "enum": ["woman", "man"],
+                                "example": "man"
+                            },
+                            "weight": {
+                                "type": "number",
+                                "format": "float"
+                            },
+                            "activeTime": {
+                                "type": "number"
+                            },
+                            "waterIntake": {
+                                "type": "number",
+                                "format": "float"
+                            },
+                            "avatar": {
+                                "type": "string",
+                                "format": "uri"
+                            }
+                        }
+                    }
+                }
+            },
+            "ErrorResponse": {
+                "type": "object",
+                "properties": {
+                    "message": {
                         "type": "string"
                     }
                 }
             }
         },
         "responses": {
+            "UserListResponse": {
+                "description": "List of users",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/components/schemas/UserDetails"
+                            }
+                        }
+                    }
+                }
+            },
             "UserLoginSuccess": {
                 "description": "User logged in successfully",
                 "content": {
@@ -96,6 +316,16 @@
                     }
                 }
             },
+            "BadRequest": {
+                "description": "Bad request",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/ErrorResponse"
+                        }
+                    }
+                }
+            },
             "InternalServerError": {
                 "description": "Internal server error",
                 "content": {
@@ -108,6 +338,16 @@
                                     "example": "Internal server error"
                                 }
                             }
+                        }
+                    }
+                }
+            },
+            "UserUpdateSuccess": {
+                "description": "User updated successfully",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/UserUpdateResponse"
                         }
                     }
                 }
@@ -148,7 +388,7 @@
                         "$ref": "#/components/responses/UserLoginSuccess"
                     },
                     "400": {
-                        "description": "Bad request"
+                        "$ref": "#/components/responses/BadRequest"
                     },
                     "404": {
                         "description": "Email or password is wrong"
@@ -196,7 +436,7 @@
                         "$ref": "#/components/responses/UserRegisterSuccess"
                     },
                     "400": {
-                        "description": "Bad request"
+                        "$ref": "#/components/responses/BadRequest"
                     },
                     "409": {
                         "description": "User already exists"
@@ -222,7 +462,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/User"
+                                    "$ref": "#/components/schemas/UserUpdateRequest"
                                 }
                             }
                         }
@@ -232,6 +472,322 @@
                     },
                     "500": {
                         "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
+        "/users/update": {
+            "patch": {
+                "summary": "Update user information",
+                "tags": ["Users"],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "description": "User information and avatar to update",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/UserUpdateSuccess"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
+        "/users/logout": {
+            "post": {
+                "summary": "Logout user",
+                "tags": ["Users"],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "description": "User information about logout"
+                },
+                "responses": {
+                    "204": {
+                        "description": "User logout successfully"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
+        "/users": {
+            "get": {
+                "summary": "Get list of users",
+                "tags": ["Users"],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/UserListResponse"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
+        "/water/create": {
+            "post": {
+                "summary": "Adding data on the volume of water consumed",
+                "tags": ["Water"],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "description": "Water creating information",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "date": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "description": "The date of the water entry in ISO 8601 format"
+                                    },
+                                    "volume": {
+                                        "type": "number",
+                                        "description": "The volume of water consumed in milliliters"
+                                    }
+                                },
+                                "required": ["date", "volume"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Getting information successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/WaterEntry"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "400": {
+                        "description": "Bad Request: Missing required fields"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
+        "/water/{id}/update": {
+            "patch": {
+                "summary": "Update data on the volume and date of water",
+                "tags": ["Water"],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "ID of the water entry to update",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Update water information",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "date": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "description": "The date of the water entry in ISO 8601 format"
+                                    },
+                                    "volume": {
+                                        "type": "number",
+                                        "description": "The volume of water consumed in milliliters"
+                                    }
+                                },
+                                "required": ["date", "volume"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Data of entry water updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/WaterEntry"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "400": {
+                        "description": "Entry ID is required"
+                    },
+                    "404": {
+                        "description": "Entry not found"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
+        "/water/{id}/delete": {
+            "delete": {
+                "summary": "Delete data on the volume and date of water",
+                "tags": ["Water"],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "ID of the water entry to delete",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Entry deleted successfully"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "400": {
+                        "description": "Entry ID is required"
+                    },
+                    "404": {
+                        "description": "Entry not found or forbidden"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
+        "/water/daily": {
+            "post": {
+                "summary": "Obtaining data on the user's water consumption per day",
+                "tags": ["Water"],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "description": "Get information about user's water consumption per day. The date field is optional. If it is missing, the data for the current day will be returned",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "date": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "description": "The date of the water entry in ISO 8601 format"
+                                    }
+                                },
+                                "required": ["date", "volume"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Data of entry water updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": { "$ref": "#/components/schemas/WaterEntry" }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "500": {
+                        "description": "Error fetching data"
+                    }
+                }
+            }
+        },
+        "/water/monthly": {
+            "get": {
+                "summary": "Obtaining data on the user's water consumption per month",
+                "tags": ["Water"],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Monthly data of water consumption retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/WaterEntry"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "500": {
+                        "description": "Error fetching data"
                     }
                 }
             }

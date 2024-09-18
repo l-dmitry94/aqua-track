@@ -1,0 +1,15 @@
+@import 'styles/mixins';
+
+.wrapper {
+    @apply mb-10 flex flex-col gap-6;
+
+    @include media-rules(desktop) {
+        @apply flex-row gap-10;
+    }
+}
+
+.box {
+    @include media-rules(desktop) {
+        @apply w-1/2;
+    }
+}
