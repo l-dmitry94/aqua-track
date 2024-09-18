@@ -3,9 +3,9 @@
 .section {
     @apply relative  ;
 
-    @include media-rules(desktop) {
-        @apply w-1/2;
-    }
+    // @include media-rules(desktop) {
+    //     @apply w-1/2;
+    // }
 
     &.desktop {
         @apply hidden;

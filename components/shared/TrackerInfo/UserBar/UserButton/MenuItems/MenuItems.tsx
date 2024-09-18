@@ -1,5 +1,6 @@
 import React from 'react';
 import { MenuItem } from '@mui/material';
+import clsx from 'clsx';
 
 import Icon from '@/components/ui/Icon';
 import { IconVariant } from '@/components/ui/Icon';
@@ -36,7 +37,7 @@ const UserMenuItems: React.FC<UserMenuItemsProps> = ({
                 <MenuItem
                     key={index}
                     onClick={item.onClick}
-                    className={`${scss.menuItem} ${index === 0 ? scss.active : ''}`}
+                    className={clsx(scss.menuItem, index === 0 && scss.active)}
                 >
                     <Icon variant={item.icon} className={scss.icon} />
                     {item.label}

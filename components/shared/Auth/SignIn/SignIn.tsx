@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 
 import Button from '@/components/ui/Button';
+import Container from '@/components/ui/Container';
 import Form from '@/components/ui/Form';
 import { FormValues, NameValues } from '@/components/ui/Form/Form.types';
 import Input from '@/components/ui/Input';
@@ -30,10 +31,10 @@ const SignIn = () => {
     };
 
     return (
-        <Box className={scss.SignInPage}>
+        <Container className={scss.SignInPage}>
             <Auth>
                 <Typography variant="h1" className={scss.title}>
-                    SignIn
+                    Sign In
                 </Typography>
                 <Form validationSchema={validationSchema} onSubmit={handleSubmit}>
                     {(signin, control, setValue, errors) => (
@@ -76,7 +77,7 @@ const SignIn = () => {
             <Box className={scss.img}>
                 <WelcomeAdvantages />
             </Box>
-        </Box>
+        </Container>
     );
 };
 

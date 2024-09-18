@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Icon from '@/components/ui/Icon';
 import { waterGlassImage } from '@/public/images/dailyInfo';
 
-import { ItemListDailyInfoProps } from './types';
+import { ItemListDailyInfoProps } from './ItemListDailyInfo.';
 
 import scss from './ItemListDailyInfo.module.scss';
 
