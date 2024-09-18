@@ -9,4 +9,5 @@ export interface IWaterInputs {
     amount: number;
     onSetEmount: any;
     value?: string | number | undefined;
+    currentDate: Date;
 }

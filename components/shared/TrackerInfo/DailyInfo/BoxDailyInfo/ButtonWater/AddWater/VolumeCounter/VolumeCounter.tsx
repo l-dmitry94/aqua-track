@@ -13,11 +13,11 @@ const VolumeCounter: FC<IVolumeCounter> = ({ onIncrement, onDecrement, amount })
                 Amount of water:
             </Typography>
             <Box component="div" className={scss.counter}>
-                <button type="button" onClick={onDecrement}>
+                <button className={scss.btn} type="button" onClick={onDecrement}>
                     <Image src="/icons/minus.svg" alt="minus" width={40} height={40} />
                 </button>
                 <span className={scss.amount}>{`${amount} ml`}</span>
-                <button type="button" onClick={onIncrement}>
+                <button className={scss.btn} type="button" onClick={onIncrement}>
                     <Image src="/icons/plus.svg" alt="minus" width={40} height={40} />
                 </button>
             </Box>

@@ -1,6 +1,6 @@
 const fields = [
     {
-        name: 'date',
+        name: 'time',
         label: 'Recording time:',
         type: 'time',
         light: true,

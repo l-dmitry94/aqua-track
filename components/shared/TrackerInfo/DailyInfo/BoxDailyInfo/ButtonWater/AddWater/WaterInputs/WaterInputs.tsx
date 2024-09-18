@@ -8,11 +8,18 @@ import { IWaterInputs } from './WaterInputs.types';
 
 import scss from './WaterInputs.module.scss';
 
-const WaterInputs: FC<IWaterInputs> = ({ register, errors, setValue, amount, onSetEmount }) => {
+const WaterInputs: FC<IWaterInputs> = ({
+    register,
+    errors,
+    setValue,
+    amount,
+    onSetEmount,
+    currentDate,
+}) => {
     const [time, setTime] = useState(() => {
-        const current = new Date();
-        return format(current, 'HH:mm');
+        return format(currentDate, 'HH:mm');
     });
+
     useEffect(() => {
         setValue('volume', amount);
         setValue('time', time);
