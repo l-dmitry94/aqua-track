@@ -1,4 +1,5 @@
 import { Box, List, ListItem, Skeleton } from '@mui/material';
+import clsx from 'clsx';
 
 import scssList from '../BoxDailyInfo.module.scss';
 import scssItem from '../ItemListDailyInfo/ItemListDailyInfo.module.scss';
@@ -9,7 +10,7 @@ const BoxSkeleton = () => {
         <>
             <List className={scssList.list}>
                 {Array.from({ length: 3 }).map((_, index) => (
-                    <ListItem key={index} className={`${scssItem.item} ${scss.item}`}>
+                    <ListItem key={index} className={clsx(scssList.item, scssItem.item)}>
                         <Skeleton variant="rectangular" width={40} height={35} />
                         <Box component="div" className={scssItem.wrapper}>
                             <Box component="div" className={scssItem.wrapperInfo}>
