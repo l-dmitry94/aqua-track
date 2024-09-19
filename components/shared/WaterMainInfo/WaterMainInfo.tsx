@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
@@ -20,7 +20,7 @@ import styles from './water-main-info.module.scss';
 const WaterMainInfo = () => {
     const [water, setWater] = useState();
 
-    const date = new Date();
+    const date = useMemo(() => new Date(), []);
 
     const {
         data: {
@@ -35,7 +35,7 @@ const WaterMainInfo = () => {
         return `${year}-${month}-${day}`;
     };
 
-    const fetchWater = async () => {
+    const fetchWater = useCallback(async () => {
         try {
             const formattedDate = formatDate(date);
             const { totalWater } = await fetchDailyWater(formattedDate);
@@ -44,11 +44,11 @@ const WaterMainInfo = () => {
         } catch (error: any) {
             console.log(error.data.message);
         }
-    };
+    }, [date]);
 
     useEffect(() => {
         fetchWater();
-    }, [water]);
+    }, [fetchWater]);
 
     return (
         <AuthWrapper backgroundColor="green" fullHeight={true}>
