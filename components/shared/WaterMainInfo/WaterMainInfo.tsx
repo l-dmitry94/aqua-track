@@ -22,11 +22,9 @@ const WaterMainInfo = () => {
 
     const date = useMemo(() => new Date(), []);
 
-    const {
-        data: {
-            user: { volume },
-        },
-    } = useSession();
+    const { data: session } = useSession();
+
+    const volume = session?.user?.volume;
 
     const formatDate = (date: Date) => {
         const year = date.getFullYear();
