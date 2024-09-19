@@ -1,9 +1,21 @@
+import { FC } from 'react';
+
 import { CustomItemBox } from '@/components/shared/WaterMainInfo';
 
 import styles from './progress-bar.module.scss';
 
-const ProgressBar = () => {
-    const progress = 5;
+type ProgressBarTypes = {
+    goal: number;
+    totalWater: number;
+};
+
+const ProgressBar: FC<ProgressBarTypes> = ({ goal, totalWater }) => {
+    const calculatedPercentage = Math.round((totalWater / (goal * 1000)) * 100);
+    const percentage = calculatedPercentage >= 100 ? 100 : calculatedPercentage;
+
+    const lowWaterColor = '#9be1a0';
+    const goalReachedColor = '#FABE4A';
+    const currentColor = totalWater < 100 * 1000 ? lowWaterColor : goalReachedColor;
 
     return (
         <CustomItemBox>
@@ -12,20 +24,17 @@ const ProgressBar = () => {
                 <div
                     className={styles.progressBarFill}
                     style={{
-                        width: `${progress}%`,
-                        backgroundColor: progress < 100 ? '#9be1a0' : '#FABE4A',
+                        width: `${percentage}%`,
+                        backgroundColor: currentColor,
                     }}
                 >
-                    <p
-                        className={styles.percentNumber}
-                        style={{ color: progress < 100 ? '#9be1a0' : '#FABE4A' }}
-                    >
-                        {progress < 100 ? `${progress}%` : 'done!'}
+                    <p className={styles.percentNumber} style={{ color: currentColor }}>
+                        {totalWater < 100 * 1000 ? `${percentage}%` : 'done!'}
                     </p>
                     <div
                         className={styles.ball}
                         style={{
-                            border: progress < 100 ? 'solid 1px #9be1a0' : 'solid 1px #FABE4A',
+                            border: `solid 1px ${currentColor}`,
                         }}
                     ></div>
                 </div>
