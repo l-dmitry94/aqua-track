@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 
-import MonthInfo from './MonthInfo/MonthInfo';
 import BoxDailyInfo from './DailyInfo/BoxDailyInfo';
+import MonthInfo from './MonthInfo/MonthInfo';
 import datas from './data.json';
 import UserBar from './UserBar';
 

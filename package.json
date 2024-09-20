@@ -12,6 +12,7 @@
         "prisma:studio": "prisma studio"
     },
     "dependencies": {
+        "@date-io/date-fns": "^3.0.0",
         "@date-io/dayjs": "^3.0.0",
         "@emotion/cache": "^11.13.1",
         "@emotion/react": "^11.13.3",
@@ -26,7 +27,7 @@
         "bcrypt": "^5.1.1",
         "cloudinary": "^2.4.0",
         "clsx": "^2.1.1",
-        "date-fns": "^3.6.0",
+        "date-fns": "^2.29.3",
         "dayjs": "^1.11.13",
         "jsonwebtoken": "^9.0.2",
         "mongodb": "^6.8.0",

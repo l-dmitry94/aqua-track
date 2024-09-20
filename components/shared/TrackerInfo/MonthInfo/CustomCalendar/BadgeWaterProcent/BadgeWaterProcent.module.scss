@@ -1,0 +1,9 @@
+.badge {
+    :global(.MuiBadge-root) {
+        @apply size-7;
+    }
+
+    :global(.MuiBadge-badge) {
+        @apply right-[10px] top-10;
+    }
+}
