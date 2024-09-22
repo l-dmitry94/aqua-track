@@ -1,6 +1,7 @@
 import React from 'react';
 import { Badge } from '@mui/material';
 import { PickersDay, PickersDayProps } from '@mui/x-date-pickers/PickersDay';
+import clsx from 'clsx';
 import { Dayjs } from 'dayjs';
 
 import scss from './BadgeWaterProcent.module.scss';
@@ -15,9 +16,11 @@ const BadgeWaterProcent = (
 
     const isSelected = !outsideCurrentMonth && highlightedDays.indexOf(day.date()) >= 0;
 
+    console.log(procentValue > 100);
+
     return (
         <Badge
-            className={scss.badge}
+            className={clsx(scss.badge, procentValue < 100 && scss.btnGray)}
             sx={{
                 width: '28px',
             }}

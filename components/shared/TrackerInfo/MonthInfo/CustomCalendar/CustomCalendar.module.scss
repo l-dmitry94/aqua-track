@@ -6,7 +6,11 @@
     }
 
     :global(.MuiDateCalendar-toolbar) {
-        @apply pl-3 pr-3;
+        @apply h-auto pl-3 pr-3;
+    }
+
+    :global(.MuiPickersSlideTransition-root-MuiDayCalendar-slideTransition) {
+        @apply h-auto;
     }
 
     :global(.MuiPickersDay-root) {
@@ -18,14 +22,14 @@
     }
 
     :global(.Mui-selected) {
-        @apply bg-primary text-green transition-colors duration-300 ease-linear;
+        @apply bg-primary text-green transition-colors duration-300 ease-linear !important;
     }
 
     :global(.MuiDayCalendar-monthContainer) {
-        @apply flex flex-col gap-5;
+        @apply flex flex-col;
     }
 
     :global(.MuiDayCalendar-weekContainer) {
-        @apply flex flex-row gap-4;
+        @apply mb-7 flex flex-row gap-3;
     }
 }

@@ -4,6 +4,18 @@
     }
 
     :global(.MuiBadge-badge) {
-        @apply right-[10px] top-10;
+        @apply right-[13px] top-9 text-[10px] font-normal text-secondary opacity-60;
+    }
+}
+
+.btnGray {
+    :global(.MuiBadge-root) {
+        // Окремий стиль для MuiBadge-root
+        @apply bg-red-600;
+    }
+
+    :global(.MuiPickersDay-root) {
+        // Окремий стиль для MuiPickersDay-root
+        @apply bg-[rgba(50,63,71,0.2)] !important;
     }
 }

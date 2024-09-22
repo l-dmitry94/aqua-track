@@ -28,6 +28,7 @@ const MonthInfo = () => {
 
     const handleDateChange = (date: dayjs.Dayjs) => {
         setSelectedDate(date);
+        localStorage.setItem('currentDate', date.format('YYYY-MM-DD'));
     };
 
     const handleMonthChange = (newMonth: dayjs.Dayjs) => {
