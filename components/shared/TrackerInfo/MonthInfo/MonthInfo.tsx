@@ -19,6 +19,7 @@ const MonthInfo = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     const router = useRouter();
+
     useEffect(() => {
         const formattedDate = dayjs(selectedDate).format('YYYY-MM-DD');
         const queryParams = new URLSearchParams(window.location.search);
