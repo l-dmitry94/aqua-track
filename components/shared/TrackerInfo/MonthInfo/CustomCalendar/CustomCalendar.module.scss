@@ -1,23 +1,33 @@
+@import 'styles/mixins';
+
 .calendar {
-    @apply mb-0 ml-5 mr-5 mt-0 max-w-[300px];
+    @apply mb-0 ml-5 mr-5 mt-0 h-full max-h-full max-w-[300px];
+
+    @include media-rules(tablet) {
+        @apply mb-0 ml-8 mr-8 mt-0 min-w-[640px];
+    }
 
     :global(.MuiDayCalendar-header) {
         @apply hidden;
     }
 
     :global(.MuiDateCalendar-toolbar) {
-        @apply h-auto pl-3 pr-3;
+        @apply pl-3 pr-3;
     }
 
     :global(.MuiPickersSlideTransition-root-MuiDayCalendar-slideTransition) {
-        @apply h-auto;
+        @apply min-h-80 !important;
     }
 
     :global(.MuiPickersDay-root) {
-        @apply flex size-7 w-full flex-row items-center justify-center rounded-[50%] bg-white font-sans text-sm font-bold text-primary transition-colors duration-300 ease-linear;
+        @apply flex flex-row items-center justify-center rounded-[50%] bg-white font-sans text-sm font-bold text-primary transition-colors duration-300 ease-linear;
 
         &:is(:hover, :focus) {
             @apply bg-primary text-green;
+        }
+
+        @include media-rules(tablet) {
+            @apply text-base;
         }
     }
 
@@ -30,6 +40,10 @@
     }
 
     :global(.MuiDayCalendar-weekContainer) {
-        @apply mb-7 flex flex-row gap-3;
+        @apply mb-7 flex flex-row justify-between;
+
+        @include media-rules(tablet) {
+            @apply mb-9;
+        }
     }
 }

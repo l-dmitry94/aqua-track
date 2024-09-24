@@ -23,24 +23,28 @@ const HeaderMonthInfo: React.FC<HeaderMonthInfoProps> = (props) => {
             <Typography component="h3" className={scss.title}>
                 {isCalendarVisible ? 'Month' : 'Statistics'}
             </Typography>
-            <IconButton onClick={selectPreviousMonth} title="Previous month">
-                <Icon variant="chevron-left" className={clsx(scss.svg, scss.right)} />
-            </IconButton>
+            <Box component="div" className={scss.buttons}>
+                <Box component="div" className={scss.navMonth}>
+                    <IconButton onClick={selectPreviousMonth} title="Previous month">
+                        <Icon variant="chevron-left" className={clsx(scss.svg, scss.right)} />
+                    </IconButton>
 
-            <Typography className={scss.textDate} variant="body2">
-                {currentMonth.format('MMMM, YYYY')}
-            </Typography>
+                    <Typography className={scss.textDate} variant="body2">
+                        {currentMonth.format('MMMM, YYYY')}
+                    </Typography>
 
-            <IconButton onClick={selectNextMonth} title="Next month">
-                <Icon variant="chevron-left" className={scss.svg} />
-            </IconButton>
+                    <IconButton onClick={selectNextMonth} title="Next month">
+                        <Icon variant="chevron-left" className={scss.svg} />
+                    </IconButton>
+                </Box>
 
-            <IconButton onClick={onToggleView}>
-                <Icon
-                    variant="pie-chart"
-                    className={clsx(scss.svg, isCalendarVisible && scss.active)}
-                />
-            </IconButton>
+                <IconButton onClick={onToggleView}>
+                    <Icon
+                        variant="pie-chart"
+                        className={clsx(scss.svg, isCalendarVisible && scss.active)}
+                    />
+                </IconButton>
+            </Box>
         </Box>
     );
 };

@@ -16,8 +16,6 @@ const BadgeWaterProcent = (
 
     const isSelected = !outsideCurrentMonth && highlightedDays.indexOf(day.date()) >= 0;
 
-    console.log(procentValue > 100);
-
     return (
         <Badge
             className={clsx(scss.badge, procentValue < 100 && scss.btnGray)}
@@ -28,7 +26,12 @@ const BadgeWaterProcent = (
             overlap="circular"
             badgeContent={isSelected ? `${procentValue}%` : undefined}
         >
-            <PickersDay {...other} outsideCurrentMonth={outsideCurrentMonth} day={day} />
+            <PickersDay
+                {...other}
+                outsideCurrentMonth={outsideCurrentMonth}
+                day={day}
+                className={scss.pickersDay}
+            />
         </Badge>
     );
 };

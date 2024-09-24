@@ -1,5 +1,14 @@
+@import 'styles/mixins';
+
 .wrapper {
     @apply mb-6 flex items-center justify-between;
+}
+.buttons {
+    @apply flex flex-row items-center justify-center gap-2;
+
+    & div {
+        @apply flex items-center justify-center;
+    }
 }
 
 .svg {
@@ -22,4 +31,8 @@
 
 .title {
     @apply text-xl;
+
+    @include media-rules(tablet) {
+        @apply text-lg;
+    }
 }

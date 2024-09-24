@@ -13,35 +13,3 @@
 .boxCalendar {
     @apply pb-10;
 }
-
-.calendar {
-    @apply mb-0 ml-5 mr-5 mt-0 max-w-[300px];
-
-    :global(.MuiDayCalendar-header) {
-        @apply hidden;
-    }
-
-    :global(.MuiDateCalendar-toolbar) {
-        @apply pl-3 pr-3;
-    }
-
-    :global(.MuiButtonBase-root-MuiPickersDay-root) {
-        @apply mb-4 flex h-7 w-7 flex-row items-center justify-center rounded-[50%] bg-white font-sans text-sm font-bold text-primary transition-colors duration-300 ease-linear;
-
-        &:is(:hover, :focus) {
-            @apply bg-primary text-green;
-        }
-    }
-
-    :global(.Mui-selected) {
-        @apply bg-primary text-green transition-colors duration-300 ease-linear;
-    }
-
-    :global(.MuiDayCalendar-monthContainer) {
-        @apply flex min-h-[300px] flex-col;
-    }
-
-    :global(.MuiDayCalendar-weekContainer) {
-        @apply mb-5 flex flex-row gap-4;
-    }
-}
