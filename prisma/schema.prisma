@@ -74,7 +74,7 @@ model VerificationToken {
 model Water {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   userId    String   @db.ObjectId
-  date      String
+  date      DateTime
   time      String
   volume    Int
   user      User     @relation(fields: [userId], references: [id])
