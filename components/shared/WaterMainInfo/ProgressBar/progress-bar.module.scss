@@ -1,0 +1,65 @@
+@import 'styles/mixins';
+
+
+.progressBarContainer {
+  @apply top-1/2 rounded-[15px] p-[12px] w-[203px] h-[85px] shadow-[0_4px_50px_0_rgba(0,0,0,0.1)] bg-white translate-x-[-50%];
+
+  @include media-rules(tablet) {
+    @apply mt-[266px] p-[20px] w-[295px] h-[106px];
+  }
+
+  @include media-rules(desktop) {
+    @apply mt-[400px] h-[115px];
+  }
+}
+
+.progressBarTitle {
+  @apply font-bold text-[14px] leading-[100%] text-black;
+
+  @include media-rules(desktop) {
+    @apply text-[15px] leading-[149%];
+  }
+}
+
+.progressBar {
+  @apply rounded-[9px] w-full h-[6px] mt-[23px] bg-gray;
+  @include media-rules(tablet) {
+    @apply h-[8px];
+  }
+}
+
+.progressBarFill {
+  @apply rounded-[9px] h-[6px] mt-[15px] max-w-full relative transition-all duration-1000 ease-in-out;
+
+  @include media-rules(tablet) {
+    @apply h-[8px];
+  }
+}
+
+.ball {
+  @apply h-[12px] w-[12px] rounded-full bg-white absolute top-1/2 right-0 translate-x-[50%] translate-y-[-50%];
+}
+
+.percentNumber {
+  @apply font-normal text-[8px] leading-[100%] absolute bottom-[130%] right-0 translate-x-[50%] translate-y-[-50%];
+
+  @include media-rules(tablet) {
+    @apply text-[9px] leading-[180%]  bottom-[20%];
+  }
+}
+
+.percentContainer {
+  @apply flex justify-between w-[180px] h-[6px];
+
+  @include media-rules(tablet) {
+    @apply w-[260px];
+  }
+}
+
+.percent {
+  @apply font-normal text-[10px] leading-[100%] text-black mt-[8px];
+
+  @include media-rules(tablet) {
+    @apply text-[12px] leading-[187%] mt-[6px];
+  }
+}
