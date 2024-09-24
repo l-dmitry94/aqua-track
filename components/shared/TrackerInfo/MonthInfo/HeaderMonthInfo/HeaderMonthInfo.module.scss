@@ -14,6 +14,10 @@
 .svg {
     @apply fill-gray stroke-primary transition-opacity duration-300 ease-linear;
 
+    @include media-rules(tablet) {
+        @apply size-6;
+    }
+
     &.right {
         @apply rotate-180;
     }

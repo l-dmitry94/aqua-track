@@ -1,9 +1,11 @@
 'use client';
+
 import React, { useEffect, useState } from 'react';
 import { Box } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs from 'dayjs';
+import { useRouter } from 'next/navigation';
 
 import CustomCharts from './CustomCharts/CustomCharts';
 import CustomCalendar from './CustomCalendar';
@@ -15,6 +17,15 @@ const MonthInfo = () => {
     const [selectedDate, setSelectedDate] = useState(dayjs());
     const [isCalendarVisible, setIsCalendarVisible] = useState(true);
     const [isLoading, setIsLoading] = useState(true);
+
+    const router = useRouter();
+    useEffect(() => {
+        const formattedDate = dayjs(selectedDate).format('YYYY-MM-DD');
+        const queryParams = new URLSearchParams(window.location.search);
+        queryParams.set('date', formattedDate);
+
+        router.push(`/tracker?${queryParams.toString()}`, { scroll: true });
+    }, [selectedDate, router]);
 
     useEffect(() => {
         const fetchData = () => {
@@ -28,7 +39,6 @@ const MonthInfo = () => {
 
     const handleDateChange = (date: dayjs.Dayjs) => {
         setSelectedDate(date);
-        localStorage.setItem('currentDate', date.format('YYYY-MM-DD'));
     };
 
     const handleMonthChange = (newMonth: dayjs.Dayjs) => {

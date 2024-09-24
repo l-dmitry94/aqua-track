@@ -7,6 +7,10 @@
         @apply mb-0 ml-8 mr-8 mt-0 min-w-[640px];
     }
 
+    @include media-rules(desktop) {
+        @apply min-w-[608px];
+    }
+
     :global(.MuiDayCalendar-header) {
         @apply hidden;
     }
@@ -20,14 +24,14 @@
     }
 
     :global(.MuiPickersDay-root) {
-        @apply flex flex-row items-center justify-center rounded-[50%] bg-white font-sans text-sm font-bold text-primary transition-colors duration-300 ease-linear;
+        @apply flex size-7 flex-row items-center justify-center rounded-[50%] bg-white font-sans text-sm font-bold text-primary transition-colors duration-300 ease-linear;
 
         &:is(:hover, :focus) {
             @apply bg-primary text-green;
         }
 
         @include media-rules(tablet) {
-            @apply text-base;
+            @apply size-[38px] text-base;
         }
     }
 
@@ -44,6 +48,14 @@
 
         @include media-rules(tablet) {
             @apply mb-9;
+        }
+
+        & > span {
+            @apply size-7;
+
+            @include media-rules(tablet) {
+                @apply size-[38px];
+            }
         }
     }
 }

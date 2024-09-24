@@ -1,14 +1,6 @@
 @import 'styles/mixins';
 
 .badge {
-    :global(.MuiBadge-root) {
-        @apply size-7;
-
-        @include media-rules(tablet) {
-            @apply size-[38px];
-        }
-    }
-
     :global(.MuiBadge-badge) {
         @apply right-[13px] top-9 text-[10px] font-normal text-secondary opacity-60;
 
@@ -21,6 +13,10 @@
 .btnGray {
     :global(.MuiPickersDay-root) {
         @apply bg-[rgba(50,63,71,0.2)] !important;
+
+        &:is(:hover, :focus) {
+            @apply bg-primary text-green !important;
+        }
     }
 }
 
