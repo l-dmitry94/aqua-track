@@ -40,7 +40,7 @@ const WaterMainInfo = () => {
             setWater(totalWater);
             return totalWater;
         } catch (error: any) {
-            console.log(error.data.message);
+            console.log(error.message);
         }
     }, [date]);
 
