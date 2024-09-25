@@ -44,6 +44,18 @@
             <path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4"
                 stroke-width="3" d="M28 16h-16"></path>
         </symbol>
+        <symbol id="icon-counterminus" viewBox="0 0 288 32">
+            <path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" stroke-width="28.8" d="M29.711 16h228.571"></path>
+            </symbol>
+        <symbol id="icon-counterplus" viewBox="0 0 32 32">
+            <path stroke-linejoin="miter" stroke-linecap="butt" stroke-miterlimit="4"
+                stroke-width="1.2"
+                d="M16 0.6c8.505 0 15.4 6.895 15.4 15.4s-6.895 15.4-15.4 15.4c-8.505 0-15.4-6.895-15.4-15.4s6.895-15.4 15.4-15.4z"></path>
+            <path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4"
+                stroke-width="1.44" d="M16 10.286v11.429"></path>
+            <path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4"
+                stroke-width="1.44" d="M10.286 16h11.429"></path>
+        </symbol>
         <symbol id="icon-pie-chart" viewBox="0 0 32 32">
             <path fill="none" stroke="#323f47" style="stroke: var(--color1, #323f47)"
                 stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4"
