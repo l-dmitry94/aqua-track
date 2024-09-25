@@ -1,6 +1,9 @@
 //функція для форматування часу в формат АМ або РМ
-import { format } from 'date-fns';
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+
+dayjs.extend(customParseFormat);
 
 export const formatTime = (date: Date): string => {
-    return format(date, 'h:mm a');
+    return dayjs(date).format('h:mm A');
 };

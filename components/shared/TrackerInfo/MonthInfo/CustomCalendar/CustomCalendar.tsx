@@ -19,14 +19,12 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({
     isLoading,
     toggleView,
     isCalendarVisible,
+    currentMonth,
 }) => {
     const [waterProcentData, setWaterProcentData] = useState({});
     const [highlightedDays, setHighlightedDays] = useState<number[]>([]);
-    let currentMonth;
 
     useEffect(() => {
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        currentMonth = localStorage.getItem('currentMonth');
         const allWaterProcentData: AllWaterProcentDataType = {};
         const startOfMonth = dayjs(currentMonth).startOf('month');
         const endOfMonth = dayjs(currentMonth).endOf('month');

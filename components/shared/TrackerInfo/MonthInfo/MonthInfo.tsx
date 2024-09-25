@@ -19,7 +19,7 @@ const MonthInfo = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     const router = useRouter();
-
+    //тут обрана дата кладеться в url
     useEffect(() => {
         const formattedDate = dayjs(selectedDate).format('YYYY-MM-DD');
         const queryParams = new URLSearchParams(window.location.search);
@@ -66,7 +66,7 @@ const MonthInfo = () => {
                     <CustomCharts
                         currentMonth={currentMonth}
                         onMonthChange={handleMonthChange}
-                        onToggleView={toggleView}
+                        ontoggleView={toggleView}
                     />
                 )}
             </Box>

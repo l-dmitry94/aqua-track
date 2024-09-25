@@ -1,4 +1,6 @@
+import React from 'react';
 import { Box } from '@mui/material';
+import dayjs from 'dayjs';
 import {
     CartesianGrid,
     Legend,
@@ -12,6 +14,8 @@ import {
 
 import HeaderMonthInfo from '../HeaderMonthInfo/HeaderMonthInfo';
 
+import { CustomChartsProps } from './CustomCharts.types';
+
 // Sample data for the graph
 const data = [
     { name: 'Day 1', value: 400 },
@@ -21,14 +25,24 @@ const data = [
     { name: 'Day 5', value: 278 },
     { name: 'Day 6', value: 189 },
 ];
-const CuctomCharts = ({ currentMonth, onMonthChange, onToggleView }) => {
+const CuctomCharts: React.FC<CustomChartsProps> = ({
+    currentMonth,
+    onMonthChange,
+    ontoggleView,
+}) => {
     console.log(`graph ${currentMonth}`);
     return (
         <Box component="div">
             <HeaderMonthInfo
                 currentMonth={currentMonth}
                 onMonthChange={onMonthChange}
-                onToggleView={onToggleView}
+                onToggleView={ontoggleView}
+                views={[]}
+                view={'year'}
+                reduceAnimations={false}
+                minDate={dayjs()}
+                maxDate={dayjs()}
+                timezone={''}
             />
             <ResponsiveContainer width="100%" height={300}>
                 <LineChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>

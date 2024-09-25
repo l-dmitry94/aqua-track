@@ -19,8 +19,8 @@
         @apply pl-3 pr-3;
     }
 
-    :global(.MuiPickersSlideTransition-root-MuiDayCalendar-slideTransition) {
-        @apply min-h-80 !important;
+    :global(.MuiPickersSlideTransition-root) {
+        @apply min-h-max;
     }
 
     :global(.MuiPickersDay-root) {
