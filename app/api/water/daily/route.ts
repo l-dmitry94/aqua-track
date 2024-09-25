@@ -1,4 +1,4 @@
-import { endOfWeek, startOfWeek } from 'date-fns';
+import { endOfDay, startOfDay } from 'date-fns';
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 
@@ -15,21 +15,21 @@ export const GET = async (req: NextRequest) => {
     const searchParams = req.nextUrl.searchParams;
     const date = searchParams.get('date');
 
-    const startWeek = startOfWeek(new Date(date!)).toISOString();
-    const endWeek = endOfWeek(new Date(date!)).toISOString();
+    const startDay = startOfDay(new Date(date!)).toISOString();
+    const endDay = endOfDay(new Date(date!)).toISOString();
 
     try {
-        const getWeeklyWater = await prisma.water.findMany({
+        const getDailyWater = await prisma.water.findMany({
             where: {
                 userId: session.user.id,
                 date: {
-                    gte: startWeek,
-                    lte: endWeek,
+                    gte: startDay,
+                    lte: endDay,
                 },
             },
         });
 
-        return NextResponse.json(getWeeklyWater);
+        return NextResponse.json(getDailyWater);
     } catch (error) {
         return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
     }

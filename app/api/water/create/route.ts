@@ -11,17 +11,17 @@ export const POST = async (req: NextRequest) => {
         return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     }
 
-    const body = await req.json();
-
     try {
-        const waterEntry = await prisma.water.create({
+        const body = await req.json();
+
+        const newWater = await prisma.water.create({
             data: {
                 userId: session.user.id,
                 ...body,
             },
         });
 
-        return NextResponse.json(waterEntry, { status: 201 });
+        return NextResponse.json(newWater, { status: 201 });
     } catch (error) {
         return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
     }
