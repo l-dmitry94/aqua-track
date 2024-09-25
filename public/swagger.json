@@ -31,44 +31,38 @@
             "csrfTokenAuth": {
                 "type": "apiKey",
                 "in": "header",
-                "name": "Cookie",
-                "description": "After the first login, the session token is stored in cookies and there is no need to receive the csrf token again during subsequent actions with requests. If you clear your cookies, you need to request the csrf token again. In this field, it is not necessary to enter the value for the header, because it still needs to be passed in the body of the request in the csrfToken field"
+                "name": "next-auth.csrf-token",
+                "description": "After the first login, the session token is stored in cookies, and there is no need to retrieve the csrf token again during subsequent request actions. If you clear your cookies, you'll need to request the csrf token again. In this field, it is not necessary to enter a value for the header, because it still needs to be passed in the body of the authorization request through the selected type (google or credentials) to the csrfToken field. You can also log in to the site in the same browser as swagger-docs and not enter tokens manually. They will be automatically extracted from cookies."
             }
         },
         "schemas": {
-            "WaterEntry": {
+            "Water": {
                 "type": "object",
                 "properties": {
-                    "_id": {
+                    "id": {
                         "type": "string",
-                        "description": "Id of water entry",
-                        "example": "66d6c013157ef1c67f7f096e"
+                        "description": "The unique identifier for the water entry (ObjectId)."
                     },
-                    "user": {
+                    "userId": {
                         "type": "string",
-                        "description": "ID of the user"
+                        "description": "The unique identifier for the user (ObjectId)."
                     },
                     "date": {
                         "type": "string",
-                        "format": "date-time",
-                        "description": "Date of the water entry"
+                        "format": "date",
+                        "description": "The date when the water entry was recorded (YYYY-MM-DD format)."
+                    },
+                    "time": {
+                        "type": "string",
+                        "description": "The time when the water was consumed."
                     },
                     "volume": {
-                        "type": "number",
-                        "description": "Volume of water consumed"
-                    },
-                    "createdAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Timestamp of when the entry was created"
-                    },
-                    "updatedAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Timestamp of the last update"
+                        "type": "integer",
+                        "description": "The volume of water consumed (in milliliters)."
                     }
                 },
-                "required": ["user", "date", "volume"]
+                "required": ["date", "time", "volume"],
+                "description": "Represents a water consumption entry for a user."
             },
             "User": {
                 "type": "object",
@@ -352,6 +346,11 @@
         "/auth/signout": {
             "post": {
                 "tags": ["Auth"],
+                "security": [
+                    {
+                        "csrfTokenAuth": []
+                    }
+                ],
                 "summary": "User sign-out",
                 "description": "Terminates the user's session.",
                 "responses": {
@@ -364,6 +363,11 @@
         "/auth/session": {
             "get": {
                 "tags": ["Auth"],
+                "security": [
+                    {
+                        "csrfTokenAuth": []
+                    }
+                ],
                 "summary": "Get current session information",
                 "description": "Returns information about the user's current session.",
                 "responses": {
@@ -469,6 +473,11 @@
             "patch": {
                 "summary": "Update info user",
                 "tags": ["User"],
+                "security": [
+                    {
+                        "csrfTokenAuth": []
+                    }
+                ],
                 "requestBody": {
                     "description": "User info to be updated",
                     "content": {
@@ -504,6 +513,11 @@
             "patch": {
                 "summary": "Request to delete an image",
                 "tags": ["User"],
+                "security": [
+                    {
+                        "csrfTokenAuth": []
+                    }
+                ],
                 "requestBody": {
                     "description": "Request to delete an image",
                     "content": {
@@ -537,6 +551,294 @@
                                 }
                             }
                         }
+                    }
+                }
+            }
+        },
+        "/water/create": {
+            "post": {
+                "tags": ["Water"],
+                "summary": "Create a new water entry",
+                "description": "Creates a new water entry in the database.",
+                "security": [
+                    {
+                        "csrfTokenAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "description": "Water entry data",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "date": {
+                                        "type": "string",
+                                        "example": "2024-09-28"
+                                    },
+                                    "time": {
+                                        "type": "string",
+                                        "example": "10:00"
+                                    },
+                                    "volume": {
+                                        "type": "number",
+                                        "example": 200
+                                    }
+                                }
+                            }
+                        },
+                        "required": true
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Water entry created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Water"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "User not authenticated"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/water/{waterId}": {
+            "put": {
+                "tags": ["Water"],
+                "summary": "Update info water",
+                "description": "Updates a water entry in the database.",
+                "security": [
+                    {
+                        "csrfTokenAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "waterId",
+                        "in": "path",
+                        "required": true,
+                        "description": "The ID of the water entry to retrieve.",
+                        "schema": {
+                            "type": "string",
+                            "example": "66f41b6b1714ac448eb07757"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Water entry data",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "date": {
+                                        "type": "string",
+                                        "example": "2024-09-28"
+                                    },
+                                    "time": {
+                                        "type": "string",
+                                        "example": "10:00"
+                                    },
+                                    "volume": {
+                                        "type": "number",
+                                        "example": 200
+                                    }
+                                }
+                            }
+                        },
+                        "required": true
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Water entry updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Water"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "User not authenticated"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Water"],
+                "summary": "Delete water entry",
+                "description": "Delete a water entry in the database.",
+                "security": [
+                    {
+                        "csrfTokenAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "waterId",
+                        "in": "path",
+                        "required": true,
+                        "description": "The ID of the water entry to retrieve.",
+                        "schema": {
+                            "type": "string",
+                            "example": "66f41b6b1714ac448eb07757"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Water entry deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Water"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "User not authenticated"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/water/daily": {
+            "get": {
+                "tags": ["Water"],
+                "summary": "Get daily water entry",
+                "security": [
+                    {
+                        "csrfTokenAuth": []
+                    }
+                ],
+                "description": "Retrieves the water entry for a specific date using query parameter.",
+                "parameters": [
+                    {
+                        "name": "date",
+                        "in": "query",
+                        "required": true,
+                        "description": "Date for which to retrieve the water entry, formatted as YYYY-MM-DD.",
+                        "schema": {
+                            "type": "string",
+                            "example": "2024-09-25"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Daily water entry retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Water"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/water/monthly": {
+            "get": {
+                "tags": ["Water"],
+                "summary": "Get monthly water entry",
+                "security": [
+                    {
+                        "csrfTokenAuth": []
+                    }
+                ],
+                "description": "Retrieves the water entry for a specific date using query parameter.",
+                "parameters": [
+                    {
+                        "name": "date",
+                        "in": "query",
+                        "required": true,
+                        "description": "Date for which to retrieve the water entry, formatted as YYYY-MM-DD.",
+                        "schema": {
+                            "type": "string",
+                            "example": "2024-09-25"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Monthly water entry retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Water"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/water/weekly": {
+            "get": {
+                "tags": ["Water"],
+                "summary": "Get weekly water entry",
+                "security": [
+                    {
+                        "csrfTokenAuth": []
+                    }
+                ],
+                "description": "Retrieves the water entry for a specific date using query parameter.",
+                "parameters": [
+                    {
+                        "name": "date",
+                        "in": "query",
+                        "required": true,
+                        "description": "Date for which to retrieve the water entry, formatted as YYYY-MM-DD.",
+                        "schema": {
+                            "type": "string",
+                            "example": "2024-09-25"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Weekly water entry retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Water"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error"
                     }
                 }
             }
