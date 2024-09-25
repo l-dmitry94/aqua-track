@@ -21,6 +21,7 @@ export const GET = async (req: NextRequest) => {
     try {
         const getWeeklyWater = await prisma.water.findMany({
             where: {
+                userId: session.user.id,
                 date: {
                     gte: startWeek,
                     lte: endWeek,
