@@ -53,7 +53,7 @@ model User {
   gender        Gender    @default(woman)
   activeTime    Float?    @default(0)
   weight        Float?    @default(0)
-  volume        Float?    @default(1.8)
+  volume        Int?    @default(1800)
   accounts      Account[]
   sessions      Session[]
   water         Water[]
@@ -74,11 +74,9 @@ model VerificationToken {
 model Water {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   userId    String   @db.ObjectId
-  date      DateTime
-  volume    Float
+  date      String
+  time      String
+  volume    Int
   user      User     @relation(fields: [userId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
   @@map("water")
 }

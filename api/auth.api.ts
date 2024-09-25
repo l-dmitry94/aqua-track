@@ -5,6 +5,7 @@ import ENDPOINTS from './endpoints';
 
 export const signup = async (body: FormValues) => {
     const response = await instance.post(ENDPOINTS.auth.signup, body);
+    console.log(response);
     return response;
 };
 

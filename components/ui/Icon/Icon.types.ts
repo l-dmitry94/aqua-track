@@ -11,7 +11,9 @@ export type IconVariant =
     | 'settings'
     | 'trash'
     | 'upload'
-    | 'exclamation';
+    | 'exclamation'
+    | 'counterplus'
+    | 'counterminus';
 
 export interface IIcon {
     variant: IconVariant;

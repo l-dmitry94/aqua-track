@@ -2,7 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 import SimpleBar from 'simplebar-react';
 
-import { CustomScrollBarProps } from './types';
+import { CustomScrollBarProps } from './Scrollbar.types';
 
 import 'simplebar-react/dist/simplebar.min.css';
 

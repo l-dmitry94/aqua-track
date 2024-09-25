@@ -13,8 +13,11 @@ interface IAuthWrapper {
 
 const AuthWrapper: FC<IAuthWrapper> = ({ children, fullHeight, backgroundColor = 'gray' }) => {
     return (
-        <Box component="section" className={clsx(scss.logoSection, fullHeight && scss.fullHeight)}>
-            <Box component="div" className={clsx(scss.wrapper, scss[backgroundColor])}>
+        <Box
+            component="section"
+            className={clsx(scss.logoSection, fullHeight && scss.fullHeight, scss[backgroundColor])}
+        >
+            <Box component="div" className={clsx(scss.wrapper)}>
                 <Link href="/" className={scss.logo}>
                     AQUATRACK
                 </Link>
