@@ -7,7 +7,7 @@ import { useSearchParams } from 'next/navigation';
 import CustomScrollBar from '@/components/ui/Scrollbar/Srollbar';
 import { formatTime } from '@/helpers/formatTime';
 
-import { DailyInfoResponse } from '../types';
+import { DailyInfoResponse } from '../DailyInfo.types';
 
 import BoxSkeleton from './BoxSkeleton';
 import ButtonWater from './ButtonWater';

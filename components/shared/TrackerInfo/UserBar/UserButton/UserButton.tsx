@@ -6,7 +6,7 @@ import Settings from '@/components/shared/Settings';
 import CustomModal from '@/components/ui/CustomModal';
 
 import Logout from '../Logout';
-import { UserBarProps } from '../types';
+import { UserBarProps } from '../UserBar.types';
 
 import UserBarPopover from './UserBarPopover';
 import { useUserButton } from './useUserButton';
