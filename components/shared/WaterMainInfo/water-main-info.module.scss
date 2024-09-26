@@ -1,7 +1,25 @@
+@import 'styles/mixins';
+
 .box {
-  @apply relative h-full rounded-[30px];
+  @apply relative h-[97%] rounded-[30px];
 }
 
 .img {
-  @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+  @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-auto;
+
+  @include media-rules(tablet) {
+    @apply h-full;
+  }
+}
+
+.dailyNormalValue {
+  @apply mb-[6px] text-[14px] font-bold leading-[1];
+}
+
+.dailyNormalDescription {
+  @apply text-[10px] font-normal leading-[1];
+}
+
+.progressBarBox {
+  @apply absolute left-1/2 top-1/2 translate-x-[-50%];
 }
