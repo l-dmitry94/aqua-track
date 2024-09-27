@@ -717,7 +717,7 @@
                 }
             }
         },
-        "/water/daily": {
+        "/water/daily/{date}": {
             "get": {
                 "tags": ["Water"],
                 "summary": "Get daily water entry",
@@ -730,7 +730,7 @@
                 "parameters": [
                     {
                         "name": "date",
-                        "in": "query",
+                        "in": "path",
                         "required": true,
                         "description": "Date for which to retrieve the water entry, formatted as YYYY-MM-DD.",
                         "schema": {
@@ -759,7 +759,7 @@
                 }
             }
         },
-        "/water/monthly": {
+        "/water/monthly/{date}": {
             "get": {
                 "tags": ["Water"],
                 "summary": "Get monthly water entry",
@@ -772,7 +772,7 @@
                 "parameters": [
                     {
                         "name": "date",
-                        "in": "query",
+                        "in": "path",
                         "required": true,
                         "description": "Date for which to retrieve the water entry, formatted as YYYY-MM-DD.",
                         "schema": {
@@ -801,7 +801,7 @@
                 }
             }
         },
-        "/water/weekly": {
+        "/water/weekly{date}": {
             "get": {
                 "tags": ["Water"],
                 "summary": "Get weekly water entry",
@@ -814,7 +814,7 @@
                 "parameters": [
                     {
                         "name": "date",
-                        "in": "query",
+                        "in": "path",
                         "required": true,
                         "description": "Date for which to retrieve the water entry, formatted as YYYY-MM-DD.",
                         "schema": {

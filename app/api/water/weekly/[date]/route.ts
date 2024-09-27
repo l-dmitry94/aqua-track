@@ -5,15 +5,14 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/authOptions';
 import prisma from '@/prisma/prisma';
 
-export const GET = async (req: NextRequest) => {
+export const GET = async (req: NextRequest, { params }: { params: { date: string } }) => {
     const session = await getServerSession(authOptions);
 
     if (!session) {
         return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     }
 
-    const searchParams = req.nextUrl.searchParams;
-    const date = searchParams.get('date');
+    const { date } = params;
 
     const startWeek = startOfWeek(new Date(date!)).toISOString();
     const endWeek = endOfWeek(new Date(date!)).toISOString();
