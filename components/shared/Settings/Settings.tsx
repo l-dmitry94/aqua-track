@@ -4,7 +4,7 @@ import { FC, useState } from 'react';
 import { Box } from '@mui/material';
 import { useSession } from 'next-auth/react';
 
-import { update } from '@/api/auth.api';
+import { update } from '@/api/auth/auth.api';
 import Button from '@/components/ui/Button';
 import Form from '@/components/ui/Form';
 import { FormValues } from '@/components/ui/Form/Form.types';

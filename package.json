@@ -39,7 +39,8 @@
         "simplebar": "^6.2.7",
         "simplebar-react": "^3.2.6",
         "swagger-ui-react": "^5.17.14",
-        "yup": "^1.4.0"
+        "yup": "^1.4.0",
+        "zustand": "^5.0.0-rc.2"
     },
     "devDependencies": {
         "@types/bcrypt": "^5.0.2",
