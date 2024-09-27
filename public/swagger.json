@@ -12,342 +12,175 @@
             "url": "https://aqua-track-olive.vercel.app/api"
         }
     ],
-    "tags": ["Users", "Water"],
+    "tags": [
+        {
+            "name": "User",
+            "description": "Operations related to user management"
+        },
+        {
+            "name": "Water",
+            "description": "Operations related to water entries"
+        },
+        {
+            "name": "Auth",
+            "description": "Authentication operations"
+        }
+    ],
     "components": {
         "securitySchemes": {
-            "bearerAuth": {
-                "type": "http",
-                "scheme": "bearer",
-                "bearerFormat": "JWT"
+            "csrfTokenAuth": {
+                "type": "apiKey",
+                "in": "header",
+                "name": "next-auth.csrf-token",
+                "description": "After the first login, the session token is stored in cookies, and there is no need to retrieve the csrf token again during subsequent request actions. If you clear your cookies, you'll need to request the csrf token again. In this field, it is not necessary to enter a value for the header, because it still needs to be passed in the body of the authorization request through the selected type (google or credentials) to the csrfToken field. You can also log in to the site in the same browser as swagger-docs and not enter tokens manually. They will be automatically extracted from cookies."
             }
         },
         "schemas": {
-            "WaterEntry": {
+            "Water": {
                 "type": "object",
                 "properties": {
-                    "_id": {
+                    "id": {
                         "type": "string",
-                        "description": "Id of water entry",
-                        "example": "66d6c013157ef1c67f7f096e"
+                        "description": "The unique identifier for the water entry (ObjectId)."
                     },
-                    "user": {
+                    "userId": {
                         "type": "string",
-                        "description": "ID of the user"
+                        "description": "The unique identifier for the user (ObjectId)."
                     },
                     "date": {
                         "type": "string",
-                        "format": "date-time",
-                        "description": "Date of the water entry"
+                        "format": "date",
+                        "description": "The date when the water entry was recorded (YYYY-MM-DD format)."
+                    },
+                    "time": {
+                        "type": "string",
+                        "description": "The time when the water was consumed."
                     },
                     "volume": {
-                        "type": "number",
-                        "description": "Volume of water consumed"
-                    },
-                    "createdAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Timestamp of when the entry was created"
-                    },
-                    "updatedAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Timestamp of the last update"
+                        "type": "integer",
+                        "description": "The volume of water consumed (in milliliters)."
                     }
                 },
-                "required": ["user", "date", "volume"]
-            },
-            "UserDetails": {
-                "type": "object",
-                "properties": {
-                    "_id": {
-                        "type": "string"
-                    },
-                    "name": {
-                        "type": "string"
-                    },
-                    "email": {
-                        "type": "string"
-                    },
-                    "password": {
-                        "type": "string"
-                    },
-                    "token": {
-                        "type": "string"
-                    },
-                    "gender": {
-                        "type": "string",
-                        "enum": ["woman", "man"]
-                    },
-                    "weight": {
-                        "type": "number",
-                        "format": "float"
-                    },
-                    "activeTime": {
-                        "type": "number"
-                    },
-                    "waterIntake": {
-                        "type": "number",
-                        "format": "float"
-                    },
-                    "avatar": {
-                        "type": "string",
-                        "format": "uri"
-                    },
-                    "createdAt": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "updatedAt": {
-                        "type": "string",
-                        "format": "date-time"
-                    }
-                },
-                "required": [
-                    "_id",
-                    "name",
-                    "email",
-                    "password",
-                    "token",
-                    "gender",
-                    "weight",
-                    "activeTime",
-                    "waterIntake",
-                    "avatar",
-                    "createdAt",
-                    "updatedAt"
-                ]
+                "required": ["date", "time", "volume"],
+                "description": "Represents a water consumption entry for a user."
             },
             "User": {
                 "type": "object",
                 "properties": {
-                    "name": {
-                        "type": "string"
-                    },
-                    "email": {
-                        "type": "string",
-                        "unique": true,
-                        "required": true
-                    },
-                    "password": {
-                        "type": "string",
-                        "required": true
-                    },
-                    "token": {
-                        "type": "string",
-                        "default": null
-                    },
-                    "gender": {
-                        "type": "string",
-                        "enum": ["woman", "man"],
-                        "default": "woman"
-                    },
-                    "weight": {
-                        "type": "number",
-                        "default": 0
-                    },
-                    "activeTime": {
-                        "type": "number",
-                        "default": 0
-                    },
-                    "waterIntake": {
-                        "type": "number",
-                        "default": 1.8
-                    },
-                    "avatar": {
-                        "type": "string",
-                        "default": null
-                    }
-                }
-            },
-            "UserResponseWithMessage": {
-                "type": "object",
-                "properties": {
-                    "user": {
-                        "$ref": "#/components/schemas/User"
-                    },
-                    "message": {
-                        "type": "string"
-                    }
-                }
-            },
-            "UserResponseWithoutMessage": {
-                "type": "object",
-                "properties": {
-                    "user": {
-                        "$ref": "#/components/schemas/User"
-                    }
-                }
-            },
-            "UserUpdateRequest": {
-                "type": "object",
-                "properties": {
-                    "name": {
-                        "type": "string",
-                        "example": "John Doe"
-                    },
-                    "email": {
-                        "type": "string",
-                        "format": "email",
-                        "example": "john.doe@example.com"
-                    },
-                    "gender": {
-                        "type": "string",
-                        "enum": ["woman", "man"],
-                        "example": "man",
-                        "default": "woman"
-                    },
-                    "weight": {
-                        "type": "number",
-                        "format": "float",
-                        "example": 70.5
-                    },
-                    "activeTime": {
-                        "type": "number",
-                        "example": "2"
-                    },
-                    "waterIntake": {
-                        "type": "number",
-                        "format": "float",
-                        "example": 2000
-                    },
-                    "avatar": {
-                        "type": "string",
-                        "format": "binary",
-                        "description": "New avatar image (JPEG or PNG)"
-                    }
-                }
-            },
-            "UserUpdateResponse": {
-                "type": "object",
-                "properties": {
-                    "message": {
-                        "type": "string",
-                        "example": "User updated successfully"
-                    },
                     "user": {
                         "type": "object",
                         "properties": {
                             "name": {
-                                "type": "string"
+                                "type": "string",
+                                "example": "Любов"
                             },
                             "email": {
-                                "type": "string"
+                                "type": "string",
+                                "format": "email",
+                                "example": "drogaltseva92@gmail.com"
+                            },
+                            "image": {
+                                "type": "string",
+                                "example": "https://res.cloudinary.com/deer7odwf/image/upload/v1726217734/zyqfxdij07btxwuiqeyk.jpg"
+                            },
+                            "id": {
+                                "type": "string",
+                                "example": "66e15bdbd94b57c78830d8ab"
                             },
                             "gender": {
                                 "type": "string",
                                 "enum": ["woman", "man"],
                                 "example": "man"
                             },
+                            "activeTime": {
+                                "type": "number",
+                                "format": "float",
+                                "example": 0
+                            },
                             "weight": {
                                 "type": "number",
-                                "format": "float"
+                                "format": "float",
+                                "example": 0
                             },
-                            "activeTime": {
-                                "type": "number"
-                            },
-                            "waterIntake": {
+                            "volume": {
                                 "type": "number",
-                                "format": "float"
+                                "format": "float",
+                                "example": 3
                             },
-                            "avatar": {
+                            "publicId": {
                                 "type": "string",
-                                "format": "uri"
+                                "example": "zyqfxdij07btxwuiqeyk"
                             }
                         }
+                    },
+                    "expires": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-10-13T10:46:06.373Z"
                     }
                 }
             },
-            "ErrorResponse": {
+            "UserUpdate": {
                 "type": "object",
                 "properties": {
-                    "message": {
-                        "type": "string"
+                    "name": {
+                        "type": "string",
+                        "nullable": true,
+                        "example": "Alice"
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "example": "alice@example.com"
+                    },
+                    "image": {
+                        "type": "string",
+                        "nullable": true,
+                        "example": "https://example.com/image.jpg"
+                    },
+                    "gender": {
+                        "type": "string",
+                        "enum": ["woman", "man"],
+                        "example": "woman"
+                    },
+                    "activeTime": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 0
+                    },
+                    "weight": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 0
+                    },
+                    "volume": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 1.8
                     }
-                }
+                },
+                "required": [],
+                "nullable": true
             }
         },
         "responses": {
-            "UserListResponse": {
-                "description": "List of users",
+            "UserSession": {
+                "description": "The session is successful",
                 "content": {
                     "application/json": {
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/components/schemas/UserDetails"
-                            }
+                            "$ref": "#/components/schemas/User"
                         }
                     }
                 }
             },
-            "UserLoginSuccess": {
-                "description": "User logged in successfully",
+            "RedirectSuccess": {
+                "description": "The redirect is successful",
                 "content": {
-                    "application/json": {
+                    "text/html": {
                         "schema": {
-                            "$ref": "#/components/schemas/UserResponseWithoutMessage"
-                        }
-                    }
-                }
-            },
-            "UserRegisterSuccess": {
-                "description": "User registered successfully",
-                "content": {
-                    "application/json": {
-                        "schema": {
-                            "$ref": "#/components/schemas/UserResponseWithMessage"
-                        }
-                    }
-                }
-            },
-            "Unauthorized": {
-                "description": "Unauthorized",
-                "content": {
-                    "application/json": {
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "message": {
-                                    "type": "string",
-                                    "example": "Unauthorized"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "BadRequest": {
-                "description": "Bad request",
-                "content": {
-                    "application/json": {
-                        "schema": {
-                            "$ref": "#/components/schemas/ErrorResponse"
-                        }
-                    }
-                }
-            },
-            "InternalServerError": {
-                "description": "Internal server error",
-                "content": {
-                    "application/json": {
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "message": {
-                                    "type": "string",
-                                    "example": "Internal server error"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "UserUpdateSuccess": {
-                "description": "User updated successfully",
-                "content": {
-                    "application/json": {
-                        "schema": {
-                            "$ref": "#/components/schemas/UserUpdateResponse"
+                            "type": "string",
+                            "example": "<html><body>page</body></html>"
                         }
                     }
                 }
@@ -355,12 +188,204 @@
         }
     },
     "paths": {
-        "/users/login": {
+        "/auth/csrf": {
+            "get": {
+                "tags": ["Auth"],
+                "summary": "Get CSRF token",
+                "description": "Returns a CSRF token to secure requests.",
+                "responses": {
+                    "200": {
+                        "description": "CSRF token"
+                    }
+                }
+            }
+        },
+        "/auth/signin/google": {
             "post": {
-                "summary": "Login a user",
-                "tags": ["Users"],
+                "tags": ["Auth"],
+                "summary": "Sign-in through the specified provider",
+                "description": "Authenticates the user via the selected provider.",
+                "security": [
+                    {
+                        "csrfTokenAuth": []
+                    }
+                ],
+
                 "requestBody": {
-                    "description": "User login credentials",
+                    "description": "Authentication data",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "callbackUrl": {
+                                        "type": "string",
+                                        "description": "URL to redirect after authentication",
+                                        "example": "http://localhost:3000/signin"
+                                    },
+                                    "json": {
+                                        "type": "boolean",
+                                        "description": "Whether to redirect or not",
+                                        "example": true
+                                    }
+                                },
+                                "required": ["csrfToken", "callbackUrl", "json"]
+                            },
+                            "examples": {
+                                "googleExample": {
+                                    "summary": "Example for Google provider",
+                                    "value": {
+                                        "csrfToken": "c4a0350112b456810d26fc20d9e8e0ffdd2d6b8b705dafdfd18c8903a2ac7b8e",
+                                        "callbackUrl": "http://localhost:3000/signin",
+                                        "json": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "302": {
+                        "description": "Redirects to Google",
+                        "headers": {
+                            "Location": {
+                                "description": "The URL to which the user is redirected",
+                                "schema": {
+                                    "type": "string",
+                                    "format": "uri",
+                                    "example": "https://accounts.google.com/o/oauth2/v2/auth?client_id=YOUR_CLIENT_ID&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fgoogle&response_type=code&scope=openid%20email%20profile"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid credentials or provider not found"
+                    }
+                }
+            }
+        },
+        "/auth/callback/credentials": {
+            "post": {
+                "tags": ["Auth"],
+                "summary": "Sign-in through the specified provider",
+                "description": "Authenticates the user via the selected provider.",
+                "security": [
+                    {
+                        "csrfTokenAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "description": "Authentication data",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "description": "User email for credential-based login",
+                                        "example": "user@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "description": "User password for credential-based login",
+                                        "example": "password123"
+                                    },
+
+                                    "callbackUrl": {
+                                        "type": "string",
+                                        "description": "URL to redirect after authentication",
+                                        "example": "http://localhost:3000/signin"
+                                    },
+                                    "redirect": {
+                                        "type": "boolean",
+                                        "description": "Whether to redirect or not",
+                                        "example": false
+                                    },
+                                    "json": {
+                                        "type": "boolean",
+                                        "description": "Whether to redirect as JSON",
+                                        "example": true
+                                    }
+                                },
+                                "required": [
+                                    "provider",
+                                    "email",
+                                    "password",
+                                    "csrfToken",
+                                    "callbackUrl",
+                                    "redirect"
+                                ]
+                            },
+                            "examples": {
+                                "credentialsExample": {
+                                    "summary": "Example for Credentials provider",
+                                    "value": {
+                                        "email": "kurkayetra@gufum.com",
+                                        "password": "Qwerty123",
+                                        "csrfToken": "c4a0350112b456810d26fc20d9e8e0ffdd2d6b8b705dafdfd18c8903a2ac7b8e",
+                                        "callbackUrl": "http://localhost:3000/signin",
+                                        "redirect": false,
+                                        "json": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/RedirectSuccess"
+                    },
+                    "401": {
+                        "description": "Invalid credentials or provider not found"
+                    }
+                }
+            }
+        },
+        "/auth/signout": {
+            "post": {
+                "tags": ["Auth"],
+                "security": [
+                    {
+                        "csrfTokenAuth": []
+                    }
+                ],
+                "summary": "User sign-out",
+                "description": "Terminates the user's session.",
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/RedirectSuccess"
+                    }
+                }
+            }
+        },
+        "/auth/session": {
+            "get": {
+                "tags": ["Auth"],
+                "security": [
+                    {
+                        "csrfTokenAuth": []
+                    }
+                ],
+                "summary": "Get current session information",
+                "description": "Returns information about the user's current session.",
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/UserSession"
+                    },
+                    "401": {
+                        "description": "User not authenticated"
+                    }
+                }
+            }
+        },
+        "/auth/signup": {
+            "post": {
+                "summary": "Register a new user",
+                "description": "Creates a new user with an email and password",
+                "tags": ["User"],
+                "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
@@ -370,12 +395,12 @@
                                     "email": {
                                         "type": "string",
                                         "format": "email",
-                                        "example": "john.doe@example.com"
+                                        "example": "example@example.com"
                                     },
                                     "password": {
                                         "type": "string",
                                         "format": "password",
-                                        "example": "password123"
+                                        "example": "securePassword123"
                                     }
                                 },
                                 "required": ["email", "password"]
@@ -384,182 +409,164 @@
                     }
                 },
                 "responses": {
-                    "200": {
-                        "$ref": "#/components/responses/UserLoginSuccess"
-                    },
-                    "400": {
-                        "$ref": "#/components/responses/BadRequest"
-                    },
-                    "404": {
-                        "description": "Email or password is wrong"
-                    },
-                    "500": {
-                        "$ref": "#/components/responses/InternalServerError"
-                    }
-                }
-            }
-        },
-        "/users/register": {
-            "post": {
-                "summary": "Register a new user",
-                "tags": ["Users"],
-                "requestBody": {
-                    "description": "User registration information",
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "name": {
-                                        "type": "string",
-                                        "example": "John Doe"
-                                    },
-                                    "email": {
-                                        "type": "string",
-                                        "format": "email",
-                                        "example": "john.doe@example.com"
-                                    },
-                                    "password": {
-                                        "type": "string",
-                                        "format": "password",
-                                        "example": "password123"
-                                    }
-                                },
-                                "required": ["name", "email", "password"]
-                            }
-                        }
-                    }
-                },
-                "responses": {
                     "201": {
-                        "$ref": "#/components/responses/UserRegisterSuccess"
-                    },
-                    "400": {
-                        "$ref": "#/components/responses/BadRequest"
-                    },
-                    "409": {
-                        "description": "User already exists"
-                    },
-                    "500": {
-                        "$ref": "#/components/responses/InternalServerError"
-                    }
-                }
-            }
-        },
-        "/users/current": {
-            "get": {
-                "summary": "Get current user",
-                "tags": ["Users"],
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Getting information successfully",
+                        "description": "User successfully registered",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/UserUpdateRequest"
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User registered successfully"
+                                        }
+                                    }
                                 }
                             }
                         }
                     },
-                    "401": {
-                        "$ref": "#/components/responses/Unauthorized"
-                    },
-                    "500": {
-                        "$ref": "#/components/responses/InternalServerError"
-                    }
-                }
-            }
-        },
-        "/users/update": {
-            "patch": {
-                "summary": "Update user information",
-                "tags": ["Users"],
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "requestBody": {
-                    "description": "User information and avatar to update",
-                    "required": true,
-                    "content": {
-                        "multipart/form-data": {
-                            "schema": {
-                                "$ref": "#/components/schemas/UserUpdateRequest"
+                    "409": {
+                        "description": "User already exists",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User already exists"
+                                        }
+                                    }
+                                }
                             }
                         }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "$ref": "#/components/responses/UserUpdateSuccess"
-                    },
-                    "400": {
-                        "$ref": "#/components/responses/BadRequest"
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/Unauthorized"
-                    },
-                    "500": {
-                        "$ref": "#/components/responses/InternalServerError"
-                    }
-                }
-            }
-        },
-        "/users/logout": {
-            "post": {
-                "summary": "Logout user",
-                "tags": ["Users"],
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "requestBody": {
-                    "description": "User information about logout"
-                },
-                "responses": {
-                    "204": {
-                        "description": "User logout successfully"
-                    },
-                    "500": {
-                        "$ref": "#/components/responses/InternalServerError"
                     }
                 }
             }
         },
         "/users": {
             "get": {
-                "summary": "Get list of users",
-                "tags": ["Users"],
+                "tags": ["User"],
+                "summary": "Get amount of users",
+                "description": "Returns the amount of users in the database.",
                 "responses": {
                     "200": {
-                        "$ref": "#/components/responses/UserListResponse"
+                        "description": "Amount of users",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "users": {
+                                            "type": "number",
+                                            "example": 1
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/update": {
+            "patch": {
+                "summary": "Update info user",
+                "tags": ["User"],
+                "security": [
+                    {
+                        "csrfTokenAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "description": "User info to be updated",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserUpdate"
+                            }
+                        }
                     },
-                    "500": {
-                        "$ref": "#/components/responses/InternalServerError"
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Profile updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Profile updated successfully"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/avatar/remove": {
+            "patch": {
+                "summary": "Request to delete an image",
+                "tags": ["User"],
+                "security": [
+                    {
+                        "csrfTokenAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "description": "Request to delete an image",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "publicId": {
+                                        "type": "string",
+                                        "example": "nztd1vmrqxgsvfarwyha"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Deleting an image",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Image removed"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
         },
         "/water/create": {
             "post": {
-                "summary": "Adding data on the volume of water consumed",
                 "tags": ["Water"],
+                "summary": "Create a new water entry",
+                "description": "Creates a new water entry in the database.",
                 "security": [
                     {
-                        "bearerAuth": []
+                        "csrfTokenAuth": []
                     }
                 ],
                 "requestBody": {
-                    "description": "Water creating information",
-                    "required": true,
+                    "description": "Water entry data",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -567,65 +574,66 @@
                                 "properties": {
                                     "date": {
                                         "type": "string",
-                                        "format": "date-time",
-                                        "description": "The date of the water entry in ISO 8601 format"
+                                        "example": "2024-09-28"
+                                    },
+                                    "time": {
+                                        "type": "string",
+                                        "example": "10:00"
                                     },
                                     "volume": {
                                         "type": "number",
-                                        "description": "The volume of water consumed in milliliters"
+                                        "example": 200
                                     }
-                                },
-                                "required": ["date", "volume"]
+                                }
                             }
-                        }
+                        },
+                        "required": true
                     }
                 },
                 "responses": {
                     "201": {
-                        "description": "Getting information successfully",
+                        "description": "Water entry created successfully",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/WaterEntry"
+                                    "$ref": "#/components/schemas/Water"
                                 }
                             }
                         }
                     },
                     "401": {
-                        "$ref": "#/components/responses/Unauthorized"
-                    },
-                    "400": {
-                        "description": "Bad Request: Missing required fields"
+                        "description": "User not authenticated"
                     },
                     "500": {
-                        "$ref": "#/components/responses/InternalServerError"
+                        "description": "Internal server error"
                     }
                 }
             }
         },
-        "/water/{id}/update": {
-            "patch": {
-                "summary": "Update data on the volume and date of water",
+        "/water/{waterId}": {
+            "put": {
                 "tags": ["Water"],
+                "summary": "Update info water",
+                "description": "Updates a water entry in the database.",
                 "security": [
                     {
-                        "bearerAuth": []
+                        "csrfTokenAuth": []
                     }
                 ],
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "waterId",
                         "in": "path",
                         "required": true,
-                        "description": "ID of the water entry to update",
+                        "description": "The ID of the water entry to retrieve.",
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "example": "66f41b6b1714ac448eb07757"
                         }
                     }
                 ],
                 "requestBody": {
-                    "description": "Update water information",
-                    "required": true,
+                    "description": "Water entry data",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -633,161 +641,204 @@
                                 "properties": {
                                     "date": {
                                         "type": "string",
-                                        "format": "date-time",
-                                        "description": "The date of the water entry in ISO 8601 format"
+                                        "example": "2024-09-28"
+                                    },
+                                    "time": {
+                                        "type": "string",
+                                        "example": "10:00"
                                     },
                                     "volume": {
                                         "type": "number",
-                                        "description": "The volume of water consumed in milliliters"
+                                        "example": 200
                                     }
-                                },
-                                "required": ["date", "volume"]
+                                }
                             }
-                        }
+                        },
+                        "required": true
                     }
                 },
                 "responses": {
                     "200": {
-                        "description": "Data of entry water updated successfully",
+                        "description": "Water entry updated successfully",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/WaterEntry"
+                                    "$ref": "#/components/schemas/Water"
                                 }
                             }
                         }
                     },
                     "401": {
-                        "$ref": "#/components/responses/Unauthorized"
-                    },
-                    "400": {
-                        "description": "Entry ID is required"
-                    },
-                    "404": {
-                        "description": "Entry not found"
+                        "description": "User not authenticated"
                     },
                     "500": {
-                        "$ref": "#/components/responses/InternalServerError"
+                        "description": "Internal server error"
                     }
                 }
-            }
-        },
-        "/water/{id}/delete": {
+            },
             "delete": {
-                "summary": "Delete data on the volume and date of water",
                 "tags": ["Water"],
+                "summary": "Delete water entry",
+                "description": "Delete a water entry in the database.",
                 "security": [
                     {
-                        "bearerAuth": []
+                        "csrfTokenAuth": []
                     }
                 ],
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "waterId",
                         "in": "path",
                         "required": true,
-                        "description": "ID of the water entry to delete",
+                        "description": "The ID of the water entry to retrieve.",
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "example": "66f41b6b1714ac448eb07757"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Entry deleted successfully"
+                        "description": "Water entry deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Water"
+                                }
+                            }
+                        }
                     },
                     "401": {
-                        "$ref": "#/components/responses/Unauthorized"
-                    },
-                    "400": {
-                        "description": "Entry ID is required"
-                    },
-                    "404": {
-                        "description": "Entry not found or forbidden"
+                        "description": "User not authenticated"
                     },
                     "500": {
-                        "$ref": "#/components/responses/InternalServerError"
+                        "description": "Internal server error"
                     }
                 }
             }
         },
         "/water/daily": {
-            "post": {
-                "summary": "Obtaining data on the user's water consumption per day",
+            "get": {
                 "tags": ["Water"],
+                "summary": "Get daily water entry",
                 "security": [
                     {
-                        "bearerAuth": []
+                        "csrfTokenAuth": []
                     }
                 ],
-                "requestBody": {
-                    "description": "Get information about user's water consumption per day. The date field is optional. If it is missing, the data for the current day will be returned",
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "date": {
-                                        "type": "string",
-                                        "format": "date-time",
-                                        "description": "The date of the water entry in ISO 8601 format"
-                                    }
-                                },
-                                "required": ["date", "volume"]
-                            }
+                "description": "Retrieves the water entry for a specific date using query parameter.",
+                "parameters": [
+                    {
+                        "name": "date",
+                        "in": "query",
+                        "required": true,
+                        "description": "Date for which to retrieve the water entry, formatted as YYYY-MM-DD.",
+                        "schema": {
+                            "type": "string",
+                            "example": "2024-09-25"
                         }
                     }
-                },
+                ],
                 "responses": {
                     "200": {
-                        "description": "Data of entry water updated successfully",
+                        "description": "Daily water entry retrieved successfully",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "type": "array",
-                                    "items": { "$ref": "#/components/schemas/WaterEntry" }
+                                    "items": {
+                                        "$ref": "#/components/schemas/Water"
+                                    }
                                 }
                             }
                         }
                     },
-                    "401": {
-                        "$ref": "#/components/responses/Unauthorized"
-                    },
                     "500": {
-                        "description": "Error fetching data"
+                        "description": "Internal server error"
                     }
                 }
             }
         },
         "/water/monthly": {
             "get": {
-                "summary": "Obtaining data on the user's water consumption per month",
                 "tags": ["Water"],
+                "summary": "Get monthly water entry",
                 "security": [
                     {
-                        "bearerAuth": []
+                        "csrfTokenAuth": []
+                    }
+                ],
+                "description": "Retrieves the water entry for a specific date using query parameter.",
+                "parameters": [
+                    {
+                        "name": "date",
+                        "in": "query",
+                        "required": true,
+                        "description": "Date for which to retrieve the water entry, formatted as YYYY-MM-DD.",
+                        "schema": {
+                            "type": "string",
+                            "example": "2024-09-25"
+                        }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Monthly data of water consumption retrieved successfully",
+                        "description": "Monthly water entry retrieved successfully",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/WaterEntry"
+                                        "$ref": "#/components/schemas/Water"
                                     }
                                 }
                             }
                         }
                     },
-                    "401": {
-                        "$ref": "#/components/responses/Unauthorized"
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/water/weekly": {
+            "get": {
+                "tags": ["Water"],
+                "summary": "Get weekly water entry",
+                "security": [
+                    {
+                        "csrfTokenAuth": []
+                    }
+                ],
+                "description": "Retrieves the water entry for a specific date using query parameter.",
+                "parameters": [
+                    {
+                        "name": "date",
+                        "in": "query",
+                        "required": true,
+                        "description": "Date for which to retrieve the water entry, formatted as YYYY-MM-DD.",
+                        "schema": {
+                            "type": "string",
+                            "example": "2024-09-25"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Weekly water entry retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Water"
+                                    }
+                                }
+                            }
+                        }
                     },
                     "500": {
-                        "description": "Error fetching data"
+                        "description": "Internal server error"
                     }
                 }
             }

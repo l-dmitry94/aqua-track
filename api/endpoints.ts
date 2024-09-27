@@ -4,6 +4,9 @@ const ENDPOINTS = {
         update: '/auth/update',
         removeAvatar: '/auth/avatar/remove',
     },
+    water: {
+        dailyWater: '/water/daily',
+    },
 };
 
 export default ENDPOINTS;

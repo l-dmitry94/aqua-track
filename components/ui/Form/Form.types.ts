@@ -22,8 +22,13 @@ export interface ISettings {
     publicId?: string;
 }
 
-export type FormValues = UserLogin & UserRegister & ISettings;
-export type NameValues = keyof UserLogin & keyof UserRegister & keyof ISettings;
+export interface addWater {
+    time: string;
+    volume: number;
+}
+
+export type FormValues = UserLogin & UserRegister & ISettings & addWater;
+export type NameValues = keyof UserLogin & keyof UserRegister & keyof ISettings & keyof addWater;
 
 export interface IForm {
     validationSchema?: yup.AnyObjectSchema;
