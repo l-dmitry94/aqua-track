@@ -17,7 +17,6 @@ const MonthInfo = () => {
     const [selectedDate, setSelectedDate] = useState(dayjs());
     const [isCalendarVisible, setIsCalendarVisible] = useState(true);
     const [isLoading, setIsLoading] = useState(true);
-    console.log(currentMonth);
 
     const router = useRouter();
     //тут обрана дата кладеться в url
@@ -26,7 +25,7 @@ const MonthInfo = () => {
         const queryParams = new URLSearchParams(window.location.search);
         queryParams.set('date', formattedDate);
 
-        router.push(`/tracker?${queryParams.toString()}`, { scroll: true });
+        router.push(`/tracker?${queryParams.toString()}`, { scroll: false });
     }, [selectedDate, router]);
 
     useEffect(() => {
@@ -61,7 +60,6 @@ const MonthInfo = () => {
                         isLoading={isLoading}
                         toggleView={toggleView}
                         isCalendarVisible={isCalendarVisible}
-                        currentMonth={currentMonth}
                     />
                 ) : (
                     <CustomCharts

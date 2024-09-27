@@ -1,7 +1,10 @@
+'use client';
 import React, { useEffect, useState } from 'react';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { DayCalendarSkeleton } from '@mui/x-date-pickers/DayCalendarSkeleton';
+import { format } from 'date-fns';
 import dayjs from 'dayjs';
+import { useSearchParams } from 'next/navigation';
 
 import { getWaterProcentDay } from '@/helpers/getwaterProcentDay';
 
@@ -19,10 +22,13 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({
     isLoading,
     toggleView,
     isCalendarVisible,
-    currentMonth,
 }) => {
     const [waterProcentData, setWaterProcentData] = useState({});
     const [highlightedDays, setHighlightedDays] = useState<number[]>([]);
+    const searchParams = useSearchParams();
+    const dateParam = searchParams.get('date');
+    const currentMonth = dateParam ? format(new Date(dateParam), 'MM') : format(new Date(), 'MM');
+    console.log(currentMonth);
 
     useEffect(() => {
         const allWaterProcentData: AllWaterProcentDataType = {};
@@ -31,7 +37,6 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({
 
         // масив усіх днів у місяці
         const allDaysInMonth = [];
-        console.log(startOfMonth, endOfMonth);
         for (
             let day = startOfMonth;
             day.isBefore(endOfMonth.add(1, 'day'));

@@ -17,9 +17,6 @@ const BadgeWaterProcent: React.FC<BadgeWaterProcentProps> = ({
     const procentValue = waterProcentData[dayString] || 0;
 
     const isSelected = !outsideCurrentMonth && highlightedDays.includes(day.date());
-    // const isHighlighted = highlightedDays.includes(dayjs('2024-10-20').date());
-    // console.log('Is 2024-10-20 highlighted:', isHighlighted);
-    // console.log('Procent value for 2024-10-20:', waterProcentData['2024-10-20']);
 
     return (
         <Badge

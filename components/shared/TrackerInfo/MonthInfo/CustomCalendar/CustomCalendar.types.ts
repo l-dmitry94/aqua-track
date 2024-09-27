@@ -9,5 +9,4 @@ export interface CustomCalendarProps {
     isLoading: boolean;
     toggleView: () => void;
     isCalendarVisible: boolean;
-    currentMonth: dayjs.Dayjs;
 }
