@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Box } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
@@ -14,9 +14,6 @@ const HeaderMonthInfo: React.FC<HeaderMonthInfoProps> = (props) => {
     const { currentMonth, onMonthChange, isCalendarVisible, onToggleView } = props;
     const selectNextMonth = () => onMonthChange(currentMonth.add(1, 'month'), 'left');
     const selectPreviousMonth = () => onMonthChange(currentMonth.subtract(1, 'month'), 'right');
-    useEffect(() => {
-        localStorage.setItem('currentMonth', currentMonth.format('YYYY-MM-DD'));
-    }, [currentMonth]);
 
     return (
         <Box component="div" className={scss.wrapper}>

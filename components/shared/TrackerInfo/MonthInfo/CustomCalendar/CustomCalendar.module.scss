@@ -20,7 +20,11 @@
     }
 
     :global(.MuiPickersSlideTransition-root) {
-        @apply min-h-max;
+        @apply min-h-[300px];
+
+        @include media-rules(tablet) {
+            @apply min-h-[380px];
+        }
     }
 
     :global(.MuiPickersDay-root) {

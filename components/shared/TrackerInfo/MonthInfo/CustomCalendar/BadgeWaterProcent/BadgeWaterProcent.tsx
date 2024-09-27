@@ -1,20 +1,25 @@
 import React from 'react';
 import { Badge } from '@mui/material';
-import { PickersDay, PickersDayProps } from '@mui/x-date-pickers/PickersDay';
+import { PickersDay } from '@mui/x-date-pickers/PickersDay';
 import clsx from 'clsx';
-import { Dayjs } from 'dayjs';
+
+import { BadgeWaterProcentProps } from './BadgeWaterProps.types';
 
 import scss from './BadgeWaterProcent.module.scss';
-
-const BadgeWaterProcent = (
-    props: PickersDayProps<Dayjs> & { highlightedDays?: number[]; waterProcentData?: any }
-) => {
-    const { highlightedDays = [], day, outsideCurrentMonth, waterProcentData, ...other } = props;
-
+const BadgeWaterProcent: React.FC<BadgeWaterProcentProps> = ({
+    highlightedDays = [],
+    day,
+    outsideCurrentMonth,
+    waterProcentData = {},
+    ...other
+}) => {
     const dayString = day.format('YYYY-MM-DD');
     const procentValue = waterProcentData[dayString] || 0;
 
-    const isSelected = !outsideCurrentMonth && highlightedDays.indexOf(day.date()) >= 0;
+    const isSelected = !outsideCurrentMonth && highlightedDays.includes(day.date());
+    // const isHighlighted = highlightedDays.includes(dayjs('2024-10-20').date());
+    // console.log('Is 2024-10-20 highlighted:', isHighlighted);
+    // console.log('Procent value for 2024-10-20:', waterProcentData['2024-10-20']);
 
     return (
         <Badge
@@ -24,7 +29,7 @@ const BadgeWaterProcent = (
             }}
             key={day.toString()}
             overlap="circular"
-            badgeContent={isSelected ? `${procentValue}%` : undefined}
+            badgeContent={isSelected ? `${procentValue}%` : null}
         >
             <PickersDay
                 {...other}

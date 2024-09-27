@@ -31,6 +31,7 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({
 
         // масив усіх днів у місяці
         const allDaysInMonth = [];
+        console.log(startOfMonth, endOfMonth);
         for (
             let day = startOfMonth;
             day.isBefore(endOfMonth.add(1, 'day'));

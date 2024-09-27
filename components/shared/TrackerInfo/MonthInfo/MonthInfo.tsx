@@ -17,6 +17,7 @@ const MonthInfo = () => {
     const [selectedDate, setSelectedDate] = useState(dayjs());
     const [isCalendarVisible, setIsCalendarVisible] = useState(true);
     const [isLoading, setIsLoading] = useState(true);
+    console.log(currentMonth);
 
     const router = useRouter();
     //тут обрана дата кладеться в url
