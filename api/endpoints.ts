@@ -5,7 +5,12 @@ const ENDPOINTS = {
         removeAvatar: '/auth/avatar/remove',
     },
     water: {
+        createWater: '/water/create',
+        updateWater: '/water',
+        deleteWater: '/water',
         dailyWater: '/water/daily',
+        weeklyWater: '/water/weekly',
+        monthlyWater: '/water/monthly',
     },
 };
 
