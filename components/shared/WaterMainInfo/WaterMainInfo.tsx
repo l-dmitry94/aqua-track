@@ -5,7 +5,7 @@ import { Box, Typography } from '@mui/material';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 
-import { fetchDailyWater } from '@/api/auth.api';
+import { fetchDailyWater } from '@/api/auth/auth.api';
 import {
     AddWaterButton,
     CustomItemBox,

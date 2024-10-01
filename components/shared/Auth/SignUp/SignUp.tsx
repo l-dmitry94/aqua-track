@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 
-import { signup } from '@/api/auth.api';
+import { signup } from '@/api/auth/auth.api';
 import Button from '@/components/ui/Button';
 import Container from '@/components/ui/Container';
 import Form from '@/components/ui/Form';
