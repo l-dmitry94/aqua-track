@@ -18,8 +18,3 @@ export const removeImage = async (publicId: string) => {
     const response = await instance.post(ENDPOINTS.auth.removeAvatar, { publicId });
     return response;
 };
-
-export const fetchDailyWater = async (date: string) => {
-    const { data } = await instance.get(`${ENDPOINTS.water.dailyWater}/${date}`);
-    return data;
-};
