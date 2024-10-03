@@ -1,11 +1,11 @@
 'use client';
-
 import React, { useEffect, useState } from 'react';
 import { Box } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs from 'dayjs';
-import { useRouter } from 'next/navigation';
+
+import { useWaterStore } from '@/zustand/water/store';
 
 import CustomCharts from './CustomCharts/CustomCharts';
 import CustomCalendar from './CustomCalendar';
@@ -13,37 +13,19 @@ import CustomCalendar from './CustomCalendar';
 import scss from './MonthInfo.module.scss';
 
 const MonthInfo = () => {
-    const [currentMonth, setCurrentMonth] = useState(dayjs());
-    const [selectedDate, setSelectedDate] = useState(dayjs());
+    const { currentDate, setCurrentDate, setCurrentMonth } = useWaterStore();
     const [isCalendarVisible, setIsCalendarVisible] = useState(true);
     const [isLoading, setIsLoading] = useState(true);
-
-    const router = useRouter();
-    //тут обрана дата кладеться в url
     useEffect(() => {
-        const formattedDate = dayjs(selectedDate).format('YYYY-MM-DD');
-        const queryParams = new URLSearchParams(window.location.search);
-        queryParams.set('date', formattedDate);
-
-        router.push(`/tracker?${queryParams.toString()}`, { scroll: false });
-    }, [selectedDate, router]);
-
-    useEffect(() => {
-        const fetchData = () => {
-            setTimeout(() => {
-                setIsLoading(false);
-            }, 2000);
-        };
-
-        fetchData();
-    }, [currentMonth, selectedDate]);
+        setIsLoading(false);
+    }, []);
 
     const handleDateChange = (date: dayjs.Dayjs) => {
-        setSelectedDate(date);
+        setCurrentDate(dayjs(date).format('YYYY-MM-DD'));
     };
 
     const handleMonthChange = (newMonth: dayjs.Dayjs) => {
-        setCurrentMonth(newMonth);
+        setCurrentMonth(newMonth.format('YYYY-MM-DD'));
     };
 
     const toggleView = () => {
@@ -55,18 +37,14 @@ const MonthInfo = () => {
             <Box component="div" className={scss.boxCalendar}>
                 {isCalendarVisible ? (
                     <CustomCalendar
-                        selectedDate={selectedDate}
+                        selectedDate={dayjs(currentDate)}
                         handleDateChange={handleDateChange}
                         isLoading={isLoading}
                         toggleView={toggleView}
                         isCalendarVisible={isCalendarVisible}
                     />
                 ) : (
-                    <CustomCharts
-                        currentMonth={currentMonth}
-                        onMonthChange={handleMonthChange}
-                        ontoggleView={toggleView}
-                    />
+                    <CustomCharts onMonthChange={handleMonthChange} ontoggleView={toggleView} />
                 )}
             </Box>
         </LocalizationProvider>

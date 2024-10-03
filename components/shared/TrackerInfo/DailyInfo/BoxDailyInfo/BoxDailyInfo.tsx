@@ -1,11 +1,11 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Box, List, Typography } from '@mui/material';
 import { format, isToday, parseISO } from 'date-fns';
-import { useSearchParams } from 'next/navigation';
 
 import CustomScrollBar from '@/components/ui/Scrollbar/Srollbar';
 import { formatTime } from '@/helpers/formatTime';
+import { useWaterStore } from '@/zustand/water/store';
 
 import { DailyInfoResponse } from '../DailyInfo.types';
 
@@ -15,28 +15,22 @@ import ItemListDailyInfo from './ItemListDailyInfo';
 
 import scss from './BoxDailyInfo.module.scss';
 
-const BoxDailyInfo: React.FC<{ data: DailyInfoResponse }> = ({ data }) => {
-    const searchParams = useSearchParams();
-    const dateParam = searchParams.get('date');
-    const date = dateParam ? parseISO(dateParam) : new Date();
-    const { entries } = data;
+const BoxDailyInfo: React.FC<{ data: DailyInfoResponse }> = () => {
+    const { currentDate, fetchDailyWater, isLoading, dailyWater } = useWaterStore();
+    const date = currentDate ? parseISO(currentDate) : new Date();
+    const showList = dailyWater.length === 0;
 
     const displayDate = isToday(date) ? 'Today' : format(date, 'd, MMMM');
 
-    const [loading, setLoading] = useState(true);
-
     useEffect(() => {
-        // Simulate an asynchronous request
-        const fetchData = () => {
-            setTimeout(() => {
-                setLoading(false); // Simulate loading completion
-            }, 2000);
+        const fetchData = async () => {
+            await fetchDailyWater(format(date, 'yyyy-MM-dd'));
         };
-
         fetchData();
-    }, []);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentDate]);
 
-    const formattedEntries = entries.map((item) => {
+    const formattedEntries = dailyWater.map((item) => {
         const dateObj = new Date(item.date);
         const formattedTime = formatTime(dateObj);
         return {
@@ -53,18 +47,24 @@ const BoxDailyInfo: React.FC<{ data: DailyInfoResponse }> = ({ data }) => {
                 </Typography>
                 <ButtonWater />
             </Box>
-            {loading ? (
+            {isLoading ? (
                 <BoxSkeleton />
             ) : (
                 <CustomScrollBar style={{ maxWidth: '100%', height: 'auto' }}>
-                    <List className={scss.list}>
-                        {formattedEntries.map((item) => (
-                            <ItemListDailyInfo
-                                key={item._id}
-                                dataItem={{ time: item.formattedTime, volume: item.volume }}
-                            />
-                        ))}
-                    </List>
+                    {showList ? (
+                        <Typography component="p" className={scss.text}>
+                            No water entries yet
+                        </Typography>
+                    ) : (
+                        <List className={scss.list}>
+                            {formattedEntries.map((item) => (
+                                <ItemListDailyInfo
+                                    key={item.id}
+                                    dataItem={{ time: item.formattedTime, volume: item.volume }}
+                                />
+                            ))}
+                        </List>
+                    )}
                 </CustomScrollBar>
             )}
         </Box>

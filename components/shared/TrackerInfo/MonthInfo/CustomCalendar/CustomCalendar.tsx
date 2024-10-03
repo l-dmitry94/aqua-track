@@ -7,6 +7,7 @@ import dayjs from 'dayjs';
 import { useSearchParams } from 'next/navigation';
 
 import { getWaterProcentDay } from '@/helpers/getwaterProcentDay';
+import { useWaterStore } from '@/zustand/water/store';
 
 import data from '../../data.json';
 import HeaderMonthInfo from '../HeaderMonthInfo/HeaderMonthInfo';
@@ -23,17 +24,20 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({
     toggleView,
     isCalendarVisible,
 }) => {
+    console.log(selectedDate);
+    const { currentMonthState } = useWaterStore();
     const [waterProcentData, setWaterProcentData] = useState({});
     const [highlightedDays, setHighlightedDays] = useState<number[]>([]);
     const searchParams = useSearchParams();
     const dateParam = searchParams.get('date');
-    const currentMonth = dateParam ? format(new Date(dateParam), 'MM') : format(new Date(), 'MM');
-    console.log(currentMonth);
+    const formatCurrentMonth = dateParam
+        ? format(new Date(currentMonthState), 'MM')
+        : format(new Date(), 'MM');
 
     useEffect(() => {
         const allWaterProcentData: AllWaterProcentDataType = {};
-        const startOfMonth = dayjs(currentMonth).startOf('month');
-        const endOfMonth = dayjs(currentMonth).endOf('month');
+        const startOfMonth = dayjs(formatCurrentMonth).startOf('month');
+        const endOfMonth = dayjs(formatCurrentMonth).endOf('month');
 
         // масив усіх днів у місяці
         const allDaysInMonth = [];
@@ -66,11 +70,12 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({
 
         const daysWithData: string[] = Object.keys(allWaterProcentData);
         setHighlightedDays(daysWithData.map((date) => dayjs(date).date())); // саме тут кладуться всі дні
-    }, [currentMonth]);
+    }, [formatCurrentMonth, currentMonthState]);
 
     const CustomCalendarHeader = (props: any) => (
         <HeaderMonthInfo
             {...props}
+            currentMonth={dayjs(currentMonthState)}
             onToggleView={toggleView}
             isCalendarVisible={isCalendarVisible}
         />
@@ -79,7 +84,7 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({
     return (
         <DateCalendar
             className={scss.calendar}
-            value={dayjs(selectedDate)}
+            value={dayjs(currentMonthState)}
             onChange={handleDateChange}
             slots={{ calendarHeader: CustomCalendarHeader, day: BadgeWaterProcent }}
             slotProps={{

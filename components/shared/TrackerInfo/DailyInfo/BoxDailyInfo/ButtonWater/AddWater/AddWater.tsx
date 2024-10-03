@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Box, Typography } from '@mui/material';
-import { format } from 'date-fns';
 
 import Button from '@/components/ui/Button';
 import Form from '@/components/ui/Form';
 import { FormValues } from '@/components/ui/Form/Form.types';
+import { useWaterStore } from '@/zustand/water/store';
 
 import VolumeCounter from './VolumeCounter';
 import WaterInputs from './WaterInputs';
@@ -13,17 +13,15 @@ import scss from './AddWater.module.scss';
 
 const AddWater = () => {
     const [amount, setAmount] = useState(50);
-    const currentDate = new Date();
+    const currentTime = new Date();
+    const { currentDate, createWater } = useWaterStore();
 
     const handleSubmit = (data: FormValues) => {
-        const formattedDate = format(currentDate, 'yyyy-MM-dd');
-
         const formData = {
             ...data,
-            date: formattedDate,
+            date: currentDate,
         };
-
-        console.log(formData);
+        createWater(formData);
     };
 
     const decrement = () => {
@@ -58,7 +56,7 @@ const AddWater = () => {
                         register={register}
                         errors={errors}
                         onSetEmount={setAmount}
-                        currentDate={currentDate}
+                        currentDate={currentTime}
                     />
 
                     <Button type="submit" variant="contained" className={scss.submitBtn}>

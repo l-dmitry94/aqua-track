@@ -31,3 +31,11 @@
         @apply gap-4;
     }
 }
+
+.text {
+    @apply text-center font-sans text-sm font-normal leading-5 text-primary;
+
+    @include media-rules(tablet) {
+        @apply text-lg;
+    }
+}

@@ -3,17 +3,31 @@ import { Box } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import clsx from 'clsx';
+import dayjs from 'dayjs';
 
 import Icon from '@/components/ui/Icon';
+import { useWaterStore } from '@/zustand/water/store';
 
 import { HeaderMonthInfoProps } from './HeaderMonthInfo.types';
 
 import scss from './HeaderMonthInfo.module.scss';
 
 const HeaderMonthInfo: React.FC<HeaderMonthInfoProps> = (props) => {
-    const { currentMonth, onMonthChange, isCalendarVisible, onToggleView } = props;
-    const selectNextMonth = () => onMonthChange(currentMonth.add(1, 'month'), 'left');
-    const selectPreviousMonth = () => onMonthChange(currentMonth.subtract(1, 'month'), 'right');
+    const { onMonthChange, isCalendarVisible, onToggleView } = props;
+
+    const { setCurrentMonth, currentMonthState } = useWaterStore();
+
+    const selectNextMonth = () => {
+        const newMonth = dayjs(currentMonthState).add(1, 'month');
+        onMonthChange(newMonth, 'left');
+        setCurrentMonth(newMonth.format('YYYY-MM'));
+    };
+
+    const selectPreviousMonth = () => {
+        const newMonth = dayjs(currentMonthState).subtract(1, 'month');
+        onMonthChange(newMonth, 'right');
+        setCurrentMonth(newMonth.format('YYYY-MM'));
+    };
 
     return (
         <Box component="div" className={scss.wrapper}>
@@ -26,8 +40,8 @@ const HeaderMonthInfo: React.FC<HeaderMonthInfoProps> = (props) => {
                         <Icon variant="chevron-left" className={clsx(scss.svg, scss.right)} />
                     </IconButton>
 
-                    <Typography className={scss.textDate} variant="body2">
-                        {currentMonth.format('MMMM, YYYY')}
+                    <Typography id="month" className={scss.textDate} variant="body2">
+                        {dayjs(currentMonthState).format('MMMM, YYYY')}
                     </Typography>
 
                     <IconButton onClick={selectNextMonth} title="Next month">
