@@ -31,19 +31,19 @@ export const useWaterStore = create<waterStore>()((set) => ({
     setCurrentDate: (date: string) => set((state) => ({ ...state, currentDate: date })),
     createWater: async (body: WaterBody) => {
         try {
-            set({ isLoading: true });
+            set({ isLoading: true, error: null });
 
             const data = await water.fetchCreateWater(body);
             set((state) => ({ dailyWater: [...state.dailyWater, data] }));
         } catch (err: any) {
-            console.error(err);
+            set({ error: err.response.data.message });
         } finally {
             set({ isLoading: false });
         }
     },
     updateWater: async (body: WaterBody, waterId: string) => {
         try {
-            set({ isLoading: true });
+            set({ isLoading: true, error: null });
 
             const data = await water.fetchUpdateWater(body, waterId);
             set((state) => ({
@@ -59,7 +59,7 @@ export const useWaterStore = create<waterStore>()((set) => ({
     },
     deleteWater: async (id: string) => {
         try {
-            set({ isLoading: true });
+            set({ isLoading: true, error: null });
 
             await water.fetchDeleteWater(id);
             set((state) => ({
@@ -87,7 +87,7 @@ export const useWaterStore = create<waterStore>()((set) => ({
     },
     fetchWeeklyWater: async (date: string) => {
         try {
-            set({ isLoading: true });
+            set({ isLoading: true, error: null });
 
             const data = await water.fetchWeeklyWater(date);
             set({ weeklyWater: data });
@@ -99,7 +99,7 @@ export const useWaterStore = create<waterStore>()((set) => ({
     },
     fetchMonthlyWater: async (date: string) => {
         try {
-            set({ isLoading: true });
+            set({ isLoading: true, error: null });
 
             const data = await water.fetchMonthlyWater(date);
             set({ monthlyWater: data });
