@@ -20,13 +20,13 @@ const HeaderMonthInfo: React.FC<HeaderMonthInfoProps> = (props) => {
     const selectNextMonth = () => {
         const newMonth = dayjs(currentMonthState).add(1, 'month');
         onMonthChange(newMonth, 'left');
-        setCurrentMonth(newMonth.format('YYYY-MM'));
+        setCurrentMonth(newMonth.format('YYYY-MM-DD'));
     };
 
     const selectPreviousMonth = () => {
         const newMonth = dayjs(currentMonthState).subtract(1, 'month');
         onMonthChange(newMonth, 'right');
-        setCurrentMonth(newMonth.format('YYYY-MM'));
+        setCurrentMonth(newMonth.format('YYYY-MM-DD'));
     };
 
     return (

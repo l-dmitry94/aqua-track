@@ -2,14 +2,12 @@
 import React, { useEffect, useState } from 'react';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { DayCalendarSkeleton } from '@mui/x-date-pickers/DayCalendarSkeleton';
-import { format } from 'date-fns';
 import dayjs from 'dayjs';
-import { useSearchParams } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 import { getWaterProcentDay } from '@/helpers/getwaterProcentDay';
 import { useWaterStore } from '@/zustand/water/store';
 
-import data from '../../data.json';
 import HeaderMonthInfo from '../HeaderMonthInfo/HeaderMonthInfo';
 
 import BadgeWaterProcent from './BadgeWaterProcent';
@@ -18,26 +16,20 @@ import { AllWaterProcentDataType, CustomCalendarProps } from './CustomCalendar.t
 import scss from './CustomCalendar.module.scss';
 
 const CustomCalendar: React.FC<CustomCalendarProps> = ({
-    selectedDate,
     handleDateChange,
     isLoading,
     toggleView,
     isCalendarVisible,
 }) => {
-    console.log(selectedDate);
-    const { currentMonthState } = useWaterStore();
+    const { data } = useSession();
+    const { currentMonthState, monthlyWater } = useWaterStore();
     const [waterProcentData, setWaterProcentData] = useState({});
     const [highlightedDays, setHighlightedDays] = useState<number[]>([]);
-    const searchParams = useSearchParams();
-    const dateParam = searchParams.get('date');
-    const formatCurrentMonth = dateParam
-        ? format(new Date(currentMonthState), 'MM')
-        : format(new Date(), 'MM');
 
     useEffect(() => {
         const allWaterProcentData: AllWaterProcentDataType = {};
-        const startOfMonth = dayjs(formatCurrentMonth).startOf('month');
-        const endOfMonth = dayjs(formatCurrentMonth).endOf('month');
+        const startOfMonth = dayjs(currentMonthState).startOf('month');
+        const endOfMonth = dayjs(currentMonthState).endOf('month');
 
         // масив усіх днів у місяці
         const allDaysInMonth = [];
@@ -49,13 +41,22 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({
             allDaysInMonth.push(day.format('YYYY-MM-DD'));
         }
 
-        // відсотки для днів, для яких є дані
-        data.entries.forEach((entry) => {
+        const normaDailyWater = data?.user?.volume;
+        // тут об'єм води за кожен день
+        const waterByDate: Record<string, number[]> = {};
+
+        monthlyWater.forEach((entry) => {
             const date = dayjs(entry.date).format('YYYY-MM-DD');
-            const volumes = data.entries
-                .filter((item) => item.date === date)
-                .map((item) => item.volume);
-            const waterProcent = getWaterProcentDay(volumes, data.normaDailyWater);
+            if (!waterByDate[date]) {
+                waterByDate[date] = [];
+            }
+            waterByDate[date].push(entry.volume);
+        });
+
+        //  відсотки
+        Object.keys(waterByDate).forEach((date) => {
+            const volumesForDate = waterByDate[date];
+            const waterProcent = getWaterProcentDay(volumesForDate, normaDailyWater);
             allWaterProcentData[date] = waterProcent;
         });
 
@@ -70,7 +71,7 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({
 
         const daysWithData: string[] = Object.keys(allWaterProcentData);
         setHighlightedDays(daysWithData.map((date) => dayjs(date).date())); // саме тут кладуться всі дні
-    }, [formatCurrentMonth, currentMonthState]);
+    }, [currentMonthState, monthlyWater, data?.user?.volume]);
 
     const CustomCalendarHeader = (props: any) => (
         <HeaderMonthInfo

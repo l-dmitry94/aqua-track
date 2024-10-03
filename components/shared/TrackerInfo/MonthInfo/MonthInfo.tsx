@@ -13,12 +13,20 @@ import CustomCalendar from './CustomCalendar';
 import scss from './MonthInfo.module.scss';
 
 const MonthInfo = () => {
-    const { currentDate, setCurrentDate, setCurrentMonth } = useWaterStore();
+    const {
+        currentDate,
+        setCurrentDate,
+        setCurrentMonth,
+        fetchMonthlyWater,
+        isLoading,
+        currentMonthState,
+    } = useWaterStore();
     const [isCalendarVisible, setIsCalendarVisible] = useState(true);
-    const [isLoading, setIsLoading] = useState(true);
+    // const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
-        setIsLoading(false);
-    }, []);
+        fetchMonthlyWater(currentMonthState);
+        // setIsLoading(false);
+    }, [currentMonthState, fetchMonthlyWater]);
 
     const handleDateChange = (date: dayjs.Dayjs) => {
         setCurrentDate(dayjs(date).format('YYYY-MM-DD'));

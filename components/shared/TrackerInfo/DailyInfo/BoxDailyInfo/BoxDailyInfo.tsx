@@ -31,8 +31,7 @@ const BoxDailyInfo: React.FC<{ data: DailyInfoResponse }> = () => {
     }, [currentDate]);
 
     const formattedEntries = dailyWater.map((item) => {
-        const dateObj = new Date(item.date);
-        const formattedTime = formatTime(dateObj);
+        const formattedTime = formatTime(item.time);
         return {
             ...item,
             formattedTime,
