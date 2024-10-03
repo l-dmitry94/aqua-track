@@ -7,6 +7,8 @@ import { WaterMainInfo } from '@/components/shared/WaterMainInfo';
 import Container from '@/components/ui/Container';
 import { authOptions } from '@/lib/authOptions';
 
+import scss from './Tracker.module.scss';
+
 const TrackerPage = async () => {
     const session = await getServerSession(authOptions);
 
@@ -15,7 +17,7 @@ const TrackerPage = async () => {
     }
     return (
         <div>
-            <Container>
+            <Container className={scss.trackerContainer}>
                 <TrackerInfo />
                 <WaterMainInfo />
             </Container>

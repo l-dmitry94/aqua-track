@@ -1,9 +1,10 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { Box, List, Typography } from '@mui/material';
+import { format, isToday, parseISO } from 'date-fns';
+import { useSearchParams } from 'next/navigation';
 
 import CustomScrollBar from '@/components/ui/Scrollbar/Srollbar';
-import { formatDate, isTodayDate } from '@/helpers/formatDate';
 import { formatTime } from '@/helpers/formatTime';
 
 import { DailyInfoResponse } from '../DailyInfo.types';
@@ -15,9 +16,12 @@ import ItemListDailyInfo from './ItemListDailyInfo';
 import scss from './BoxDailyInfo.module.scss';
 
 const BoxDailyInfo: React.FC<{ data: DailyInfoResponse }> = ({ data }) => {
-    const { currentDate, entries } = data;
-    const date = new Date(currentDate);
-    const displayDate = isTodayDate(date) ? 'Today' : formatDate(date);
+    const searchParams = useSearchParams();
+    const dateParam = searchParams.get('date');
+    const date = dateParam ? parseISO(dateParam) : new Date();
+    const { entries } = data;
+
+    const displayDate = isToday(date) ? 'Today' : format(date, 'd, MMMM');
 
     const [loading, setLoading] = useState(true);
 
