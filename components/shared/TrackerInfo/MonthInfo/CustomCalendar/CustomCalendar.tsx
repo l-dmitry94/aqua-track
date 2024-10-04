@@ -20,6 +20,7 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({
     isLoading,
     toggleView,
     isCalendarVisible,
+    selectedDate,
 }) => {
     const { data } = useSession();
     const { currentMonthState, monthlyWater } = useWaterStore();
@@ -92,6 +93,7 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({
                 day: {
                     highlightedDays,
                     waterProcentData,
+                    selectedDate,
                 } as any,
             }}
             renderLoading={() => <DayCalendarSkeleton />}
