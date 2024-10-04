@@ -15,8 +15,8 @@ const ProgressBar: FC<ProgressBarTypes> = ({ goal, totalWater }) => {
 
     const lowWaterColor = '#9be1a0';
     const goalReachedColor = '#FABE4A';
-    const currentColor = totalWater < 100 * 1000 ? lowWaterColor : goalReachedColor;
-
+    const currentColor = totalWater < goal * 1000 ? lowWaterColor : goalReachedColor;
+    console.log(`Goal: ${goal}, totalWater: ${totalWater}`);
     return (
         <CustomItemBox>
             <p className={styles.progressBarTitle}>Today</p>
@@ -29,7 +29,7 @@ const ProgressBar: FC<ProgressBarTypes> = ({ goal, totalWater }) => {
                     }}
                 >
                     <p className={styles.percentNumber} style={{ color: currentColor }}>
-                        {totalWater < 100 * 1000 ? `${percentage}%` : 'done!'}
+                        {totalWater < goal * 1000 ? `${percentage}%` : 'done!'}
                     </p>
                     <div
                         className={styles.ball}
