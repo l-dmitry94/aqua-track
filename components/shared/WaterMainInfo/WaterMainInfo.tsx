@@ -26,13 +26,12 @@ const WaterMainInfo = () => {
 
     const { dailyWater, fetchDailyWater, isLoading } = useWaterStore();
 
-    const volume = session?.user?.volume;
+    const volume = session?.user?.volume / 1000;
 
     useEffect(() => {
         const today = new Date().toISOString().split('T')[0];
         fetchDailyWater(today);
     }, [fetchDailyWater]);
-    console.log(dailyWater);
 
     const totalWater = dailyWater.reduce((prev, curr) => prev + curr.volume, 0);
     return (

@@ -9,8 +9,8 @@ import { ItemListDailyInfoProps } from './ItemListDailyInfo.';
 
 import scss from './ItemListDailyInfo.module.scss';
 
-const ItemListDailyInfo: React.FC<ItemListDailyInfoProps> = ({ dataItem }) => {
-    const { volume, time, message } = dataItem;
+const ItemListDailyInfo: React.FC<ItemListDailyInfoProps> = ({ dataItem, onEdit, onDelete }) => {
+    const { volume, time, message, id } = dataItem;
 
     return (
         <ListItem className={scss.item}>
@@ -26,7 +26,7 @@ const ItemListDailyInfo: React.FC<ItemListDailyInfoProps> = ({ dataItem }) => {
                             <Typography component="p" className={scss.textValue}>
                                 {`${volume} ml`}
                             </Typography>
-                            <IconButton size="small">
+                            <IconButton onClick={() => onEdit(id!)} size="small">
                                 <Icon variant="edit" className={scss.svg} />
                             </IconButton>
                         </Box>
@@ -34,7 +34,7 @@ const ItemListDailyInfo: React.FC<ItemListDailyInfoProps> = ({ dataItem }) => {
                             <Typography component="p" className={scss.textTime}>
                                 {time}
                             </Typography>
-                            <IconButton size="small">
+                            <IconButton onClick={() => onDelete(id!)} size="small">
                                 <Icon variant="trash" className={scss.svg} />
                             </IconButton>
                         </Box>

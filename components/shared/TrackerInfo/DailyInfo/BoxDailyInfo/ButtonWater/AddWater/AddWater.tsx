@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import { Box, Typography } from '@mui/material';
 
+import { WaterBody } from '@/api/water/water.api.types';
 import Button from '@/components/ui/Button';
 import Form from '@/components/ui/Form';
 import { FormValues } from '@/components/ui/Form/Form.types';
@@ -11,8 +12,14 @@ import WaterInputs from './WaterInputs';
 
 import scss from './AddWater.module.scss';
 
-const AddWater = () => {
-    const [amount, setAmount] = useState(50);
+export interface IAddWater {
+    onClose: () => void;
+    water?: WaterBody;
+}
+
+const AddWater: FC<IAddWater> = ({ onClose, water }) => {
+    const [amount, setAmount] = useState(water?.volume || 50);
+    const { updateWater } = useWaterStore();
     const currentTime = new Date();
     const { currentDate, createWater } = useWaterStore();
 
@@ -21,7 +28,14 @@ const AddWater = () => {
             ...data,
             date: currentDate,
         };
+
+        if (water) {
+            updateWater(data, water?.id);
+            onClose();
+            return;
+        }
         createWater(formData);
+        onClose();
     };
 
     const decrement = () => {
@@ -51,6 +65,7 @@ const AddWater = () => {
                     />
 
                     <WaterInputs
+                        water={water}
                         amount={amount}
                         setValue={setValue}
                         register={register}

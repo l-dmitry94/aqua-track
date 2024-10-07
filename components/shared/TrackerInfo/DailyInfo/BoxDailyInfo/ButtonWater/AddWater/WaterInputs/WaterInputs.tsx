@@ -1,9 +1,8 @@
-import { ChangeEventHandler, FC, useEffect, useState } from 'react';
+import { ChangeEventHandler, FC, useEffect } from 'react';
 import { format } from 'date-fns';
 
 import Input from '@/components/ui/Input';
 
-import fields from './fields';
 import { IWaterInputs } from './WaterInputs.types';
 
 import scss from './WaterInputs.module.scss';
@@ -13,49 +12,42 @@ const WaterInputs: FC<IWaterInputs> = ({
     errors,
     setValue,
     amount,
+    water,
     onSetEmount,
-    currentDate,
 }) => {
-    const [time, setTime] = useState(() => {
-        return format(currentDate, 'HH:mm');
-    });
+    const time = water?.time || format(new Date(), 'HH:mm');
 
     useEffect(() => {
         setValue('volume', amount);
-        setValue('time', time);
-    }, [amount, setValue, time]);
+    }, [amount, setValue]);
 
     const handleVolumeChange: ChangeEventHandler<HTMLInputElement> = (event) => {
         const newValue = Number(event.target.value);
         onSetEmount(newValue);
     };
 
-    const handleTimeChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-        setTime(event.target.value);
-    };
-
     return (
         <div className={scss.inputs}>
-            {fields.map(({ name, label, type, light }) => (
-                <Input
-                    key={name}
-                    register={register}
-                    errors={errors}
-                    name={name as never}
-                    type={type}
-                    label={label}
-                    light={light}
-                    onChange={
-                        name === 'volume'
-                            ? handleVolumeChange
-                            : name === 'time'
-                              ? handleTimeChange
-                              : undefined
-                    }
-                    value={name === 'volume' ? amount : name === 'time' ? time : undefined}
-                    placeholder={''}
-                />
-            ))}
+            <Input
+                register={register}
+                errors={errors}
+                name={'time' as never}
+                type={'time'}
+                label={'Recording time:'}
+                light
+                defaultValue={time}
+                placeholder={''}
+            />
+            <Input
+                register={register}
+                errors={errors}
+                name={'volume' as never}
+                type={'number'}
+                onChange={handleVolumeChange}
+                label={'Enter the value of the water used:'}
+                placeholder={''}
+                value={amount}
+            />
         </div>
     );
 };

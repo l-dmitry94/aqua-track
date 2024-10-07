@@ -29,7 +29,7 @@ const Settings: FC<ISettings> = ({ onCloseModal }) => {
             ...data,
             activeTime: Number(data.activeTime) || session?.user?.activeTime,
             weight: Number(data.weight) || session?.user?.weight,
-            volume: Number(data.volume) || session?.user?.volume,
+            volume: Number(data.volume) * 1000 || session?.user?.volume,
         };
 
         await update(normalizeData);
