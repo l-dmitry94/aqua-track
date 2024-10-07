@@ -25,7 +25,7 @@ const ButtonWater = () => {
             </Button>
 
             <CustomModal open={modalIsOpen} onClose={toggleModal} title="Add water">
-                <AddWater />
+                <AddWater onClose={toggleModal} />
             </CustomModal>
         </>
     );

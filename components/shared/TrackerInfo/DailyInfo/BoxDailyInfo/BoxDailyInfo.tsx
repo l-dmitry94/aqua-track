@@ -1,22 +1,29 @@
 'use client';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, List, Typography } from '@mui/material';
 import { format, isToday, parseISO } from 'date-fns';
 
+import { WaterResponse } from '@/api/water/water.api.types';
+import CustomModal from '@/components/ui/CustomModal';
 import CustomScrollBar from '@/components/ui/Scrollbar/Srollbar';
 import { formatTime } from '@/helpers/formatTime';
 import { useWaterStore } from '@/zustand/water/store';
 
 import { DailyInfoResponse } from '../DailyInfo.types';
 
+import AddWater from './ButtonWater/AddWater';
 import BoxSkeleton from './BoxSkeleton';
 import ButtonWater from './ButtonWater';
+import DeleteWater from './DeleteWater';
 import ItemListDailyInfo from './ItemListDailyInfo';
 
 import scss from './BoxDailyInfo.module.scss';
 
 const BoxDailyInfo: React.FC<{ data: DailyInfoResponse }> = () => {
     const { currentDate, fetchDailyWater, isLoading, dailyWater } = useWaterStore();
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [water, setWater] = useState<WaterResponse | undefined>(undefined);
     const date = currentDate ? parseISO(currentDate) : new Date();
     const showList = dailyWater.length === 0;
 
@@ -24,7 +31,9 @@ const BoxDailyInfo: React.FC<{ data: DailyInfoResponse }> = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            await fetchDailyWater(format(date, 'yyyy-MM-dd'));
+            if (dailyWater.length) {
+                await fetchDailyWater(format(date, 'yyyy-MM-dd'));
+            }
         };
         fetchData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -38,35 +47,74 @@ const BoxDailyInfo: React.FC<{ data: DailyInfoResponse }> = () => {
         };
     });
 
+    const handleEdit = (id: string) => {
+        setWater(dailyWater.find((item) => item.id === id));
+        setIsEditModalOpen(true);
+    };
+
+    const handleDelete = (id: string) => {
+        setWater(dailyWater.find((item) => item.id === id));
+        setIsDeleteModalOpen(true);
+    };
+
     return (
-        <Box component="div" className={scss.wrapper}>
-            <Box component="div" className={scss.topBox}>
-                <Typography component="h3" className={scss.h2}>
-                    {displayDate}
-                </Typography>
-                <ButtonWater />
+        <>
+            <Box component="div" className={scss.wrapper}>
+                <Box component="div" className={scss.topBox}>
+                    <Typography component="h3" className={scss.h2}>
+                        {displayDate}
+                    </Typography>
+                    <ButtonWater />
+                </Box>
+                {isLoading ? (
+                    <BoxSkeleton />
+                ) : (
+                    <CustomScrollBar style={{ maxWidth: '100%', height: 'auto' }}>
+                        {showList ? (
+                            <Typography component="p" className={scss.text}>
+                                No water entries yet
+                            </Typography>
+                        ) : (
+                            <List className={scss.list}>
+                                {formattedEntries.map((item) => (
+                                    <ItemListDailyInfo
+                                        key={item.id}
+                                        dataItem={{
+                                            time: item.formattedTime,
+                                            volume: item.volume,
+                                            id: item.id,
+                                        }}
+                                        onEdit={handleEdit}
+                                        onDelete={handleDelete}
+                                    />
+                                ))}
+                            </List>
+                        )}
+                    </CustomScrollBar>
+                )}
             </Box>
-            {isLoading ? (
-                <BoxSkeleton />
-            ) : (
-                <CustomScrollBar style={{ maxWidth: '100%', height: 'auto' }}>
-                    {showList ? (
-                        <Typography component="p" className={scss.text}>
-                            No water entries yet
-                        </Typography>
-                    ) : (
-                        <List className={scss.list}>
-                            {formattedEntries.map((item) => (
-                                <ItemListDailyInfo
-                                    key={item.id}
-                                    dataItem={{ time: item.formattedTime, volume: item.volume }}
-                                />
-                            ))}
-                        </List>
-                    )}
-                </CustomScrollBar>
+
+            {water && (
+                <CustomModal
+                    open={isEditModalOpen}
+                    onClose={() => setIsEditModalOpen(false)}
+                    title="Edit the entered amount of water"
+                >
+                    <AddWater water={water} onClose={() => setIsEditModalOpen(false)} />
+                </CustomModal>
             )}
-        </Box>
+
+            {water && (
+                <CustomModal
+                    open={isDeleteModalOpen}
+                    onClose={() => setIsDeleteModalOpen(false)}
+                    title="Delete entry"
+                    centerTitle
+                >
+                    <DeleteWater water={water} onClose={() => setIsDeleteModalOpen(false)} />
+                </CustomModal>
+            )}
+        </>
     );
 };
 

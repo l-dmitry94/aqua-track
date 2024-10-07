@@ -71,7 +71,7 @@ export const useWaterStore = create<waterStore>()(
 
             fetchDailyWater: async (date: string) => {
                 try {
-                    set({ isLoading: true });
+                    set({ isLoading: true, error: null });
 
                     const data = await water.fetchDailyWater(date);
                     set({

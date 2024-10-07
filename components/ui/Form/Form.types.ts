@@ -23,6 +23,7 @@ export interface ISettings {
 }
 
 export interface addWater {
+    id: string;
     time: string;
     volume: number;
 }

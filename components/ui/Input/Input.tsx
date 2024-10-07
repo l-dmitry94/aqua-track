@@ -19,6 +19,7 @@ const Input: FC<IInput> = ({
     errors,
     value,
     onChange,
+    ...props
 }) => {
     const [showPassword, setShowPassword] = useState(false);
 
@@ -45,6 +46,7 @@ const Input: FC<IInput> = ({
                     value={value}
                     onChange={onChange}
                     className={clsx(scss.input, errors?.[name] && scss.errorInput)}
+                    {...props}
                 />
 
                 {type === 'password' && (
