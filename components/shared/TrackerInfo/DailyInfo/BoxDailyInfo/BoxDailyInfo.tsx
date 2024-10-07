@@ -30,10 +30,8 @@ const BoxDailyInfo: React.FC<{ data: DailyInfoResponse }> = () => {
     const displayDate = isToday(date) ? 'Today' : format(date, 'd, MMMM');
 
     useEffect(() => {
-        const fetchData = async () => {
-            if (dailyWater.length) {
-                await fetchDailyWater(format(date, 'yyyy-MM-dd'));
-            }
+        const fetchData = () => {
+            fetchDailyWater(format(date, 'yyyy-MM-dd'));
         };
         fetchData();
         // eslint-disable-next-line react-hooks/exhaustive-deps

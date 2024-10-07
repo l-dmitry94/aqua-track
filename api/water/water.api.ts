@@ -1,6 +1,6 @@
 import instance from '@/api/axios.config';
 import ENDPOINTS from '@/api/endpoints';
-import { WaterBody, WaterResponse } from '@/api/water/water.api.types';
+import { WaterBody } from '@/api/water/water.api.types';
 
 export const fetchCreateWater = async (body: WaterBody) => {
     const { data } = await instance.post(ENDPOINTS.water.createWater, body);
@@ -8,10 +8,7 @@ export const fetchCreateWater = async (body: WaterBody) => {
 };
 
 export const fetchUpdateWater = async (body: WaterBody, waterId: string) => {
-    const data: WaterResponse = await instance.put(
-        `${ENDPOINTS.water.updateWater}/${waterId}`,
-        body
-    );
+    const { data } = await instance.put(`${ENDPOINTS.water.updateWater}/${waterId}`, body);
     return data;
 };
 
