@@ -20,6 +20,12 @@
     }
 }
 
+.selectedDay {
+    :global(.MuiPickersDay-root) {
+        @apply bg-primary text-green !important;
+    }
+}
+
 .pickersDay {
     :global(.MuiPickersDay-root.MuiPickersSlideTransition-root-MuiDayCalendar-slideTransition) {
         @apply min-h-80 !important;

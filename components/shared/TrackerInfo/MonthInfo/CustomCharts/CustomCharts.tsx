@@ -12,6 +12,8 @@ import {
     YAxis,
 } from 'recharts';
 
+import { useWaterStore } from '@/zustand/water/store';
+
 import HeaderMonthInfo from '../HeaderMonthInfo/HeaderMonthInfo';
 
 import { CustomChartsProps } from './CustomCharts.types';
@@ -25,18 +27,14 @@ const data = [
     { name: 'Day 5', value: 278 },
     { name: 'Day 6', value: 189 },
 ];
-const CuctomCharts: React.FC<CustomChartsProps> = ({
-    currentMonth,
-    onMonthChange,
-    ontoggleView,
-}) => {
-    console.log(`graph ${currentMonth}`);
+const CuctomCharts: React.FC<CustomChartsProps> = ({ onMonthChange, ontoggleView }) => {
+    const { currentMonthState } = useWaterStore();
     return (
         <Box component="div">
             <HeaderMonthInfo
-                currentMonth={currentMonth}
-                onMonthChange={onMonthChange}
+                currentMonth={dayjs(currentMonthState)}
                 onToggleView={ontoggleView}
+                onMonthChange={onMonthChange}
                 views={[]}
                 view={'year'}
                 reduceAnimations={false}

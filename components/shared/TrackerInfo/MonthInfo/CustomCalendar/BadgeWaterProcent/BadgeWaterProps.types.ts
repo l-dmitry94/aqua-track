@@ -7,4 +7,5 @@ export interface WaterProcentData {
 export interface BadgeWaterProcentProps extends PickersDayProps<Dayjs> {
     highlightedDays?: number[];
     waterProcentData?: WaterProcentData;
+    selectedDate?: Dayjs;
 }

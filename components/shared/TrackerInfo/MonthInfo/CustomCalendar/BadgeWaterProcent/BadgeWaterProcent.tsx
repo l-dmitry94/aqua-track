@@ -11,16 +11,21 @@ const BadgeWaterProcent: React.FC<BadgeWaterProcentProps> = ({
     day,
     outsideCurrentMonth,
     waterProcentData = {},
+    selectedDate,
     ...other
 }) => {
     const dayString = day.format('YYYY-MM-DD');
     const procentValue = waterProcentData[dayString] || 0;
-
+    const isSelectedDate = selectedDate && day.isSame(selectedDate, 'day');
     const isSelected = !outsideCurrentMonth && highlightedDays.includes(day.date());
 
     return (
         <Badge
-            className={clsx(scss.badge, procentValue < 100 && scss.btnGray)}
+            className={clsx(
+                scss.badge,
+                procentValue < 100 && scss.btnGray,
+                isSelectedDate && scss.selectedDay
+            )}
             sx={{
                 width: '28px',
             }}

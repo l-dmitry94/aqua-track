@@ -30,7 +30,7 @@
     :global(.MuiPickersDay-root) {
         @apply flex size-7 flex-row items-center justify-center rounded-[50%] bg-white font-sans text-sm font-bold text-primary transition-colors duration-300 ease-linear;
 
-        &:is(:hover, :focus) {
+        &:is(:hover, :focus, .Mui-selected) {
             @apply bg-primary text-green;
         }
 
@@ -39,9 +39,9 @@
         }
     }
 
-    :global(.Mui-selected) {
-        @apply bg-primary text-green transition-colors duration-300 ease-linear !important;
-    }
+    // :global(.Mui-selected) {
+    //     @apply bg-primary text-green transition-colors duration-300 ease-linear !important;
+    // }
 
     :global(.MuiDayCalendar-monthContainer) {
         @apply flex flex-col;
