@@ -17,5 +17,9 @@
 
     & .cancelButton {
         @apply bg-gray text-primary/30 h-[60px];
+
+        &:is(:hover, :focus) {
+            @apply text-primary;
+        }
     }
 }
