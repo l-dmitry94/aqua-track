@@ -1,0 +1,21 @@
+@import 'styles/mixins';
+
+.charts {
+    @apply mb-0 ml-5 mr-5 mt-0 min-h-[300px];
+
+    .chart {
+        @apply mb-10 min-h-[300px];
+
+        & > div {
+            @apply min-h-[300px];
+        }
+    }
+}
+
+.text {
+    @apply text-center font-sans text-sm font-normal leading-5 text-primary;
+
+    @include media-rules(tablet) {
+        @apply text-lg;
+    }
+}
