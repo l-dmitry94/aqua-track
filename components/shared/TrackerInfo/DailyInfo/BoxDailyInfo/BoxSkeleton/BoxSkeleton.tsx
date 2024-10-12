@@ -7,7 +7,7 @@ import scss from './BoxSkeleton.module.scss';
 
 const BoxSkeleton = () => {
     return (
-        <>
+        <div style={{ overflow: 'hidden' }}>
             <List className={scssList.list}>
                 {Array.from({ length: 3 }).map((_, index) => (
                     <ListItem key={index} className={clsx(scssList.item, scssItem.item)}>
@@ -26,7 +26,7 @@ const BoxSkeleton = () => {
                 ))}
             </List>
             <Skeleton animation="wave" className={scss.scroll} />
-        </>
+        </div>
     );
 };
 

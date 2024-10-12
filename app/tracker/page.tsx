@@ -1,8 +1,9 @@
 import React from 'react';
+import dynamic from 'next/dynamic';
 import { redirect } from 'next/navigation';
 import { getServerSession } from 'next-auth';
 
-import TrackerInfo from '@/components/shared/TrackerInfo';
+const TrackerInfo = dynamic(() => import('@/components/shared/TrackerInfo'), { ssr: false });
 import { WaterMainInfo } from '@/components/shared/WaterMainInfo';
 import Container from '@/components/ui/Container';
 import { authOptions } from '@/lib/authOptions';
