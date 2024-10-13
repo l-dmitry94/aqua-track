@@ -23,6 +23,7 @@ const CuctomCharts: React.FC<CustomChartsProps> = ({ onMonthChange, ontoggleView
     }, [currentDate, fetchWeeklyWater, dailyWater]);
 
     const chartData = formattedDataForChart(weeklyWater, currentDate);
+    console.log(chartData);
 
     return (
         <Box component="div" className={scss.charts}>

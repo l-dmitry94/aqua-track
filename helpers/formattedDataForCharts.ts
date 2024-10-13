@@ -1,12 +1,12 @@
-import { eachDayOfInterval, endOfWeek, format, startOfWeek } from 'date-fns';
+import { eachDayOfInterval, format, subDays } from 'date-fns';
 
 function formattedDataForChart(weeklyWater: any[], referenceDate: string) {
-    const startWeek = startOfWeek(new Date(referenceDate));
-    const endWeek = endOfWeek(new Date(referenceDate));
+    const startDay = new Date(referenceDate);
+    const endDay = subDays(startDay, 6);
 
     const daysOfWeek = eachDayOfInterval({
-        start: startWeek,
-        end: endWeek,
+        start: endDay,
+        end: startDay,
     }).map((date) => format(date, 'yyyy-MM-dd'));
 
     const volumeByDate = weeklyWater.reduce((acc, item) => {
