@@ -36,6 +36,23 @@ export const authOptions: NextAuthOptions = {
     ],
 
     callbacks: {
+        async signIn({ user, account }) {
+            if (account?.provider !== 'credentials') {
+                return true;
+            }
+
+            const existingUser = await prisma.user.findUnique({
+                where: {
+                    id: user.id ?? '',
+                },
+            });
+
+            if (!existingUser?.emailVerified) {
+                return false;
+            }
+
+            return true;
+        },
         async jwt({ token, user, trigger, session }) {
             if (trigger === 'update' && session?.email) {
                 token.name = session.name;

@@ -18,3 +18,8 @@ export const removeImage = async (publicId: string) => {
     const response = await instance.post(ENDPOINTS.auth.removeAvatar, { publicId });
     return response;
 };
+
+export const verifyToken = async (token: string) => {
+    const response = await instance.post(ENDPOINTS.auth.verifyToken, { token });
+    return response;
+};

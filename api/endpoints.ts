@@ -3,6 +3,7 @@ const ENDPOINTS = {
         signup: '/auth/signup',
         update: '/auth/update',
         removeAvatar: '/auth/avatar/remove',
+        verifyToken: '/auth/verify',
     },
     water: {
         createWater: '/water/create',

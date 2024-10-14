@@ -1,9 +1,8 @@
 'use client';
 
+import { useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { signIn } from 'next-auth/react';
 
 import { signup } from '@/api/auth/auth.api';
 import Button from '@/components/ui/Button';
@@ -21,16 +20,15 @@ import validationSchema from './validationSchema';
 import scss from './SignUp.module.scss';
 
 const SignUp = () => {
-    const router = useRouter();
+    const [message, setMessage] = useState('');
+
     const handleSubmit = async (data: FormValues) => {
         const response = await signup(data);
 
         if (response.status === 201) {
-            const response = await signIn('credentials', { ...data, redirect: false });
-
-            if (response?.ok) {
-                router.replace('/tracker');
-            }
+            setMessage("User created successfully. We've sent you an email.");
+        } else {
+            setMessage('Something went wrong. Please try again later.');
         }
     };
 
@@ -57,6 +55,12 @@ const SignUp = () => {
                                     />
                                 ))}
                             </Box>
+
+                            {message && (
+                                <Typography variant="body2" className={scss.message}>
+                                    {message}
+                                </Typography>
+                            )}
 
                             <Button
                                 type="submit"
