@@ -1,36 +1,32 @@
-import React from 'react';
-import { Box } from '@mui/material';
+import React, { useEffect } from 'react';
+import { Box, Typography } from '@mui/material';
 import dayjs from 'dayjs';
-import {
-    CartesianGrid,
-    Legend,
-    Line,
-    LineChart,
-    ResponsiveContainer,
-    Tooltip,
-    XAxis,
-    YAxis,
-} from 'recharts';
+import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 
+import formattedDataForChart from '@/helpers/formattedDataForCharts';
 import { useWaterStore } from '@/zustand/water/store';
 
 import HeaderMonthInfo from '../HeaderMonthInfo/HeaderMonthInfo';
 
+import CustomChartSkeleton from './CustomChartsSkeleton/CustomChartsSkeleton';
 import { CustomChartsProps } from './CustomCharts.types';
+import CustomTooltip from './CustomTooltip';
 
-// Sample data for the graph
-const data = [
-    { name: 'Day 1', value: 400 },
-    { name: 'Day 2', value: 300 },
-    { name: 'Day 3', value: 500 },
-    { name: 'Day 4', value: 200 },
-    { name: 'Day 5', value: 278 },
-    { name: 'Day 6', value: 189 },
-];
+import scss from './CustomCharts.module.scss';
+
 const CuctomCharts: React.FC<CustomChartsProps> = ({ onMonthChange, ontoggleView }) => {
-    const { currentMonthState } = useWaterStore();
+    const { currentDate, fetchWeeklyWater, weeklyWater, dailyWater, currentMonthState, isLoading } =
+        useWaterStore();
+
+    useEffect(() => {
+        fetchWeeklyWater(currentDate);
+    }, [currentDate, fetchWeeklyWater, dailyWater]);
+
+    const chartData = formattedDataForChart(weeklyWater, currentDate);
+    console.log(chartData);
+
     return (
-        <Box component="div">
+        <Box component="div" className={scss.charts}>
             <HeaderMonthInfo
                 currentMonth={dayjs(currentMonthState)}
                 onToggleView={ontoggleView}
@@ -42,17 +38,70 @@ const CuctomCharts: React.FC<CustomChartsProps> = ({ onMonthChange, ontoggleView
                 maxDate={dayjs()}
                 timezone={''}
             />
-            <ResponsiveContainer width="100%" height={300}>
-                <LineChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Line type="monotone" dataKey="value" stroke="#8884d8" />
-                </LineChart>
-            </ResponsiveContainer>
+            {isLoading ? (
+                <CustomChartSkeleton />
+            ) : (
+                <>
+                    {weeklyWater.length === 0 && (
+                        <Typography component="p" className={scss.text}>
+                            No water entries yet
+                        </Typography>
+                    )}
+                    <ResponsiveContainer width={'100%'} className={scss.chart}>
+                        <AreaChart data={chartData} margin={{ top: 12, right: 12 }}>
+                            <defs>
+                                <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="5%" stopColor="#9BE1A0" stopOpacity={1} />
+                                    <stop offset="95%" stopColor="#9BE1A0" stopOpacity={0} />
+                                </linearGradient>
+                            </defs>
+                            <XAxis
+                                type="number"
+                                tickCount={7}
+                                domain={[chartData[1]?.name - 1, chartData[7]?.name + 1]}
+                                dataKey="name"
+                                tickSize={0}
+                                tickMargin={17}
+                                tick={{ fontSize: 15, color: '#323f47' }}
+                                axisLine={false}
+                                minTickGap={12}
+                                allowDataOverflow
+                                ticks={chartData.slice(0, -1).map((item) => item.name)}
+                            />
+                            <YAxis
+                                type="number"
+                                tickCount={6}
+                                dataKey="pv"
+                                domain={[0, 'dataMax']}
+                                minTickGap={17}
+                                tickSize={0}
+                                tickFormatter={(v) => (v === 0 ? '0%' : `${v / 1000} L`)}
+                                tick={{ fontSize: 14, color: '#323f47' }}
+                                tickMargin={17}
+                                axisLine={false}
+                            />
+                            <Tooltip
+                                formatter={(value) => [value]}
+                                labelFormatter={() => ''}
+                                content={<CustomTooltip />}
+                                cursor={true}
+                                isAnimationActive={true}
+                            />
+                            <Area
+                                type="linear"
+                                dataKey="pv"
+                                stroke="#87d28d"
+                                strokeWidth={3}
+                                fillOpacity={1}
+                                fill="url(#colorPv)"
+                                dot={{ stroke: '#87d28d', strokeWidth: 3, r: 10, fill: '#ffffff' }}
+                            />
+                        </AreaChart>
+                    </ResponsiveContainer>
+                </>
+            )}
         </Box>
     );
 };
+
 export default CuctomCharts;

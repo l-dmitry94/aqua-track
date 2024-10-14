@@ -23,10 +23,9 @@ const MonthInfo = () => {
         dailyWater,
     } = useWaterStore();
     const [isCalendarVisible, setIsCalendarVisible] = useState(true);
-    // const [isLoading, setIsLoading] = useState(true);
+
     useEffect(() => {
         fetchMonthlyWater(currentMonthState);
-        // setIsLoading(false);
     }, [currentMonthState, fetchMonthlyWater, dailyWater]);
 
     const handleDateChange = (date: dayjs.Dayjs) => {

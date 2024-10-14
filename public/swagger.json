@@ -801,7 +801,7 @@
                 }
             }
         },
-        "/water/weekly{date}": {
+        "/water/weekly/{date}": {
             "get": {
                 "tags": ["Water"],
                 "summary": "Get weekly water entry",

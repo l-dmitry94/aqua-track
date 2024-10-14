@@ -11,6 +11,18 @@
         @apply min-w-[608px];
     }
 
+    :global(.MuiDayCalendarSkeleton-root) {
+        @apply min-w-full;
+
+        :global(.MuiDayCalendarSkeleton-week) {
+            @apply justify-between;
+
+            @include media-rules(tablet) {
+                @apply mb-5;
+            }
+        }
+    }
+
     :global(.MuiDayCalendar-header) {
         @apply hidden;
     }
@@ -38,10 +50,6 @@
             @apply size-[38px] text-base;
         }
     }
-
-    // :global(.Mui-selected) {
-    //     @apply bg-primary text-green transition-colors duration-300 ease-linear !important;
-    // }
 
     :global(.MuiDayCalendar-monthContainer) {
         @apply flex flex-col;
