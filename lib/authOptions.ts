@@ -26,8 +26,18 @@ export const authOptions: NextAuthOptions = {
                     },
                 });
 
-                if (user && (await bcrypt.compare(password, user.password!))) {
-                    return user as User;
+                if (user) {
+                    const isHashed = password.startsWith('$2a$') || password.startsWith('$2b$');
+
+                    if (isHashed) {
+                        if (password === user.password) {
+                            return user as User;
+                        }
+                    } else {
+                        if (await bcrypt.compare(password, user.password!)) {
+                            return user as User;
+                        }
+                    }
                 }
 
                 return null;

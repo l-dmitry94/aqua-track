@@ -1,6 +1,7 @@
 'use client';
 
 import { FC, useState } from 'react';
+import toast from 'react-hot-toast';
 import { Box } from '@mui/material';
 import { useSession } from 'next-auth/react';
 
@@ -9,6 +10,7 @@ import Button from '@/components/ui/Button';
 import Form from '@/components/ui/Form';
 import { FormValues } from '@/components/ui/Form/Form.types';
 import CustomScrollBar from '@/components/ui/Scrollbar/Srollbar';
+import WaterLoader from '@/components/ui/WaterLoader';
 
 import AdditionalInfo from './AdditionalInfo';
 import AmountOfWater from './AmountOfWater';
@@ -22,6 +24,7 @@ import scss from './Settings.module.scss';
 
 const Settings: FC<ISettings> = ({ onCloseModal }) => {
     const { data: session, update: updateSession } = useSession();
+    const [isLoading, setIsLoading] = useState(false);
     const [isFormSubmitted, setIsFormSubmitted] = useState(false);
 
     const handleSubmit = async (data: FormValues) => {
@@ -31,64 +34,70 @@ const Settings: FC<ISettings> = ({ onCloseModal }) => {
             weight: Number(data.weight) || session?.user?.weight,
             volume: Number(data.volume) * 1000 || session?.user?.volume,
         };
-
+        setIsLoading(true);
         await update(normalizeData);
 
-        updateSession({ ...session, ...normalizeData });
+        await updateSession({ ...session, ...normalizeData });
 
         setIsFormSubmitted(true);
+        setIsLoading(false);
+        toast.success('Settings saved!');
     };
 
     return (
-        <Form onSubmit={handleSubmit}>
-            {(register, control, setValue, errors) => (
-                <Box component="div" className={scss.settings}>
-                    <CustomScrollBar profile style={{ height: '500px', width: '100%' }}>
-                        <UploadImage
-                            avatar={session?.user?.image}
-                            publicId={session?.user?.publicId}
-                            setValue={setValue}
-                            isFormSubmitted={isFormSubmitted}
-                        />
-                        <GenderIdentity
-                            control={control}
-                            gender={session?.user?.gender}
-                            setValue={setValue}
-                        />
-                        <Box component="div" className={scss.wrapper}>
-                            <Box component="div" className={scss.box}>
-                                <ProfileData
-                                    register={register}
-                                    errors={errors}
-                                    user={session?.user}
-                                    setValue={setValue}
-                                />
-                                <DailyNorma />
+        <>
+            <Form onSubmit={handleSubmit}>
+                {(register, control, setValue, errors) => (
+                    <Box component="div" className={scss.settings}>
+                        <CustomScrollBar profile style={{ height: '500px', width: '100%' }}>
+                            <UploadImage
+                                avatar={session?.user?.image}
+                                publicId={session?.user?.publicId}
+                                setValue={setValue}
+                                isFormSubmitted={isFormSubmitted}
+                            />
+                            <GenderIdentity
+                                control={control}
+                                gender={session?.user?.gender}
+                                setValue={setValue}
+                            />
+                            <Box component="div" className={scss.wrapper}>
+                                <Box component="div" className={scss.box}>
+                                    <ProfileData
+                                        register={register}
+                                        errors={errors}
+                                        user={session?.user}
+                                        setValue={setValue}
+                                    />
+                                    <DailyNorma />
+                                </Box>
+
+                                <Box component="div" className={scss.box}>
+                                    <AdditionalInfo
+                                        register={register}
+                                        errors={errors}
+                                        user={session?.user}
+                                        setValue={setValue}
+                                    />
+                                    <AmountOfWater
+                                        register={register}
+                                        errors={errors}
+                                        user={session?.user}
+                                        setValue={setValue}
+                                    />
+                                </Box>
                             </Box>
 
-                            <Box component="div" className={scss.box}>
-                                <AdditionalInfo
-                                    register={register}
-                                    errors={errors}
-                                    user={session?.user}
-                                    setValue={setValue}
-                                />
-                                <AmountOfWater
-                                    register={register}
-                                    errors={errors}
-                                    user={session?.user}
-                                    setValue={setValue}
-                                />
-                            </Box>
-                        </Box>
+                            <Button onClick={onCloseModal} type="submit" variant="contained">
+                                Save
+                            </Button>
+                        </CustomScrollBar>
+                    </Box>
+                )}
+            </Form>
 
-                        <Button onClick={onCloseModal} type="submit" variant="contained">
-                            Save
-                        </Button>
-                    </CustomScrollBar>
-                </Box>
-            )}
-        </Form>
+            {isLoading && <WaterLoader />}
+        </>
     );
 };
 
