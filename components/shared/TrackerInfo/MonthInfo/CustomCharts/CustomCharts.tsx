@@ -23,7 +23,6 @@ const CuctomCharts: React.FC<CustomChartsProps> = ({ onMonthChange, ontoggleView
     }, [currentDate, fetchWeeklyWater, dailyWater]);
 
     const chartData = formattedDataForChart(weeklyWater, currentDate);
-    console.log(chartData);
 
     return (
         <Box component="div" className={scss.charts}>
@@ -56,17 +55,16 @@ const CuctomCharts: React.FC<CustomChartsProps> = ({ onMonthChange, ontoggleView
                                 </linearGradient>
                             </defs>
                             <XAxis
-                                type="number"
-                                tickCount={7}
-                                domain={[chartData[1]?.name - 1, chartData[7]?.name + 1]}
+                                type="category"
                                 dataKey="name"
-                                tickSize={0}
-                                tickMargin={17}
+                                tickSize={10}
+                                tickMargin={10}
                                 tick={{ fontSize: 15, color: '#323f47' }}
                                 axisLine={false}
                                 minTickGap={12}
                                 allowDataOverflow
-                                ticks={chartData.slice(0, -1).map((item) => item.name)}
+                                tickLine={false}
+                                padding={{ left: 20, right: 10 }}
                             />
                             <YAxis
                                 type="number"
