@@ -14,8 +14,8 @@ export const GET = async (req: NextRequest, { params }: { params: { date: string
 
     const { date } = params;
 
-    const startWeek = startOfWeek(new Date(date!)).toISOString();
-    const endWeek = endOfWeek(new Date(date!)).toISOString();
+    const startWeek = startOfWeek(new Date(date!), { weekStartsOn: 1 }).toISOString();
+    const endWeek = endOfWeek(new Date(date!), { weekStartsOn: 1 }).toISOString();
 
     try {
         const getWeeklyWater = await prisma.water.findMany({
