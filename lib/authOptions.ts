@@ -26,8 +26,18 @@ export const authOptions: NextAuthOptions = {
                     },
                 });
 
-                if (user && (await bcrypt.compare(password, user.password!))) {
-                    return user as User;
+                if (user) {
+                    const isHashed = password.startsWith('$2a$') || password.startsWith('$2b$');
+
+                    if (isHashed) {
+                        if (password === user.password) {
+                            return user as User;
+                        }
+                    } else {
+                        if (await bcrypt.compare(password, user.password!)) {
+                            return user as User;
+                        }
+                    }
                 }
 
                 return null;
@@ -36,6 +46,23 @@ export const authOptions: NextAuthOptions = {
     ],
 
     callbacks: {
+        async signIn({ user, account }) {
+            if (account?.provider !== 'credentials') {
+                return true;
+            }
+
+            const existingUser = await prisma.user.findUnique({
+                where: {
+                    id: user.id ?? '',
+                },
+            });
+
+            if (!existingUser?.emailVerified) {
+                return false;
+            }
+
+            return true;
+        },
         async jwt({ token, user, trigger, session }) {
             if (trigger === 'update' && session?.email) {
                 token.name = session.name;

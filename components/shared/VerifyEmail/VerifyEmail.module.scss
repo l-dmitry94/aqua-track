@@ -1,0 +1,14 @@
+.wrapper {
+    @apply flex h-screen flex-col items-center justify-center gap-4;
+}
+
+.message {
+    @apply rounded-lg bg-green p-4;
+}
+
+.link {
+    &:hover {
+        @apply underline;
+        text-decoration-skip-ink: none;
+    }
+}

@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Box, Typography } from '@mui/material';
 
 import { NameValues } from '@/components/ui/Form/Form.types';
@@ -9,11 +9,30 @@ import { IProfileData } from '../ProfileData/ProfileData.types';
 import scss from './AmountOfWater.module.scss';
 
 const AmountOfWater: FC<IProfileData> = ({ register, errors, setValue, user }) => {
+    const [weight, setWeight] = useState(user?.weight ?? 0);
+    const [activeTime, setActiveTime] = useState(user?.activeTime ?? 0);
+    const [gender] = useState(user?.gender ?? 'woman');
+    const [volume, setVolume] = useState(user?.volume ?? 0);
+
+    const normalizeVolume = volume / 1000;
+    const dailyNormaForWoman = weight * 0.03 + activeTime * 0.4;
+    const dailyNormaForMan = weight * 0.04 + activeTime * 0.6;
+
+    const dailyNorma =
+        normalizeVolume !== 1.8
+            ? gender === 'woman'
+                ? dailyNormaForWoman
+                : dailyNormaForMan
+            : 1.8;
+
     useEffect(() => {
-        if (user?.volume) {
-            setValue('volume', user?.volume);
+        if (user) {
+            setWeight(user.weight ?? 0);
+            setActiveTime(user.activeTime ?? 0);
+            setVolume(user.volume ?? 0);
+            setValue('volume', user.volume ? user.volume / 1000 : 0);
         }
-    }, [setValue, user?.volume]);
+    }, [user, setValue]);
 
     return (
         <Box component="div" className={scss.wrapper}>
@@ -22,7 +41,7 @@ const AmountOfWater: FC<IProfileData> = ({ register, errors, setValue, user }) =
                     The required amount of water in liters per day:
                 </Typography>
                 <Typography variant="body2" className={scss.text}>
-                    1.8 L
+                    {dailyNorma.toFixed(1)}
                 </Typography>
             </Box>
 
