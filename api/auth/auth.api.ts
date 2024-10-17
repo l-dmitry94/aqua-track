@@ -5,7 +5,6 @@ import ENDPOINTS from '../endpoints';
 
 export const signup = async (body: FormValues) => {
     const response = await instance.post(ENDPOINTS.auth.signup, body);
-    console.log(response);
     return response;
 };
 
@@ -17,4 +16,9 @@ export const update = async (body: FormValues) => {
 export const removeImage = async (publicId: string) => {
     const response = await instance.post(ENDPOINTS.auth.removeAvatar, { publicId });
     return response;
+};
+
+export const fetchTotalUsers = async () => {
+    const { data } = await instance.get('/users');
+    return data;
 };
