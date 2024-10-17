@@ -60,7 +60,6 @@ const UploadImage: FC<IUploadImage> = ({ avatar, publicId, setValue, isFormSubmi
     };
 
     const handleBeforeUpload = async () => {
-        console.log(imagePublicId);
         removeAvatar(imagePublicId, setValue, setImage, setImagePublicId);
     };
 

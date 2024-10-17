@@ -2,6 +2,7 @@ import dayjs from 'dayjs';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
+import { fetchTotalUsers } from '@/api/auth/auth.api';
 import { WaterBody } from '@/api/water/water.api.types';
 
 import * as water from '../../api/water/water.api';
@@ -15,6 +16,7 @@ export const useWaterStore = create<waterStore>()(
             error: null,
             currentMonthState: dayjs().format('YYYY-MM-DD'),
             currentDate: dayjs().format('YYYY-MM-DD'),
+            totalUsers: [],
             dailyWater: [],
             weeklyWater: [],
             monthlyWater: [],
@@ -23,6 +25,19 @@ export const useWaterStore = create<waterStore>()(
 
             setCurrentMonth: (date: string) =>
                 set((state) => ({ ...state, currentMonthState: date })),
+
+            fetchTotalUsers: async () => {
+                try {
+                    set({ isLoading: true, error: null });
+
+                    const data = await fetchTotalUsers();
+                    set((state) => ({ ...state, totalUsers: data }));
+                } catch (err: any) {
+                    set({ error: err.response.data.message });
+                } finally {
+                    set({ isLoading: false });
+                }
+            },
 
             createWater: async (body: WaterBody) => {
                 try {
