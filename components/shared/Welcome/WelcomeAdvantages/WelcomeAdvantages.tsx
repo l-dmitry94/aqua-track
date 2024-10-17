@@ -72,7 +72,7 @@ const WelcomeAdvantages: FC<IWelcomeAdvantages> = ({ desktop }) => {
                         }}
                     >
                         {userAvatars.map(({ image, id }) => (
-                            <Avatar src={image || undefined} key={id} className={scss.avatar} />
+                            <Avatar src={image} key={id} className={scss.avatar} />
                         ))}
                     </AvatarGroup>
                     <Typography variant="body2" className={scss.text}>

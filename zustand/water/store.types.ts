@@ -21,5 +21,5 @@ export type waterStore = {
 
 export type TotalUsersTypes = {
     id: string;
-    image: string | null;
+    image?: string;
 };
