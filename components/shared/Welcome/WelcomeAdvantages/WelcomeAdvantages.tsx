@@ -25,10 +25,10 @@ interface IWelcomeAdvantages {
 const WelcomeAdvantages: FC<IWelcomeAdvantages> = ({ desktop }) => {
     const { totalUsers, fetchTotalUsers, isLoading } = useWaterStore();
 
-    const userAvatars = totalUsers.filter(
-        (item: TotalUsersTypes) => item.image !== null && item.image !== undefined
+    const userAvatars: TotalUsersTypes[] = totalUsers.filter(
+        (item) => item.image !== null && item.image !== undefined
     );
-
+    console.log(userAvatars);
     useEffect(() => {
         fetchTotalUsers();
     }, [totalUsers.length]);
@@ -72,7 +72,7 @@ const WelcomeAdvantages: FC<IWelcomeAdvantages> = ({ desktop }) => {
                         }}
                     >
                         {userAvatars.map(({ image, id }) => (
-                            <Avatar src={image} key={id} className={scss.avatar} />
+                            <Avatar src={image || undefined} key={id} className={scss.avatar} />
                         ))}
                     </AvatarGroup>
                     <Typography variant="body2" className={scss.text}>
