@@ -4,6 +4,6 @@
     @apply my-4 rounded-[30px] bg-gray;
 
     @include media-rules(desktop) {
-        @apply my-8 max-w-[672px];
+        @apply my-8 w-1/2;
     }
 }
