@@ -7,7 +7,7 @@ function formattedDataForChart(weeklyWater: any[], referenceDate: string) {
     const daysOfWeek = eachDayOfInterval({
         start: endDay,
         end: startDay,
-    }).map((date) => format(date, 'yyyy-MM-dd'));
+    });
 
     const volumeByDate = weeklyWater.reduce((acc, item) => {
         acc[item.date] = (acc[item.date] || 0) + item.volume;
@@ -15,11 +15,11 @@ function formattedDataForChart(weeklyWater: any[], referenceDate: string) {
     }, {});
 
     const data = daysOfWeek.map((date) => ({
-        name: parseInt(date.split('-')[2]),
-        pv: volumeByDate[date] || 0,
+        name: date.getDate(),
+        pv: volumeByDate[format(date, 'yyyy-MM-dd')] || 0,
     }));
 
-    return [{ name: -100, pv: 0 }, ...data, { name: 100, pv: 0 }];
+    return data;
 }
 
 export default formattedDataForChart;

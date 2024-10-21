@@ -4,6 +4,8 @@ export type waterStore = {
     error: string | null;
     currentMonthState: string;
     currentDate: string;
+    totalUsers: TotalUsersTypes[];
+    fetchTotalUsers: () => void;
     dailyWater: WaterResponse[];
     weeklyWater: WaterResponse[];
     monthlyWater: WaterResponse[];
@@ -15,4 +17,9 @@ export type waterStore = {
     fetchDailyWater: (date: string) => void;
     fetchWeeklyWater: (date: string) => void;
     fetchMonthlyWater: (date: string) => void;
+};
+
+export type TotalUsersTypes = {
+    id: string;
+    image?: string;
 };

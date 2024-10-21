@@ -5,5 +5,12 @@ import prisma from '@/prisma/prisma';
 export const GET = async () => {
     const users = await prisma.user.findMany();
 
-    return NextResponse.json({ users: users.length });
+    const formattedUsers = users.map((user) => {
+        return {
+            id: user.id,
+            image: user.image || null,
+        };
+    });
+
+    return NextResponse.json(formattedUsers);
 };

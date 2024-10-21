@@ -24,14 +24,13 @@ import styles from './water-main-info.module.scss';
 const WaterMainInfo = () => {
     const { data: session } = useSession();
 
-    const { dailyWater, fetchDailyWater, isLoading } = useWaterStore();
+    const { dailyWater, fetchDailyWater, isLoading, currentDate } = useWaterStore();
 
     const volume = session?.user?.volume / 1000;
 
     useEffect(() => {
-        const today = new Date().toISOString().split('T')[0];
-        fetchDailyWater(today);
-    }, [fetchDailyWater]);
+        fetchDailyWater(currentDate);
+    }, [currentDate]);
 
     const totalWater = dailyWater.reduce((prev, curr) => prev + curr.volume, 0);
     return (
