@@ -30,7 +30,7 @@ const WaterMainInfo = () => {
 
     useEffect(() => {
         fetchDailyWater(currentDate);
-    }, [currentDate]);
+    }, [currentDate, fetchDailyWater]);
 
     const totalWater = dailyWater.reduce((prev, curr) => prev + curr.volume, 0);
     return (

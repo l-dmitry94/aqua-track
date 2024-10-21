@@ -21,6 +21,7 @@ export const removeImage = async (publicId: string) => {
 export const verifyToken = async (token: string) => {
     const response = await instance.post(ENDPOINTS.auth.verifyToken, { token });
     return response;
+};
 
 export const fetchTotalUsers = async () => {
     const { data } = await instance.get('/users');

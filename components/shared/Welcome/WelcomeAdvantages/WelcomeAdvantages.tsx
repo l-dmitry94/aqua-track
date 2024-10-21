@@ -31,7 +31,7 @@ const WelcomeAdvantages: FC<IWelcomeAdvantages> = ({ desktop }) => {
     console.log(userAvatars);
     useEffect(() => {
         fetchTotalUsers();
-    }, [totalUsers.length]);
+    }, [fetchTotalUsers, totalUsers.length]);
     return (
         <Box
             component="section"
