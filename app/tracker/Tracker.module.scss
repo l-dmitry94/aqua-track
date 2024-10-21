@@ -1,0 +1,8 @@
+@import 'styles/mixins';
+
+.trackerContainer {
+    @apply flex flex-col-reverse;
+    @include media-rules(desktop) {
+        @apply flex flex-row-reverse gap-8;
+    }
+}

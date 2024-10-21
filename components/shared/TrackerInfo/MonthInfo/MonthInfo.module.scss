@@ -1,0 +1,11 @@
+.svg {
+    @apply fill-white stroke-primary;
+
+    &.right {
+        @apply rotate-180;
+    }
+}
+
+.textDate {
+    @apply font-sans text-sm font-bold text-primary;
+}

@@ -1,0 +1,33 @@
+@import 'styles/mixins';
+
+.badge {
+    :global(.MuiBadge-badge) {
+        @apply right-[13px] top-9 text-[10px] font-normal text-secondary opacity-60;
+
+        @include media-rules(tablet) {
+            @apply right-4 top-12 text-[12px] font-normal text-secondary opacity-60;
+        }
+    }
+}
+
+.btnGray {
+    :global(.MuiPickersDay-root) {
+        @apply bg-[rgba(50,63,71,0.2)] !important;
+
+        &:is(:hover, :focus) {
+            @apply bg-primary text-green !important;
+        }
+    }
+}
+
+.selectedDay {
+    :global(.MuiPickersDay-root) {
+        @apply bg-primary text-green !important;
+    }
+}
+
+.pickersDay {
+    :global(.MuiPickersDay-root.MuiPickersSlideTransition-root-MuiDayCalendar-slideTransition) {
+        @apply min-h-80 !important;
+    }
+}

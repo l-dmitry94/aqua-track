@@ -1,0 +1,42 @@
+@import 'styles/mixins';
+
+.wrapper {
+    @apply mb-6 flex items-center justify-between;
+}
+.buttons {
+    @apply flex flex-row items-center justify-center gap-2;
+
+    & div {
+        @apply flex items-center justify-center;
+    }
+}
+
+.svg {
+    @apply fill-gray stroke-primary transition-opacity duration-300 ease-linear;
+
+    @include media-rules(tablet) {
+        @apply size-6;
+    }
+
+    &.right {
+        @apply rotate-180;
+    }
+    &:is(:hover, :focus),
+    &.active {
+        @apply opacity-60;
+    }
+}
+
+.textDate,
+.boxCalendar,
+.title {
+    @apply font-sans text-sm font-bold text-primary;
+}
+
+.title {
+    @apply text-xl;
+
+    @include media-rules(tablet) {
+        @apply text-lg;
+    }
+}

@@ -1,0 +1,5 @@
+@import 'styles/mixins';
+
+.chartSkeleton {
+    @apply mb-10 min-h-60 min-w-full animate-pulse rounded-2xl bg-zinc-400/20;
+}

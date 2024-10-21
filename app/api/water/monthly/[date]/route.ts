@@ -1,54 +1,35 @@
-import { eachDayOfInterval, endOfMonth, format, parse, startOfMonth } from 'date-fns';
-import groupBy from 'lodash/groupBy';
-import { NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth/next';
+import { endOfMonth, startOfMonth } from 'date-fns';
+import { NextRequest, NextResponse } from 'next/server';
+import { getServerSession } from 'next-auth';
 
 import { authOptions } from '@/lib/authOptions';
 import prisma from '@/prisma/prisma';
 
-export async function GET(request: Request, { params }: { params: { date: string } }) {
+export const GET = async (req: NextRequest, { params }: { params: { date: string } }) => {
     const session = await getServerSession(authOptions);
 
     if (!session) {
-        return NextResponse.json({ message: 'Not authenticated' }, { status: 401 });
+        return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     }
 
     const { date } = params;
-    const parsedDate = parse(date, 'yyyy-MM', new Date());
-    const startDate = startOfMonth(parsedDate);
-    const endDate = endOfMonth(parsedDate);
+
+    const startMonth = startOfMonth(new Date(date!)).toISOString();
+    const endMonth = endOfMonth(new Date(date!)).toISOString();
 
     try {
-        const entries = await prisma.water.findMany({
+        const getMonthlyWater = await prisma.water.findMany({
             where: {
                 userId: session.user.id,
                 date: {
-                    gte: startDate,
-                    lte: endDate,
+                    gte: startMonth,
+                    lte: endMonth,
                 },
             },
         });
 
-        const groupedEntries = groupBy(entries, (entry) =>
-            format(new Date(entry.date), 'yyyy-MM-dd')
-        );
-        const dailyWaterIntake = eachDayOfInterval({ start: startDate, end: endDate }).map(
-            (day) => {
-                const formattedDay = format(day, 'yyyy-MM-dd');
-                const totalVolume = (groupedEntries[formattedDay] || []).reduce(
-                    (sum, { volume = 0 }) => sum + volume,
-                    0
-                );
-
-                return {
-                    date: formattedDay,
-                    totalWater: totalVolume,
-                };
-            }
-        );
-
-        return NextResponse.json(dailyWaterIntake);
+        return NextResponse.json(getMonthlyWater);
     } catch (error) {
-        return NextResponse.json({ message: 'Error fetching data', error }, { status: 500 });
+        return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
     }
-}
+};

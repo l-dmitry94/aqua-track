@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
 import { UseFormSetValue } from 'react-hook-form';
 
-import { removeImage } from '@/api/auth.api';
+import { removeImage } from '@/api/auth/auth.api';
 import { FormValues } from '@/components/ui/Form/Form.types';
 
 type IRemoveAvatar = (

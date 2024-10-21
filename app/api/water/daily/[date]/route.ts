@@ -1,50 +1,35 @@
-import { endOfDay, isValid, parse, startOfDay } from 'date-fns';
-import { NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth/next';
+import { endOfDay, startOfDay } from 'date-fns';
+import { NextRequest, NextResponse } from 'next/server';
+import { getServerSession } from 'next-auth';
 
 import { authOptions } from '@/lib/authOptions';
 import prisma from '@/prisma/prisma';
 
-export async function GET(request: Request, { params }: { params: { date: string } }) {
+export const GET = async (req: NextRequest, { params }: { params: { date: string } }) => {
     const session = await getServerSession(authOptions);
 
     if (!session) {
-        return NextResponse.redirect('/signin');
+        return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     }
 
     const { date } = params;
 
-    const parsedDate = parse(date, 'yyyy-MM-dd', new Date());
-
-    if (!isValid(parsedDate)) {
-        return NextResponse.json(
-            { message: 'Invalid date format. Expected yyyy-MM-dd.' },
-            { status: 400 }
-        );
-    }
+    const startDay = startOfDay(new Date(date!)).toISOString();
+    const endDay = endOfDay(new Date(date!)).toISOString();
 
     try {
-        const startDate = startOfDay(parsedDate);
-        const endDate = endOfDay(parsedDate);
-
-        const entries = await prisma.water.findMany({
+        const getDailyWater = await prisma.water.findMany({
             where: {
                 userId: session.user.id,
                 date: {
-                    gte: startDate,
-                    lte: endDate,
+                    gte: startDay,
+                    lte: endDay,
                 },
             },
         });
 
-        const totalWater = entries.reduce((sum, { volume = 0 }) => sum + volume, 0);
-
-        return NextResponse.json({
-            currentDate: date,
-            entries,
-            totalWater,
-        });
+        return NextResponse.json(getDailyWater);
     } catch (error) {
-        return NextResponse.json({ message: 'Error fetching data' }, { status: 500 });
+        return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
     }
-}
+};

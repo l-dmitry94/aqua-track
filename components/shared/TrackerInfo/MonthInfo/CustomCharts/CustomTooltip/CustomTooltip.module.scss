@@ -1,0 +1,12 @@
+.wrapper {
+    @apply absolute left-1/2 min-h-10 min-w-16 -translate-x-1/2;
+}
+
+.label {
+    @apply relative flex items-center justify-center rounded-2xl bg-white px-4 py-[10px] text-xs font-bold leading-[1.87] shadow-[0_5px_10px_0_rgba(203,209,223,0.5)];
+
+    &::after {
+        content: '';
+        @apply absolute left-[25%] top-[99%] translate-x-1/2 border-x-8 border-t-8 border-x-transparent border-b-white text-white;
+    }
+}

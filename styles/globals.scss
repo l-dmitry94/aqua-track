@@ -9,7 +9,13 @@
 svg {
     @apply h-6 w-6;
 }
+svg path.path-1 {
+    stroke: red;
+}
 
+svg path.path-2 {
+    stroke: green;
+}
 body {
     @apply text-primary;
 }

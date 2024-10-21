@@ -1,0 +1,31 @@
+.overlay {
+    @apply absolute left-0 top-0 z-50 flex h-full w-full items-center justify-center bg-secondary/60;
+}
+
+.circle {
+    @apply absolute left-1/2 top-1/2 h-[150px] w-[150px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full border-[5px] border-[#fff] bg-[#ccc] shadow-[0_0_0_5px_#4973ff];
+}
+.wave {
+    @apply relative h-full w-full rounded-full bg-[#4973ff] shadow-[inset_0_0_50px_rgba(0,0,0,.5)];
+}
+.wave:before,
+.wave:after {
+    @apply absolute left-1/2 top-0 h-[200%] w-[200%] -translate-x-1/2 -translate-y-1/2 bg-black content-[''];
+}
+.wave:before {
+    @apply rounded-[45%] bg-white/10;
+    animation: animate 5s linear infinite;
+}
+.wave:after {
+    @apply rounded-[40%] bg-white/50;
+    animation: animate 10s linear infinite;
+}
+
+@keyframes animate {
+    0% {
+        transform: translate(-50%, -75%) rotate(0deg);
+    }
+    100% {
+        transform: translate(-50%, -75%) rotate(360deg);
+    }
+}
