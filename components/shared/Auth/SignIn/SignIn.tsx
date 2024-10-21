@@ -49,6 +49,11 @@ const SignIn = () => {
         }
     };
 
+    const googleSignIn = async () => {
+        const result = await signIn('google', { redirect: false });
+        console.log(result);
+    };
+
     return (
         <>
             <Container className={scss.SignInPage}>
@@ -90,7 +95,7 @@ const SignIn = () => {
                         )}
                     </Form>
                     <div className={scss.or}>or</div>
-                    <Button variant="contained" fullWidth onClick={() => signIn('google')}>
+                    <Button variant="contained" fullWidth onClick={googleSignIn}>
                         Google
                     </Button>
                 </Auth>

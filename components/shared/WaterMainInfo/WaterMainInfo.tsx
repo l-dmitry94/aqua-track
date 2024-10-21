@@ -35,7 +35,7 @@ const WaterMainInfo = () => {
 
     const totalWater = dailyWater.reduce((prev, curr) => prev + curr.volume, 0);
     return (
-        <AuthWrapper backgroundColor="green" fullHeight={true}>
+        <AuthWrapper backgroundColor="green" fullHeight={true} className={styles.container}>
             <Box component="div" className={styles.box}>
                 {isLoading ? (
                     <SkeletonNorma />
@@ -47,7 +47,7 @@ const WaterMainInfo = () => {
                         </Typography>
                     </CustomItemBox>
                 )}
-                <Image src={BG_IMG} alt={'bg'} className={styles.img} />
+                <Image src={BG_IMG} alt={'bg'} priority className={styles.img} />
                 {isLoading ? (
                     <SkeletonProgressBar />
                 ) : (
