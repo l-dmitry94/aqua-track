@@ -63,6 +63,18 @@
     }
 }
 
+.slotAvatar {
+    @apply ml-2 h-7 w-7;
+
+    &:last-child {
+        @apply ml-0;
+    }
+
+    @include media-rules(tablet) {
+        @apply ml-3 h-12 w-12;
+    }
+}
+
 .text {
     @apply max-w-[68px] text-xs font-bold leading-[1.17] font-sans;
 

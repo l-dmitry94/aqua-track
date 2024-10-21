@@ -1,7 +1,8 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { Avatar, AvatarGroup, Box, List, ListItem, Typography } from '@mui/material';
 import clsx from 'clsx';
 
+import { CustomersSkeleton } from '@/components/shared/Welcome/WelcomeAdvantages/Skeleton/CustomersSkeleton';
 import {
     bg_desk_1x,
     bg_desk_2x,
@@ -10,9 +11,10 @@ import {
     bg_tab_1x,
     bg_tab_2x,
 } from '@/public/images/advantages';
+import { useWaterStore } from '@/zustand/water/store';
+import { TotalUsersTypes } from '@/zustand/water/store.types';
 
 import advantages from './advantages';
-import customers from './customers';
 
 import scss from './WelcomeAdvantages.module.scss';
 
@@ -21,6 +23,15 @@ interface IWelcomeAdvantages {
 }
 
 const WelcomeAdvantages: FC<IWelcomeAdvantages> = ({ desktop }) => {
+    const { totalUsers, fetchTotalUsers, isLoading } = useWaterStore();
+
+    const userAvatars: TotalUsersTypes[] = totalUsers.filter(
+        (item) => item.image !== null && item.image !== undefined
+    );
+    console.log(userAvatars);
+    useEffect(() => {
+        fetchTotalUsers();
+    }, [totalUsers.length]);
     return (
         <Box
             component="section"
@@ -46,26 +57,33 @@ const WelcomeAdvantages: FC<IWelcomeAdvantages> = ({ desktop }) => {
                 />
             </Box>
 
-            <Box component="section" className={scss.customers}>
-                <AvatarGroup max={4} className={scss.customersGroup}>
-                    {customers.map(({ src, srcSet, alt }) => (
-                        <Avatar
-                            alt={alt}
-                            src={src}
-                            srcSet={srcSet}
-                            key={alt}
-                            className={scss.avatar}
-                        />
-                    ))}
-                </AvatarGroup>
-                <Typography variant="body2" className={scss.text}>
-                    Our{' '}
-                    <Box component="span" className={scss.textColor}>
-                        happy
-                    </Box>{' '}
-                    customers
-                </Typography>
-            </Box>
+            {isLoading ? (
+                <CustomersSkeleton />
+            ) : (
+                <Box component="section" className={scss.customers}>
+                    <AvatarGroup
+                        max={4}
+                        total={totalUsers.length}
+                        className={scss.customersGroup}
+                        slotProps={{
+                            additionalAvatar: {
+                                className: scss.slotAvatar,
+                            },
+                        }}
+                    >
+                        {userAvatars.map(({ image, id }) => (
+                            <Avatar src={image} key={id} className={scss.avatar} />
+                        ))}
+                    </AvatarGroup>
+                    <Typography variant="body2" className={scss.text}>
+                        Our{' '}
+                        <Box component="span" className={scss.textColor}>
+                            happy{' '}
+                        </Box>
+                        customers
+                    </Typography>
+                </Box>
+            )}
 
             <Box component="section" className={scss.advantages}>
                 <List disablePadding className={scss.advantagesList}>
