@@ -20,7 +20,8 @@ const CuctomCharts: React.FC<CustomChartsProps> = ({ onMonthChange, ontoggleView
 
     useEffect(() => {
         fetchWeeklyWater(currentDate);
-    }, [currentDate, fetchWeeklyWater, dailyWater]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [dailyWater]);
 
     const chartData = formattedDataForChart(weeklyWater, currentDate);
 

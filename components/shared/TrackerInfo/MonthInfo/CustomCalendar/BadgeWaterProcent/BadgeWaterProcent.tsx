@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { Badge } from '@mui/material';
 import { PickersDay } from '@mui/x-date-pickers/PickersDay';

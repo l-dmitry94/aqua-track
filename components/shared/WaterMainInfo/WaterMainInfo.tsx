@@ -30,7 +30,8 @@ const WaterMainInfo = () => {
 
     useEffect(() => {
         fetchDailyWater(currentDate);
-    }, [currentDate, fetchDailyWater]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentDate]);
 
     const totalWater = dailyWater.reduce((prev, curr) => prev + curr.volume, 0);
     return (
