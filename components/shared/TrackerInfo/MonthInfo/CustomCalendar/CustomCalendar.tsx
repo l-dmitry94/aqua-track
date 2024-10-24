@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { DayCalendarSkeleton } from '@mui/x-date-pickers/DayCalendarSkeleton';
 import dayjs from 'dayjs';
@@ -43,7 +43,6 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({
         }
 
         const normaDailyWater = data?.user?.volume;
-        // тут об'єм води за кожен день
         const waterByDate: Record<string, number[]> = {};
 
         monthlyWater.forEach((entry) => {
@@ -54,14 +53,12 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({
             waterByDate[date].push(entry.volume);
         });
 
-        //  відсотки
         Object.keys(waterByDate).forEach((date) => {
             const volumesForDate = waterByDate[date];
             const waterProcent = getWaterProcentDay(volumesForDate, normaDailyWater);
             allWaterProcentData[date] = waterProcent;
         });
 
-        // дні, яких немає, з відсотком 0
         allDaysInMonth.forEach((date) => {
             if (!allWaterProcentData[date]) {
                 allWaterProcentData[date] = 0;
@@ -70,18 +67,36 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({
 
         setWaterProcentData(allWaterProcentData);
 
-        const daysWithData: string[] = Object.keys(allWaterProcentData);
-        setHighlightedDays(daysWithData.map((date) => dayjs(date).date())); // саме тут кладуться всі дні
+        const daysWithData = Object.keys(allWaterProcentData);
+        setHighlightedDays(daysWithData.map((date) => dayjs(date).date()));
     }, [currentMonthState, monthlyWater, data?.user?.volume]);
 
-    const CustomCalendarHeader = (props: any) => (
-        <HeaderMonthInfo
-            {...props}
-            currentMonth={dayjs(currentMonthState)}
-            onToggleView={toggleView}
-            isCalendarVisible={isCalendarVisible}
-        />
+    const CustomCalendarHeader = useCallback(
+        (props: any) => (
+            <HeaderMonthInfo
+                {...props}
+                currentMonth={dayjs(currentMonthState)}
+                onToggleView={toggleView}
+                isCalendarVisible={isCalendarVisible}
+            />
+        ),
+        [currentMonthState, toggleView, isCalendarVisible]
     );
+
+    const slotProps = useMemo(
+        () => ({
+            day: {
+                highlightedDays,
+                waterProcentData,
+                selectedDate,
+            } as any,
+        }),
+        [highlightedDays, waterProcentData, selectedDate]
+    );
+
+    if (isLoading) {
+        return <DayCalendarSkeleton />;
+    }
 
     return (
         <DateCalendar
@@ -89,13 +104,7 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({
             value={dayjs(currentMonthState)}
             onChange={handleDateChange}
             slots={{ calendarHeader: CustomCalendarHeader, day: BadgeWaterProcent }}
-            slotProps={{
-                day: {
-                    highlightedDays,
-                    waterProcentData,
-                    selectedDate,
-                } as any,
-            }}
+            slotProps={slotProps}
             renderLoading={() => <DayCalendarSkeleton />}
             loading={isLoading}
         />

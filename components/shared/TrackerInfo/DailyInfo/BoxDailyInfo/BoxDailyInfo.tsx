@@ -20,22 +20,21 @@ import ItemListDailyInfo from './ItemListDailyInfo';
 import scss from './BoxDailyInfo.module.scss';
 
 const BoxDailyInfo: React.FC<{ data: DailyInfoResponse }> = () => {
-    const { currentDate, fetchDailyWater, isLoading, dailyWater } = useWaterStore();
+    const { currentDate, dailyWater } = useWaterStore();
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [water, setWater] = useState<WaterResponse | undefined>(undefined);
     const date = currentDate ? parseISO(currentDate) : new Date();
+    const [isLoading, setIsLoading] = useState(true);
     const showList = dailyWater.length === 0;
 
-    const displayDate = isToday(date) ? 'Today' : format(date, 'd, MMMM');
-
     useEffect(() => {
-        const fetchData = () => {
-            fetchDailyWater(format(date, 'yyyy-MM-dd'));
-        };
-        fetchData();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentDate]);
+        if (dailyWater.length > 0) {
+            setIsLoading(false);
+        }
+    }, [dailyWater]);
+
+    const displayDate = isToday(date) ? 'Today' : format(date, 'd, MMMM');
 
     const formattedEntries = dailyWater.map((item) => {
         const formattedTime = formatTime(item.time);
