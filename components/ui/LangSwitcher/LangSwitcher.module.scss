@@ -1,0 +1,19 @@
+.buttonGroup {
+    @apply flex items-center gap-6 justify-end;
+}
+
+.button {
+    @apply relative;
+
+    &:hover .icon {
+        @apply scale-110;
+    }
+
+    &:first-child::after {
+        @apply content-[''] w-[2px] h-5 bg-black absolute -right-[14px];
+    }
+
+    & .icon {
+        @apply w-8 h-8 transition-transform duration-150 ease-linear;
+    }
+}

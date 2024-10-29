@@ -2,11 +2,15 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
 import { useSession } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
 
 import UserButton from './UserButton';
 
 import scss from './UserBar.module.scss';
+
 const UserBar: React.FC = () => {
+    const t = useTranslations('UserBar');
+
     const { data: userInfo } = useSession();
     const image = userInfo?.user?.image;
     const fullName = userInfo?.user?.name ? userInfo.user.name : 'User';
@@ -17,7 +21,7 @@ const UserBar: React.FC = () => {
     return (
         <Box component="div" className={scss.wrapper}>
             <Typography component="p" className={scss.text}>
-                {`Hello`}
+                {t('hello')}
                 <Typography component="span" className={scss.name}>{`, ${displayName}`}</Typography>
             </Typography>
             <UserButton name={displayName} image={image} />

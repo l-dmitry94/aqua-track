@@ -1,6 +1,7 @@
 import { FC, useEffect } from 'react';
 import { Avatar, AvatarGroup, Box, List, ListItem, Typography } from '@mui/material';
 import clsx from 'clsx';
+import { useTranslations } from 'next-intl';
 
 import { CustomersSkeleton } from '@/components/shared/Welcome/WelcomeAdvantages/Skeleton/CustomersSkeleton';
 import {
@@ -14,8 +15,6 @@ import {
 import { useWaterStore } from '@/zustand/water/store';
 import { TotalUsersTypes } from '@/zustand/water/store.types';
 
-import advantages from './advantages';
-
 import scss from './WelcomeAdvantages.module.scss';
 
 interface IWelcomeAdvantages {
@@ -23,12 +22,14 @@ interface IWelcomeAdvantages {
 }
 
 const WelcomeAdvantages: FC<IWelcomeAdvantages> = ({ desktop }) => {
+    const t = useTranslations('Advantages');
     const { totalUsers, fetchTotalUsers, isLoading } = useWaterStore();
 
     const userAvatars: TotalUsersTypes[] = totalUsers.filter(
         (item) => item.image !== null && item.image !== undefined
     );
-    console.log(userAvatars);
+    const advantages = [t('advantage-1'), t('advantage-2'), t('advantage-3')];
+
     useEffect(() => {
         fetchTotalUsers();
     }, [fetchTotalUsers, totalUsers.length]);
@@ -76,11 +77,11 @@ const WelcomeAdvantages: FC<IWelcomeAdvantages> = ({ desktop }) => {
                         ))}
                     </AvatarGroup>
                     <Typography variant="body2" className={scss.text}>
-                        Our{' '}
+                        {t('our')}{' '}
                         <Box component="span" className={scss.textColor}>
-                            happy{' '}
+                            {t('happy')}{' '}
                         </Box>
-                        customers
+                        {t('customers')}
                     </Typography>
                 </Box>
             )}

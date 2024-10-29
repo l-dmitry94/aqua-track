@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { useTranslations } from 'next-intl';
 
 import { CustomItemBox } from '@/components/shared/WaterMainInfo';
 
@@ -10,6 +11,8 @@ type ProgressBarTypes = {
 };
 
 const ProgressBar: FC<ProgressBarTypes> = ({ goal, totalWater }) => {
+    const t = useTranslations('MainInfo');
+
     const calculatedPercentage = Math.round((totalWater / (goal * 1000)) * 100);
     const percentage = calculatedPercentage >= 100 ? 100 : calculatedPercentage;
 
@@ -18,7 +21,7 @@ const ProgressBar: FC<ProgressBarTypes> = ({ goal, totalWater }) => {
     const currentColor = totalWater < goal * 1000 ? lowWaterColor : goalReachedColor;
     return (
         <CustomItemBox>
-            <p className={styles.progressBarTitle}>Today</p>
+            <p className={styles.progressBarTitle}>{t('today')}</p>
             <div className={styles.progressBar}>
                 <div
                     className={styles.progressBarFill}

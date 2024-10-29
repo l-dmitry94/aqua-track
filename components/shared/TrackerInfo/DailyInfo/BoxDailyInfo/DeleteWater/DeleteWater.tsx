@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { useTranslations } from 'next-intl';
 
 import Button from '@/components/ui/Button';
 import { useWaterStore } from '@/zustand/water/store';
@@ -8,6 +9,7 @@ import { IAddWater } from '../ButtonWater/AddWater';
 import scss from './DeleteWater.module.scss';
 
 const DeleteWater: FC<IAddWater> = ({ onClose, water }) => {
+    const t = useTranslations('DeleteWater');
     const { deleteWater } = useWaterStore();
 
     const handleDeleteWater = () => {
@@ -18,14 +20,14 @@ const DeleteWater: FC<IAddWater> = ({ onClose, water }) => {
     };
     return (
         <div className={scss.wrapper}>
-            <p className={scss.text}>Are you sure you want to delete the entry?</p>
+            <p className={scss.text}>{t('text')}</p>
 
             <div className={scss.buttonsGroup}>
                 <Button onClick={handleDeleteWater} variant="contained" fullWidth>
-                    Delete
+                    {t('delete')}
                 </Button>
                 <Button onClick={onClose} className={scss.cancelButton} fullWidth>
-                    Cancel
+                    {t('cancel')}
                 </Button>
             </div>
         </div>

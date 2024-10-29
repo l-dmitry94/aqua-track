@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, List, Typography } from '@mui/material';
 import { format, isToday, parseISO } from 'date-fns';
+import { useTranslations } from 'next-intl';
 
 import { WaterResponse } from '@/api/water/water.api.types';
 import CustomModal from '@/components/ui/CustomModal';
@@ -20,6 +21,7 @@ import ItemListDailyInfo from './ItemListDailyInfo';
 import scss from './BoxDailyInfo.module.scss';
 
 const BoxDailyInfo: React.FC<{ data: DailyInfoResponse }> = () => {
+    const t = useTranslations();
     const { currentDate, dailyWater } = useWaterStore();
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -69,7 +71,7 @@ const BoxDailyInfo: React.FC<{ data: DailyInfoResponse }> = () => {
                     <CustomScrollBar style={{ maxWidth: '100%', height: 'auto' }}>
                         {showList ? (
                             <Typography component="p" className={scss.text}>
-                                No water entries yet
+                                {t('MonthInfo.noData')}
                             </Typography>
                         ) : (
                             <List className={scss.list}>
@@ -95,7 +97,7 @@ const BoxDailyInfo: React.FC<{ data: DailyInfoResponse }> = () => {
                 <CustomModal
                     open={isEditModalOpen}
                     onClose={() => setIsEditModalOpen(false)}
-                    title="Edit the entered amount of water"
+                    title={t('Water.editTitle')}
                 >
                     <AddWater water={water} onClose={() => setIsEditModalOpen(false)} />
                 </CustomModal>
@@ -105,7 +107,7 @@ const BoxDailyInfo: React.FC<{ data: DailyInfoResponse }> = () => {
                 <CustomModal
                     open={isDeleteModalOpen}
                     onClose={() => setIsDeleteModalOpen(false)}
-                    title="Delete entry"
+                    title={t('DeleteWater.title')}
                     centerTitle
                 >
                     <DeleteWater water={water} onClose={() => setIsDeleteModalOpen(false)} />

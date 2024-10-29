@@ -1,0 +1,105 @@
+{
+    "Welcome": {
+        "description": "Record daily water intake and track",
+        "title": "Water consumption tracker",
+        "primaryButton": "Try tracker",
+        "secondaryButton": "Sign In"
+    },
+    "Advantages": {
+        "our": "Our",
+        "happy": "happy",
+        "customers": "customers",
+        "advantage-1": "Habit drive",
+        "advantage-2": "View statistics",
+        "advantage-3": "Personal rate setting"
+    },
+    "SignUp": {
+        "title": "Sign Up",
+        "email": "Email",
+        "emailPlaceholder": "Enter your email",
+        "password": "Password",
+        "passwordPlaceholder": "Enter your password",
+        "repeatPassword": "Repeat password",
+        "repeatPasswordPlaceholder": "Repeat password",
+        "button": "Sign Up",
+        "linkText": "Already have an account?",
+        "link": "Sign In"
+    },
+    "SignIn": {
+        "title": "Sign In",
+        "email": "Email",
+        "emailPlaceholder": "Enter your email",
+        "password": "Password",
+        "passwordPlaceholder": "Enter your password",
+        "button": "Sign In",
+        "linkText": "Do not have an account?",
+        "link": "Sign Up",
+        "google": "Sign in with Google"
+    },
+    "MainInfo": {
+        "dailyNorma": "My daily norma",
+        "today": "Today",
+        "button": "Add water"
+    },
+    "UserBar": {
+        "hello": "Hello",
+        "settings": "Settings",
+        "logout": "Log out"
+    },
+    "Settings": {
+        "uploadPhoto": "Upload a photo",
+        "genderText": "Your gender identity",
+        "gender": {
+            "woman": "Woman",
+            "man": "Man"
+        },
+        "nameText": "Your name",
+        "namePlaceholder": "Enter your name",
+        "emailText": "Email",
+        "emailPlaceholder": "Enter your email",
+        "dailyNormaText": "Your daily norma",
+        "forGender": {
+            "woman": "For woman",
+            "man": "For man"
+        },
+        "description": "V is the volume of the water norm in liters per day, M is your body weight, T is the time of active sports, or another type of activity commensurate in terms of loads (in the absence of these, you must set 0)",
+        "activeTime": "Active time in hours",
+        "weightText": "Your weight in kilograms:",
+        "weightPlaceholder": "Enter your weight",
+        "activeTimeText": "The time of active participation in sports:",
+        "activeTimePlaceholder": "Enter your active time",
+        "volumeRequired": "The required amount of water in liters per day:",
+        "volumeLetter": "L",
+        "volumeText": "Write down how much water you will drink:",
+        "volumePlaceholder": "Enter your volume",
+        "save": "Save"
+    },
+    "MonthInfo": {
+        "month": "Month",
+        "statisctics": "Statistics",
+        "noData": "No water entries yet"
+    },
+    "Water": {
+        "addTitle": "Add water",
+        "editTitle": "Edit the entered amount of water",
+        "chooseValue": "Choose a value:",
+        "correctData": "Correct entered data:",
+        "amountWater": "Amount of water:",
+        "ml": "ml",
+        "recordingTime": "Recording time:",
+        "volumeValue": "Enter the value of the water used:",
+        "button": "Save"
+    },
+    "DeleteWater": {
+        "title": "Delete entry",
+        "text": "Are you sure you want to delete the entry?",
+        "cancel": "Cancel",
+        "delete": "Delete"
+    },
+    "Logout": {
+        "title": "Log out",
+        "text": "Do you really want to leave?",
+        "cancel": "Cancel",
+        "logout": "Log out"
+    }
+}

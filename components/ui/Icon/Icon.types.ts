@@ -13,7 +13,9 @@ export type IconVariant =
     | 'upload'
     | 'exclamation'
     | 'counterplus'
-    | 'counterminus';
+    | 'counterminus'
+    | 'en'
+    | 'ua';
 
 export interface IIcon {
     variant: IconVariant;

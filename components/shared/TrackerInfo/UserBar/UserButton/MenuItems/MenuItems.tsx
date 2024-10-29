@@ -1,6 +1,7 @@
 import React from 'react';
 import { MenuItem } from '@mui/material';
 import clsx from 'clsx';
+import { useTranslations } from 'next-intl';
 
 import Icon from '@/components/ui/Icon';
 import { IconVariant } from '@/components/ui/Icon';
@@ -18,14 +19,16 @@ const UserMenuItems: React.FC<UserMenuItemsProps> = ({
     handleLogoutClick,
     handleSettingsClick,
 }) => {
+    const t = useTranslations('UserBar');
+
     const menuItems = [
         {
-            label: data.label1.text,
+            label: t('settings'),
             icon: data.label1.icon as IconVariant,
             onClick: handleSettingsClick,
         },
         {
-            label: data.label2.text,
+            label: t('logout'),
             icon: data.label2.icon as IconVariant,
             onClick: handleLogoutClick,
         },
