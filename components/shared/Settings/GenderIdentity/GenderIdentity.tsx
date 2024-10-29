@@ -1,18 +1,21 @@
 import { FC, useEffect } from 'react';
 import { Controller } from 'react-hook-form';
 import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material';
+import { useTranslations } from 'next-intl';
 
 import { IGenderIdentity } from './GenderIdentity.types';
 
 import scss from './GenderIdentity.module.scss';
 
 const GenderIdentity: FC<IGenderIdentity> = ({ control, gender, setValue }) => {
+    const t = useTranslations('Settings');
+
     useEffect(() => {
         if (gender) setValue('gender', gender);
     }, [gender, setValue]);
     return (
         <FormControl component="fieldset" className={scss.formControl}>
-            <FormLabel className={scss.label}>Your gender identity</FormLabel>
+            <FormLabel className={scss.label}>{t('genderText')}</FormLabel>
             <Controller
                 name="gender"
                 control={control}
@@ -33,7 +36,7 @@ const GenderIdentity: FC<IGenderIdentity> = ({ control, gender, setValue }) => {
                                 />
                             }
                             className={scss.radio}
-                            label="Woman"
+                            label={t('gender.woman')}
                         />
                         <FormControlLabel
                             value="man"
@@ -49,7 +52,7 @@ const GenderIdentity: FC<IGenderIdentity> = ({ control, gender, setValue }) => {
                                 />
                             }
                             className={scss.radio}
-                            label="Man"
+                            label={t('gender.man')}
                         />
                     </RadioGroup>
                 )}

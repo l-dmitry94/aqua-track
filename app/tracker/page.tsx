@@ -6,6 +6,7 @@ import { getSession } from 'next-auth/react';
 import TrackerInfo from '@/components/shared/TrackerInfo';
 import { WaterMainInfo } from '@/components/shared/WaterMainInfo';
 import Container from '@/components/ui/Container';
+import LangSwitcher from '@/components/ui/LangSwitcher';
 
 import scss from './Tracker.module.scss';
 
@@ -23,9 +24,12 @@ const TrackerPage = () => {
 
     return (
         <div>
-            <Container className={scss.trackerContainer}>
-                <TrackerInfo />
-                <WaterMainInfo />
+            <Container>
+                <LangSwitcher />
+                <div className={scss.trackerContainer}>
+                    <TrackerInfo />
+                    <WaterMainInfo />
+                </div>
             </Container>
         </div>
     );

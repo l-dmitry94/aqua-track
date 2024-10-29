@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { Box, Typography } from '@mui/material';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
 
 import {
     AddWaterButton,
@@ -23,6 +24,7 @@ import styles from './water-main-info.module.scss';
 
 const WaterMainInfo = () => {
     const { data: session } = useSession();
+    const t = useTranslations('MainInfo');
 
     const { dailyWater, fetchDailyWater, isLoading, currentDate } = useWaterStore();
 
@@ -43,7 +45,7 @@ const WaterMainInfo = () => {
                     <CustomItemBox className="mt-[78px]">
                         <Typography className={styles.dailyNormalValue}>{volume} L</Typography>
                         <Typography className={styles.dailyNormalDescription}>
-                            My daily norma
+                            {t('dailyNorma')}
                         </Typography>
                     </CustomItemBox>
                 )}

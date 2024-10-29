@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 import AddWater from '@/components/shared/TrackerInfo/DailyInfo/BoxDailyInfo/ButtonWater/AddWater';
 import Button from '@/components/ui/Button';
@@ -11,6 +12,7 @@ export interface AddWaterButtonProps {}
 
 const AddWaterButton = ({}: AddWaterButtonProps) => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
+    const t = useTranslations('MainInfo');
 
     const toggleModal = () => setModalIsOpen(!modalIsOpen);
 
@@ -32,7 +34,7 @@ const AddWaterButton = ({}: AddWaterButtonProps) => {
                 onClick={toggleModal}
             >
                 <Icon variant={'plus'} className="h-[15px] w-[15px] stroke-white" />
-                Add water
+                <span>{t('button')}</span>
             </Button>
             <CustomModal open={modalIsOpen} onClose={toggleModal} title="Add water">
                 <AddWater onClose={toggleModal} />

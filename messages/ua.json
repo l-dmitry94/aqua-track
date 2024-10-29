@@ -1,0 +1,105 @@
+{
+    "Welcome": {
+        "description": "Записуйте щоденне споживання води",
+        "title": "Трекер споживання води",
+        "primaryButton": "Спробувати",
+        "secondaryButton": "Увійти"
+    },
+    "Advantages": {
+        "our": "Наші",
+        "happy": "щасливі",
+        "customers": "клієнти",
+        "advantage-1": "Керуй звичкою",
+        "advantage-2": "Перегляд статистики",
+        "advantage-3": "Персональні налаштування"
+    },
+    "SignUp": {
+        "title": "Реєстрація",
+        "email": "Електронна адреса",
+        "emailPlaceholder": "Введіть вашу електронну адресу",
+        "password": "Пароль",
+        "passwordPlaceholder": "Введіть ваш пароль",
+        "repeatPassword": "Повторіть пароль",
+        "repeatPasswordPlaceholder": "Повторіть пароль",
+        "button": "Зареєструватись",
+        "linkText": "Вже маєте акаунт?",
+        "link": "Увійти"
+    },
+    "SignIn": {
+        "title": "Увійти",
+        "email": "Електронна адреса",
+        "emailPlaceholder": "Введіть вашу електронну адресу",
+        "password": "Пароль",
+        "passwordPlaceholder": "Введіть ваш пароль",
+        "button": "Увійти",
+        "linkText": "Немає акаунту?",
+        "link": "Реєстрація",
+        "google": "Увійти через Google"
+    },
+    "MainInfo": {
+        "dailyNorma": "Моя щоденна норма",
+        "today": "Сьогодні",
+        "button": "Додати воду"
+    },
+    "UserBar": {
+        "hello": "Вітаємо",
+        "settings": "Налаштування",
+        "logout": "Вихід"
+    },
+    "Settings": {
+        "uploadPhoto": "Завантажити фото",
+        "genderText": "Ваша стать",
+        "gender": {
+            "woman": "Жінка",
+            "man": "Чоловік"
+        },
+        "nameText": "Ваше ім'я",
+        "namePlaceholder": "Введіть ваше ім'я",
+        "emailText": "Електронна адреса",
+        "emailPlaceholder": "Введіть вашу електронну адресу",
+        "dailyNormaText": "Моя щоденна норма",
+        "forGender": {
+            "woman": "Для жінки",
+            "man": "Для чоловіка"
+        },
+        "description": "V - обсяг норми води в літрах на добу, M - ваша маса тіла, T - час активних занять спортом, або іншим видом активності, співмірним за навантаженням (за відсутності таких необхідно поставити 0)",
+        "activeTime": "Активний час у годинах",
+        "weightText": "Ваш вага в кілограмах:",
+        "weightPlaceholder": "Введіть вашу вагу",
+        "activeTimeText": "Час активності у спорті:",
+        "activeTimePlaceholder": "Введіть ваш час активності",
+        "volumeRequired": "Обсяг потрібної води в літрах на добу:",
+        "volumeLetter": "Л",
+        "volumeText": "Запишіть, скільки води ви хочете пити:",
+        "volumePlaceholder": "Введіть ваш обсяг",
+        "save": "Зберегти"
+    },
+    "MonthInfo": {
+        "month": "Місяць",
+        "statisctics": "Статистика",
+        "noData": "Поки що немає даних"
+    },
+    "Water": {
+        "addTitle": "Додавання води",
+        "editTitle": "Редагування введеної кількості води",
+        "chooseValue": "Виберіть значення:",
+        "correctData": "Виправлення введених даних:",
+        "amountWater": "Кількість води:",
+        "ml": "мл",
+        "recordingTime": "Час запису:",
+        "volumeValue": "Введіть значення використаної води:",
+        "button": "Зберегти"
+    },
+    "DeleteWater": {
+        "title": "Видалення запису",
+        "text": "Ви впевнені, що хочете видалити запис?",
+        "cancel": "Скасувати",
+        "delete": "Видалити"
+    },
+    "Logout": {
+        "title": "Вихід",
+        "text": "Ви впевнені, що хочете вийти?",
+        "cancel": "Скасувати",
+        "logout": "Вихід"
+    }
+}

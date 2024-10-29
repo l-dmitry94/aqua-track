@@ -1,5 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import { Box, Typography } from '@mui/material';
+import { useTranslations } from 'next-intl';
 
 import { NameValues } from '@/components/ui/Form/Form.types';
 import Input from '@/components/ui/Input';
@@ -9,6 +10,8 @@ import { IProfileData } from '../ProfileData/ProfileData.types';
 import scss from './AmountOfWater.module.scss';
 
 const AmountOfWater: FC<IProfileData> = ({ register, errors, setValue, user }) => {
+    const t = useTranslations('Settings');
+
     const [weight, setWeight] = useState(user?.weight ?? 0);
     const [activeTime, setActiveTime] = useState(user?.activeTime ?? 0);
     const [gender] = useState(user?.gender ?? 'woman');
@@ -38,10 +41,10 @@ const AmountOfWater: FC<IProfileData> = ({ register, errors, setValue, user }) =
         <Box component="div" className={scss.wrapper}>
             <Box component="div" className={scss.amount}>
                 <Typography variant="body2" className={scss.title}>
-                    The required amount of water in liters per day:
+                    {t('volumeRequired')}
                 </Typography>
                 <Typography variant="body2" className={scss.text}>
-                    {dailyNorma.toFixed(1)}
+                    {`${dailyNorma.toFixed(1)} ${t('volumeLetter')}`}
                 </Typography>
             </Box>
 
@@ -50,8 +53,8 @@ const AmountOfWater: FC<IProfileData> = ({ register, errors, setValue, user }) =
                     register={register}
                     name={'volume' as NameValues}
                     type="text"
-                    label="Write down how much water you will drink:"
-                    placeholder="How much water you will drink"
+                    label={t('volumeText')}
+                    placeholder={t('volumePlaceholder')}
                     errors={errors}
                 />
             </Box>

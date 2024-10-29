@@ -79,7 +79,7 @@
     @apply max-w-[68px] text-xs font-bold leading-[1.17] font-sans;
 
     @include media-rules(tablet) {
-        @apply max-w-[90px] text-base leading-[1.49];
+        @apply max-w-[112px] text-base leading-[1.49];
     }
 
     &Color {
@@ -103,7 +103,7 @@
     @apply flex max-w-[168px] flex-wrap items-center gap-1;
 
     @include media-rules(tablet) {
-        @apply max-w-[242px] gap-[10px];
+        @apply max-w-[296px] gap-[10px];
     }
 }
 

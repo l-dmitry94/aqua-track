@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 import { Box } from '@mui/material';
+import { useTranslations } from 'next-intl';
 
 import Settings from '@/components/shared/Settings';
 import CustomModal from '@/components/ui/CustomModal';
@@ -14,6 +15,7 @@ import { useUserButton } from './useUserButton';
 import scss from './UserButton.module.scss';
 
 const UserButton: React.FC<UserBarProps> = ({ name, image }) => {
+    const t = useTranslations('UserBar');
     const {
         anchorEl,
         isLogoutOpen,
@@ -46,7 +48,7 @@ const UserButton: React.FC<UserBarProps> = ({ name, image }) => {
                 open={isLogoutOpen}
                 onClose={() => handleModalClose()}
                 variant="primary"
-                title="Log Out"
+                title={t('logout')}
                 centerTitle={true}
             >
                 <Logout onLogoutConfirm={handleLogoutConfirm} handleModalClose={handleModalClose} />
@@ -56,7 +58,7 @@ const UserButton: React.FC<UserBarProps> = ({ name, image }) => {
                 open={isSettinsOpen}
                 onClose={() => handleModalClose()}
                 variant="primary"
-                title="Settings"
+                title={t('settings')}
                 profile
             >
                 <Settings onCloseModal={handleModalClose} />

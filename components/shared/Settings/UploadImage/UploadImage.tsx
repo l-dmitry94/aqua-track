@@ -6,6 +6,7 @@ import {
     CloudinaryUploadWidgetInfo,
     CloudinaryUploadWidgetResults,
 } from 'next-cloudinary';
+import { useTranslations } from 'next-intl';
 
 import Icon from '@/components/ui/Icon';
 import removeAvatar from '@/helpers/removeAvatar';
@@ -15,6 +16,7 @@ import { IUploadImage } from './UploadImage.types';
 import scss from './UploadImage.module.scss';
 
 const UploadImage: FC<IUploadImage> = ({ avatar, publicId, setValue, isFormSubmitted }) => {
+    const t = useTranslations('Settings');
     const [image, setImage] = useState('');
     const [imagePublicId, setImagePublicId] = useState('');
 
@@ -100,7 +102,7 @@ const UploadImage: FC<IUploadImage> = ({ avatar, publicId, setValue, isFormSubmi
                 <Box component="div" className={scss.imageWrapper}>
                     <Icon className={scss.uploadIcon} variant="upload" />
                     <Typography component="p" className={scss.text}>
-                        Upload a photo
+                        {t('uploadPhoto')}
                     </Typography>
                 </Box>
             </CldUploadButton>

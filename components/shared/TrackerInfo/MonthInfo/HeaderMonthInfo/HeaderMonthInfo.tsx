@@ -4,6 +4,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
+import { useTranslations } from 'next-intl';
 
 import Icon from '@/components/ui/Icon';
 import { useWaterStore } from '@/zustand/water/store';
@@ -13,6 +14,8 @@ import { HeaderMonthInfoProps } from './HeaderMonthInfo.types';
 import scss from './HeaderMonthInfo.module.scss';
 
 const HeaderMonthInfo: React.FC<HeaderMonthInfoProps> = (props) => {
+    const t = useTranslations('MonthInfo');
+
     const { onMonthChange, isCalendarVisible, onToggleView } = props;
 
     const { setCurrentMonth, currentMonthState } = useWaterStore();
@@ -32,7 +35,7 @@ const HeaderMonthInfo: React.FC<HeaderMonthInfoProps> = (props) => {
     return (
         <Box component="div" className={scss.wrapper}>
             <Typography component="h3" className={scss.title}>
-                {isCalendarVisible ? 'Month' : 'Statistics'}
+                {isCalendarVisible ? t('month') : t('statisctics')}
             </Typography>
             <Box component="div" className={scss.buttons}>
                 <Box component="div" className={scss.navMonth}>

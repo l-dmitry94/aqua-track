@@ -1,5 +1,6 @@
 import { ChangeEventHandler, FC, useEffect } from 'react';
 import { format } from 'date-fns';
+import { useTranslations } from 'next-intl';
 
 import Input from '@/components/ui/Input';
 
@@ -15,6 +16,7 @@ const WaterInputs: FC<IWaterInputs> = ({
     water,
     onSetEmount,
 }) => {
+    const t = useTranslations('Water');
     const time = water?.time || format(new Date(), 'HH:mm');
 
     useEffect(() => {
@@ -33,7 +35,7 @@ const WaterInputs: FC<IWaterInputs> = ({
                 errors={errors}
                 name={'time' as never}
                 type={'time'}
-                label={'Recording time:'}
+                label={t('recordingTime')}
                 light
                 defaultValue={time}
                 placeholder={''}
@@ -44,7 +46,7 @@ const WaterInputs: FC<IWaterInputs> = ({
                 name={'volume' as never}
                 type={'number'}
                 onChange={handleVolumeChange}
-                label={'Enter the value of the water used:'}
+                label={t('volumeValue')}
                 placeholder={''}
                 value={amount}
             />

@@ -4,6 +4,7 @@ import { FC, useState } from 'react';
 import toast from 'react-hot-toast';
 import { Box } from '@mui/material';
 import { useSession } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
 
 import { update } from '@/api/auth/auth.api';
 import Button from '@/components/ui/Button';
@@ -23,6 +24,7 @@ import UploadImage from './UploadImage';
 import scss from './Settings.module.scss';
 
 const Settings: FC<ISettings> = ({ onCloseModal }) => {
+    const t = useTranslations('Settings');
     const { data: session, update: updateSession } = useSession();
     const [isLoading, setIsLoading] = useState(false);
     const [isFormSubmitted, setIsFormSubmitted] = useState(false);
@@ -89,7 +91,7 @@ const Settings: FC<ISettings> = ({ onCloseModal }) => {
                             </Box>
 
                             <Button onClick={onCloseModal} type="submit" variant="contained">
-                                Save
+                                {t('save')}
                             </Button>
                         </CustomScrollBar>
                     </Box>

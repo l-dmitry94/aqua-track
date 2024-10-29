@@ -6,6 +6,7 @@ import { Box, Typography } from '@mui/material';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
 
 import Button from '@/components/ui/Button';
 import Container from '@/components/ui/Container';
@@ -17,14 +18,30 @@ import WaterLoader from '@/components/ui/WaterLoader';
 import WelcomeAdvantages from '../../Welcome/WelcomeAdvantages/WelcomeAdvantages';
 import Auth from '../Auth';
 
-import fields from './fields';
 import validationSchema from './validationSchema';
 
 import scss from './SignIn.module.scss';
 
 const SignIn = () => {
+    const t = useTranslations('SignIn');
+
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
+
+    const fields = [
+        {
+            name: 'email',
+            type: 'email',
+            label: t('email'),
+            placeholder: t('emailPlaceholder'),
+        },
+        {
+            name: 'password',
+            type: 'password',
+            label: t('password'),
+            placeholder: t('passwordPlaceholder'),
+        },
+    ];
 
     const handleSubmit = async (data: FormValues) => {
         try {
@@ -59,7 +76,7 @@ const SignIn = () => {
             <Container className={scss.SignInPage}>
                 <Auth>
                     <Typography variant="h1" className={scss.title}>
-                        Sign In
+                        {t('title')}
                     </Typography>
                     <Form validationSchema={validationSchema} onSubmit={handleSubmit}>
                         {(signin, control, setValue, errors) => (
@@ -83,12 +100,12 @@ const SignIn = () => {
                                     fullWidth
                                     className={scss.button}
                                 >
-                                    Sign In
+                                    {t('button')}
                                 </Button>
                                 <Typography variant="body2" className={scss.linkWrapper}>
-                                    Do not have an account?{' '}
+                                    {t('linkText')}{' '}
                                     <Link href="/signup" className={scss.link}>
-                                        Sign Up
+                                        {t('link')}
                                     </Link>
                                 </Typography>
                             </>
@@ -96,7 +113,7 @@ const SignIn = () => {
                     </Form>
                     <div className={scss.or}>or</div>
                     <Button variant="contained" fullWidth onClick={googleSignIn}>
-                        Google
+                        {t('google')}
                     </Button>
                 </Auth>
                 <Box className={scss.img}>

@@ -2,6 +2,7 @@
 import { Box } from '@mui/material';
 
 import Container from '@/components/ui/Container';
+import LangSwitcher from '@/components/ui/LangSwitcher';
 
 import AuthWrapper from './AuthWrapper';
 import WelcomeAdvantages from './WelcomeAdvantages';
@@ -13,6 +14,7 @@ const Welcome = () => {
     return (
         <Box component="section" className={scss.section}>
             <Container>
+                <LangSwitcher />
                 <Box component="div" className={scss.wrapper}>
                     <AuthWrapper>
                         <WelcomeInfo />

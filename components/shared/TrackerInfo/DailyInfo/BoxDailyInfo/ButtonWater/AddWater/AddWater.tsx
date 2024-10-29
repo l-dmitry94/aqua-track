@@ -1,6 +1,7 @@
 import { FC, useState } from 'react';
 import toast from 'react-hot-toast';
 import { Box, Typography } from '@mui/material';
+import { useTranslations } from 'next-intl';
 
 import { WaterBody } from '@/api/water/water.api.types';
 import Button from '@/components/ui/Button';
@@ -20,6 +21,7 @@ export interface IAddWater {
 }
 
 const AddWater: FC<IAddWater> = ({ onClose, water }) => {
+    const t = useTranslations('Water');
     const [isLoading, setIsLoading] = useState(false);
     const [amount, setAmount] = useState(water?.volume || 50);
     const { updateWater } = useWaterStore();
@@ -64,7 +66,7 @@ const AddWater: FC<IAddWater> = ({ onClose, water }) => {
                 {(register, control, setValue, errors) => (
                     <Box component="div" className={scss.addWater}>
                         <Typography component="h3" className={scss.title}>
-                            Choose a value
+                            {water ? t('correctData') : t('chooseValue')}
                         </Typography>
 
                         <VolumeCounter
@@ -85,7 +87,7 @@ const AddWater: FC<IAddWater> = ({ onClose, water }) => {
                         />
 
                         <Button type="submit" variant="contained" className={scss.submitBtn}>
-                            Save
+                            {t('button')}
                         </Button>
                     </Box>
                 )}
